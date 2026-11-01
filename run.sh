@@ -11,6 +11,9 @@ if [ ! -d "build" ]; then
     echo "Running on Other Systems, using system default compiler"
     cmake -S . -B build
     cmake --build build --target run_int8_baseline
+    cmake -S . -B build
+    cmake --build build --target run_fp16_baseline
+
   fi
 
 fi
@@ -25,6 +28,28 @@ echo "Running the binaries..."
   exit 1
 }
 sleep 2
+
+if [ ! -f "models/stories110M_fp16.bin" ]; then
+    echo "FP16 model not found. Creating it..."
+    /opt/tinyllm-export/bin/python tools/export.py \
+        models/stories110M_fp16.bin \
+        --version 3 \
+        --dtype fp16 \
+        --checkpoint models/stories110M.pt || {
+        echo "FP16 export failed"
+        exit 1
+    }
+fi
+
+echo "Running run_fp16_baseline with input 'Once upon a time'..."
+./build/run_fp16_baseline models/stories110M_fp16.bin \
+    -z models/tokenizer.bin \
+    -t 0 \
+    -n 128 \
+    -i "Once upon a time" || {
+    echo "run_fp16_baseline failed"
+    exit 1
+}
 
 if [ ! -f "models/stories110M_int8.bin" ]; then
     echo "INT8 model not found. Creating it..."
