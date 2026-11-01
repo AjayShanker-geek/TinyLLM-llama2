@@ -19,6 +19,7 @@
 #include <unistd.h>
 #endif
 
+#include "perplexity.h"
 #include "run_fp32_openmp.h"
 #include "sampler.h"
 #include "tokenizer.h"
@@ -331,6 +332,8 @@ float *forward(Transformer *transformer, int token, int pos)
   return s->logits;
 }
 
+// Adapter to perplexity.h's forward_fn: perplexity.c only knows the model as a void*
+static float *forward_cb(void *model, int token, int pos) { return forward((Transformer *)model, token, pos); }
 
 int sample_argmax(const float *probabilities, int n)
 {
@@ -632,7 +635,8 @@ void error_usage()
   fprintf(stderr, "  -n <int>    number of steps to run for, default 256. 0 = max_seq_len\n");
   fprintf(stderr, "  -i <string> input prompt\n");
   fprintf(stderr, "  -z <string> optional path to custom tokenizer\n");
-  fprintf(stderr, "  -m <string> mode: generate|chat, default: generate\n");
+  fprintf(stderr, "  -m <string> mode: generate|chat|ppl, default: generate\n");
+  fprintf(stderr, "  -f <string> text file to score in ppl mode\n");
   fprintf(stderr, "  -y <string> (optional) system prompt in chat mode\n");
   exit(EXIT_FAILURE);
 }
@@ -650,6 +654,7 @@ int main(int argc, char *argv[])
   unsigned long long rng_seed = 0;// seed rng with time by default
   char *mode = "generate";// generate|chat
   char *system_prompt = nullptr;// the (optional) system prompt to use in chat mode
+  char *text_path = nullptr;// evaluation text file for ppl mode
 
   // poor man's C argparse so we can override the defaults above from the command line
   if (argc >= 2) {
@@ -679,6 +684,8 @@ int main(int argc, char *argv[])
       mode = argv[i + 1];
     } else if (argv[i][1] == 'y') {
       system_prompt = argv[i + 1];
+    } else if (argv[i][1] == 'f') {
+      text_path = argv[i + 1];
     } else {
       error_usage();
     }
@@ -710,6 +717,10 @@ int main(int argc, char *argv[])
     generate(&transformer, &tokenizer, &sampler, prompt, steps);
   } else if (strcmp(mode, "chat") == 0) {
     chat(&transformer, &tokenizer, &sampler, prompt, system_prompt, steps);
+  } else if (strcmp(mode, "ppl") == 0) {
+    if (text_path == nullptr) { error_usage(); }
+    perplexity_file(
+      &transformer, forward_cb, transformer.config.vocab_size, transformer.config.seq_len, &tokenizer, text_path);
   } else {
     fprintf(stderr, "unknown mode: %s\n", mode);
     error_usage();

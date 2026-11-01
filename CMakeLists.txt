@@ -119,9 +119,11 @@ add_executable(run_fp32_openmp
     include/tokenizer.h
     include/util.h
     include/sampler.h
+    include/perplexity.h
     src/run_fp32_openmp.c
     src/tokenizer.c
     src/util.c
+    src/perplexity.c
 )
 
 # -fopenmp must also be passed at link time to pull in the OpenMP runtime (libomp)
