@@ -1,0 +1,4 @@
+settings set target.run-args ./models/stories110M.bin -i "Yesterday" -z ./models/tokenizer.bin -t 0
+settings set target.env-vars OMP_NUM_THREADS=4
+breakpoint set --name main
+run

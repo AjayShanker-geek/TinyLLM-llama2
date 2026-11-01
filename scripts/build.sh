@@ -1,7 +1,11 @@
 #! /bin/sh
 
 # Go to the root of the project
-# ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
 
 # Ensure latest binaries are built
 if [ ! -d "build" ]; then
@@ -13,7 +17,6 @@ if [ ! -d "build" ]; then
   else
     echo "Running on Other Systems, using system default compiler"
     cmake -S . -B build
-    cmake --build build --target run_int8_baseline
   fi
 
 fi

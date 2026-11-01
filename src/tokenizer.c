@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "tokenizer.h"
+#include "util.h"
 
 int compare_tokens(const void *a, const void *b) { return strcmp(((TokenIndex *)a)->str, ((TokenIndex *)b)->str); }
 
@@ -19,7 +20,7 @@ void build_tokenizer(Tokenizer *t, char *tokenizer_path, int vocab_size)
   // malloc space to hold the scores and the strings
   t->vocab = (char **)malloc(vocab_size * sizeof(char *));
   t->vocab_scores = (float *)malloc(vocab_size * sizeof(float));
-  t->sorted_vocab = NULL;// initialized lazily
+  t->sorted_vocab = nullptr;// initialized lazily
   for (int i = 0; i < 256; i++) {
     t->byte_pieces[i * 2] = (unsigned char)i;
     t->byte_pieces[i * 2 + 1] = '\0';
@@ -176,7 +177,7 @@ void encode(Tokenizer *t, char *text, int8_t bos, int8_t eos, int *tokens, int *
       // byte_fallback encoding: just encode each byte as a token
       // +3 is here because the first 3 vocab elements are <unk>, <s>, </s>
       // so the individual bytes only start at index 3
-      for (int i = 0; i < str_len; i++) { tokens[(*n_tokens)++] = (unsigned char)str_buffer[i] + 3; }
+      for (size_t i = 0; i < str_len; i++) { tokens[(*n_tokens)++] = (unsigned char)str_buffer[i] + 3; }
     }
     str_len = 0;// protect against a sequence of stray UTF8 continuation bytes
   }
