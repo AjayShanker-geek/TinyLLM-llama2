@@ -87,6 +87,21 @@ target_link_libraries(run_fp32_baseline
         no_optimization
 )
 
+# Build for FP16 binary
+add_executable(run_fp16_baseline
+    src/run_fp16_baseline.c
+    include/run_fp16_baseline.h
+)
+
+target_include_directories(run_fp16_baseline PRIVATE include)
+
+target_link_libraries(run_fp16_baseline PRIVATE no_optimization)
+
+if(NOT WIN32)
+    target_link_libraries(run_fp16_baseline PRIVATE m)
+endif()
+
+
 # Build for INT8 binary
 add_executable(run_int8_baseline
     include/run_int8_baseline.h
