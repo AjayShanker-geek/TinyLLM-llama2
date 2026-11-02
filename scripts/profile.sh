@@ -59,7 +59,7 @@ INT8_MODEL="${INT8_MODEL:-models/stories110M_int8.bin}"
 TOKENIZER="${TOKENIZER:-models/tokenizer.bin}"
 
 # ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp32_simd run_fp32_openmp)
-ALL_BINARIES=(run_int8_baseline run_fp32_openmp run_fp32_openmp_simd)
+ALL_BINARIES=(run_int8_baseline run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd)
 
 # Fixed simulated cache for cachegrind: 32 KiB L1 I/D, 8 MiB last level
 CACHEGRIND_CACHE=(--I1=32768,8,64 --D1=32768,8,64 --LL=8388608,16,64)
@@ -339,17 +339,25 @@ timed_run() {
 }
 
 # run_repeats <tool> <threads> <file prefix>: 1 warm-up + RUNS measured runs
-# CSV: wall_s and tok_s per repeat. Files: runs/<prefix>warmup.txt, runs/<prefix>run_NN.txt
+# CSV: wall_s, tok_s and bandwidth per repeat. Files: runs/<prefix>warmup.txt, runs/<prefix>run_NN.txt
+# bandwidth ~= model_bytes * tok/s: every weight is read once per token (KV cache and
+# activations are small next to the weights, so this is an estimate)
 run_repeats() {
-  local tool="$1" threads="$2" prefix="$3" r logf
+  local tool="$1" threads="$2" prefix="$3" r logf model_bytes bw
+  model_bytes="$(stat -c %s "$(model_for "$NAME")")"
   mkdir -p "$OUT/runs"
   timed_run "$threads" "$OUT/runs/${prefix}warmup.txt" || return 1
   for ((r = 1; r <= RUNS; r++)); do
     logf="$OUT/runs/${prefix}run_$(printf '%02d' "$r").txt"
     timed_run "$threads" "$logf" || return 1
+    bw=""
+    if [[ -n "$TOK" ]]; then
+      bw="$(awk -v b="$model_bytes" -v t="$TOK" 'BEGIN { printf "%.4f", b * t / 1e9 }')"
+    fi
     csv_row "$tool" wall_s "" "$threads" "$r" "$WALL" s
     csv_row "$tool" tok_s "" "$threads" "$r" "$TOK" tok/s
-    printf '  threads=%s run %d: %s s, %s tok/s\n' "$threads" "$r" "$WALL" "${TOK:-?}"
+    csv_row "$tool" bandwidth "" "$threads" "$r" "$bw" GB/s
+    printf '  threads=%s run %d: %s s, %s tok/s, %s GB/s\n' "$threads" "$r" "$WALL" "${TOK:-?}" "${bw:-?}"
   done
 }
 
@@ -468,7 +476,7 @@ for NAME in "${BINARIES[@]}"; do
     step "$NAME: cachegrind" run_cachegrind
     step "$NAME: massif" run_massif
     ;;
-  run_fp32_simd)
+  run_fp32_simd | run_fp32_simd_4row)
     step "$NAME: gprof" run_gprof
     step "$NAME: callgrind" run_callgrind
     step "$NAME: cachegrind" run_cachegrind

@@ -45,9 +45,9 @@ target_compile_options(no_optimization
 
 target_compile_options(simd_optimisation
     INTERFACE
-        -O0 # Enable compiler optimizations
+        -O0 # Disable compiler optimizations, same as the baseline
         -march=${SIMD_ARCH} # Enable architecture-specific optimizations
-        -ftree-vectorize # Enable vectorization
+        -fno-tree-vectorize # No auto-vectorization: only the hand-written NEON is SIMD
         -Wall
         -Wextra
         -Wpedantic
@@ -109,6 +109,29 @@ add_executable(run_fp32_simd
 )
 
 target_link_libraries(run_fp32_simd
+    PRIVATE
+        simd_optimisation
+)
+
+# Build for SIMD binary with the 4-row kernel (same source, -DSIMD_4ROW)
+add_executable(run_fp32_simd_4row
+    include/run_fp32_simd.h
+    src/run_fp32_simd.c
+)
+
+target_compile_definitions(run_fp32_simd_4row PRIVATE SIMD_4ROW)
+
+target_link_libraries(run_fp32_simd_4row
+    PRIVATE
+        simd_optimisation
+)
+
+# Kernel correctness test for the SIMD matmul kernels
+add_executable(test_matmul_simd
+    tests/test_matmul_simd.c
+)
+
+target_link_libraries(test_matmul_simd
     PRIVATE
         simd_optimisation
 )
