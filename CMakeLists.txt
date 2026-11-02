@@ -89,8 +89,12 @@ target_link_libraries(run_fp32_baseline
 
 # Build for FP16 binary
 add_executable(run_fp16_baseline
-    src/run_fp16_baseline.c
     include/run_fp16_baseline.h
+    include/tokenizer.h
+    include/perplexity.h
+    src/run_fp16_baseline.c
+    src/tokenizer.c
+    src/perplexity.c
 )
 
 target_include_directories(run_fp16_baseline PRIVATE include)

@@ -62,14 +62,15 @@ SEED="${SEED:-42}"
 TOP_N="${TOP_N:-15}" # functions kept per profiler in the CSV
 
 FP32_MODEL="${FP32_MODEL:-models/stories110M.bin}"
+FP16_MODEL="${FP16_MODEL:-models/stories110M_fp16.bin}"
 INT8_MODEL="${INT8_MODEL:-models/stories110M_int8.bin}"
 TOKENIZER="${TOKENIZER:-models/tokenizer.bin}"
 
-PPL="${PPL:-1}"                         # 1 = run the perplexity step, 0 = skip it
-PPL_TEXT="${PPL_TEXT:-data/eval.txt}"   # same text for every binary, so PPLs are comparable
+PPL="${PPL:-1}"                       # 1 = run the perplexity step, 0 = skip it
+PPL_TEXT="${PPL_TEXT:-data/eval.txt}" # same text for every binary, so PPLs are comparable
 
 # ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp32_simd run_fp32_openmp)
-ALL_BINARIES=(run_int8_baseline run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd)
+ALL_BINARIES=(run_int8_baseline run_fp16_baseline run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd)
 
 # Fixed simulated cache for cachegrind: 32 KiB L1 I/D, 8 MiB last level
 CACHEGRIND_CACHE=(--I1=32768,8,64 --D1=32768,8,64 --LL=8388608,16,64)
@@ -112,6 +113,7 @@ step() {
 model_for() {
   case "$1" in
   run_int8_baseline) echo "$INT8_MODEL" ;;
+  run_fp16_baseline) echo "$FP16_MODEL" ;;
   *) echo "$FP32_MODEL" ;;
   esac
 }
@@ -534,7 +536,7 @@ for NAME in "${BINARIES[@]}"; do
 
   # Binary-specific
   case "$NAME" in
-  run_fp32_baseline | run_int8_baseline)
+  run_fp32_baseline | run_int8_baseline | run_fp16_baseline)
     step "$NAME: gprof" run_gprof
     step "$NAME: callgrind" run_callgrind
     step "$NAME: cachegrind" run_cachegrind
