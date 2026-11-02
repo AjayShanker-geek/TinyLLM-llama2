@@ -161,9 +161,11 @@ add_executable(run_fp32_openmp_simd
     include/tokenizer.h
     include/util.h
     include/sampler.h
+    include/perplexity.h
     src/run_fp32_openmp.c
     src/tokenizer.c
     src/util.c
+    src/perplexity.c
 )
 
 target_link_options(openmp_simd_aggressive_optimisation INTERFACE -fopenmp)
