@@ -10,7 +10,7 @@
  * Build and run from the project root (AddressSanitizer catches any read
  * or write past the end of W, x or xout):
  *   clang -O0 -g -fsanitize=address -Iinclude \
- *       -o build/test_matmul_simd tests/test_matmul_simd.c -lm
+ *       -o build/test_matmul_simd tests/test_matmul_simd.c src/tokenizer.c -lm
  *   ./build/test_matmul_simd
  **/
 

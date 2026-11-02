@@ -105,7 +105,11 @@ target_link_libraries(run_int8_baseline
 # Build for SIMD binary
 add_executable(run_fp32_simd
     include/run_fp32_simd.h
+    include/tokenizer.h
+    include/perplexity.h
     src/run_fp32_simd.c
+    src/tokenizer.c
+    src/perplexity.c
 )
 
 target_link_libraries(run_fp32_simd
@@ -116,7 +120,11 @@ target_link_libraries(run_fp32_simd
 # Build for SIMD binary with the 4-row kernel (same source, -DSIMD_4ROW)
 add_executable(run_fp32_simd_4row
     include/run_fp32_simd.h
+    include/tokenizer.h
+    include/perplexity.h
     src/run_fp32_simd.c
+    src/tokenizer.c
+    src/perplexity.c
 )
 
 target_compile_definitions(run_fp32_simd_4row PRIVATE SIMD_4ROW)
@@ -129,6 +137,7 @@ target_link_libraries(run_fp32_simd_4row
 # Kernel correctness test for the SIMD matmul kernels
 add_executable(test_matmul_simd
     tests/test_matmul_simd.c
+    src/tokenizer.c
 )
 
 target_link_libraries(test_matmul_simd
