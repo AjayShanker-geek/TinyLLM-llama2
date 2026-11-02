@@ -19,12 +19,14 @@
 #        cachegrind  simulated cache misses (fixed cache size, same on every machine)
 #        massif      peak heap memory
 #        thread sweep  timing repeated for each thread count in THREADS_SWEEP (OpenMP)
+#   6. perplexity    accuracy on PPL_TEXT (`-m ppl -f`), skipped if the file is missing or PPL=0
 #
 # Output, in logs/profile/<run_id>[-<label>]/:
 #   results.csv     every measurement of this run, one row each
+#   perplexity.csv  one row per binary: tokens, mean NLL, perplexity (accuracy, separate from speed)
 #   system.txt      CPU, limits, compiler and settings of this run
-#   <binary>/       raw tool output: runs/run_01.txt, gprof.txt, perf.data, ...
-# Every run's rows are also appended to logs/profile/all_results.csv.
+#   <binary>/       raw tool output: runs/run_01.txt, gprof.txt, perf.data, perplexity.txt, ...
+# Every run's rows are also appended to logs/profile/all_results.csv and all_perplexity.csv.
 #
 # CSV columns:
 #   run_id   timestamp of this profile run      label    LABEL setting (free text)
@@ -33,6 +35,11 @@
 #   item     function name (empty if n/a)       threads  OMP_NUM_THREADS used (1 if not OpenMP)
 #   repeat   1..RUNS for timing rows            value    the number
 #   unit     s, %, kB, count, ...
+#
+# perplexity.csv columns:
+#   run_id, label, arch, binary, model, text (PPL_TEXT), text_sha256 (first 12 hex chars, to
+#   check every row scored the same text), threads, tokens (scored), mean_nll (nats),
+#   perplexity (exp(mean_nll), lower is better), wall_s (time of the ppl run)
 #
 # Note: the binaries print tok/s differently (run_fp32_openmp includes sampling and
 # printing, run_int8_baseline times only forward()), so compare binaries by wall_s.
@@ -58,6 +65,9 @@ FP32_MODEL="${FP32_MODEL:-models/stories110M.bin}"
 INT8_MODEL="${INT8_MODEL:-models/stories110M_int8.bin}"
 TOKENIZER="${TOKENIZER:-models/tokenizer.bin}"
 
+PPL="${PPL:-1}"                         # 1 = run the perplexity step, 0 = skip it
+PPL_TEXT="${PPL_TEXT:-data/eval.txt}"   # same text for every binary, so PPLs are comparable
+
 # ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp32_simd run_fp32_openmp)
 ALL_BINARIES=(run_int8_baseline run_fp32_openmp run_fp32_openmp_simd)
 
@@ -74,6 +84,9 @@ LOG_ROOT="$ROOT/logs/profile/${RUN_ID}${LABEL:+-$LABEL}"
 RESULTS_CSV="$LOG_ROOT/results.csv"
 ALL_RESULTS_CSV="$ROOT/logs/profile/all_results.csv"
 CSV_HEADER="run_id,label,arch,binary,tool,metric,item,threads,repeat,value,unit"
+PPL_CSV="$LOG_ROOT/perplexity.csv"
+ALL_PPL_CSV="$ROOT/logs/profile/all_perplexity.csv"
+PPL_HEADER="run_id,label,arch,binary,model,text,text_sha256,threads,tokens,mean_nll,perplexity,wall_s"
 
 if (($#)); then BINARIES=("$@"); else BINARIES=("${ALL_BINARIES[@]}"); fi
 FAILURES=()
@@ -129,6 +142,11 @@ check_inputs() {
       fi
     done
   done
+  # A missing evaluation text only skips the perplexity step, it does not stop profiling
+  if [[ "$PPL" == 1 && ! -f "$PPL_TEXT" ]]; then
+    echo "Missing $PPL_TEXT: skipping perplexity (set PPL_TEXT=... or PPL=0)." >&2
+    PPL=0
+  fi
   return "$missing"
 }
 
@@ -170,6 +188,7 @@ system_info() {
     env | grep -E '^OMP_' || true
     echo "# settings"
     echo "LABEL=$LABEL STEPS=$STEPS VALGRIND_STEPS=$VALGRIND_STEPS RUNS=$RUNS SEED=$SEED PROMPT=$PROMPT"
+    echo "PPL=$PPL PPL_TEXT=$PPL_TEXT"
   } >"$LOG_ROOT/system.txt"
 }
 
@@ -200,9 +219,13 @@ add_rows() {
   done
 }
 
-append_all_results() { # copy this run's rows into the file that holds every run
+append_all_results() { # copy this run's rows into the files that hold every run
   [[ -f "$ALL_RESULTS_CSV" ]] || echo "$CSV_HEADER" >"$ALL_RESULTS_CSV"
   tail -n +2 "$RESULTS_CSV" >>"$ALL_RESULTS_CSV"
+  if [[ -f "$PPL_CSV" ]]; then
+    [[ -f "$ALL_PPL_CSV" ]] || echo "$PPL_HEADER" >"$ALL_PPL_CSV"
+    tail -n +2 "$PPL_CSV" >>"$ALL_PPL_CSV"
+  fi
 }
 ##################################################################################
 
@@ -316,6 +339,15 @@ parse_cachegrind_functions() { # raw cachegrind.out -> L1 data misses (read + wr
     }
     END { for (f in d1) if (d1[f] > 0) printf "D1_misses|%s|%.0f|count\n", f, d1[f] }
   ' "$1" | sort -t'|' -k3,3gr | head -n "$TOP_N"
+}
+
+parse_ppl() { # perplexity_file() output -> "tokens|mean_nll|perplexity" (empty if any is missing)
+  awk -F': ' '
+    /^ppl tokens:/     { t = $2 }
+    /^ppl mean nll:/   { n = $2 }
+    /^ppl perplexity:/ { p = $2 }
+    END { if (t != "" && n != "" && p != "") print t "|" n "|" p }
+  ' "$1"
 }
 
 parse_massif() { # peak heap; the mmap-ed model weights are not heap, so not included
@@ -437,6 +469,38 @@ run_massif() {
     parse_massif "$OUT/massif.out" | add_rows massif 1
 }
 
+# perplexity.csv (one row). File: perplexity.txt
+# Teacher forcing over the whole PPL_TEXT, so -t/-n/-i don't apply and it is not a timing run.
+run_perplexity() {
+  local model threads logf start end wall result tokens nll ppl sha
+  model="$(model_for "$NAME")"
+  threads="$(threads_for "$NAME")"
+  logf="$OUT/perplexity.txt"
+
+  start="$(date +%s.%N)"
+  OMP_NUM_THREADS="$threads" "$BIN" "$ROOT/$model" -z "$ROOT/$TOKENIZER" -m ppl -f "$ROOT/$PPL_TEXT" \
+    >"$logf" 2>&1 || {
+    echo "  $NAME exited with an error, see ${logf#"$ROOT"/} (no -m ppl mode in this binary?)" >&2
+    return 1
+  }
+  end="$(date +%s.%N)"
+  wall="$(awk -v s="$start" -v e="$end" 'BEGIN { printf "%.3f", e - s }')"
+
+  result="$(parse_ppl "$logf")"
+  if [[ -z "$result" ]]; then
+    echo "  no 'ppl ...' lines in ${logf#"$ROOT"/}" >&2
+    return 1
+  fi
+  IFS='|' read -r tokens nll ppl <<<"$result"
+  sha="$(sha256sum "$PPL_TEXT" | cut -c1-12)"
+
+  [[ -f "$PPL_CSV" ]] || echo "$PPL_HEADER" >"$PPL_CSV"
+  printf '%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n' \
+    "$RUN_ID" "$(csv_quote "$LABEL")" "$ARCH" "$NAME" "$(csv_quote "$(basename "$model")")" \
+    "$(csv_quote "$PPL_TEXT")" "$sha" "$threads" "$tokens" "$nll" "$ppl" "$wall" >>"$PPL_CSV"
+  printf '  %s tokens, mean nll %s, perplexity %s (%s s)\n' "$tokens" "$nll" "$ppl" "$wall"
+}
+
 ##################################################################################
 # MAIN
 ##################################################################################
@@ -479,11 +543,15 @@ for NAME in "${BINARIES[@]}"; do
     step "$NAME: thread sweep" run_thread_sweep
     ;;
   esac
+
+  # Accuracy (separate CSV)
+  if [[ "$PPL" == 1 ]]; then step "$NAME: perplexity" run_perplexity; fi
 done
 
 append_all_results
 
 log "Results in ${LOG_ROOT#"$ROOT"/} ($(($(wc -l <"$RESULTS_CSV") - 1)) rows in results.csv)"
+if [[ -f "$PPL_CSV" ]]; then column -s, -t <"$PPL_CSV" 2>/dev/null || cat "$PPL_CSV"; fi
 if ((${#FAILURES[@]})); then
   printf 'Failed steps:\n'
   printf '  - %s\n' "${FAILURES[@]}"

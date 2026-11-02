@@ -90,7 +90,11 @@ target_link_libraries(run_fp32_baseline
 # Build for INT8 binary
 add_executable(run_int8_baseline
     include/run_int8_baseline.h
+    include/tokenizer.h
+    include/perplexity.h
     src/run_int8_baseline.c
+    src/tokenizer.c
+    src/perplexity.c
 )
 
 if(NOT WIN32)
@@ -138,9 +142,11 @@ add_executable(run_fp32_openmp_simd
     include/tokenizer.h
     include/util.h
     include/sampler.h
+    include/perplexity.h
     src/run_fp32_openmp.c
     src/tokenizer.c
     src/util.c
+    src/perplexity.c
 )
 
 target_link_options(openmp_simd_aggressive_optimisation INTERFACE -fopenmp)
