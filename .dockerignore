@@ -1,0 +1,11 @@
+.git/
+.venv/
+.cache/
+build/
+build-*/
+models/
+logs/
+figures/
+plots/
+*.bin
+*.pt

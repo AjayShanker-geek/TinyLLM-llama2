@@ -34,16 +34,16 @@ Make sure stories110M.pt is copied over correctly before doing the model.
 ### One-time Python setup for model conversion
 
 ```bash
-apt-get update
-apt-get install -y python3 python3-venv
-python3 -m venv /opt/tinyllm-export
-/opt/tinyllm-export/bin/python -m pip install torch numpy
+# Ensure you have Python 3, pip and virtualenv installed
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install torch numpy
 ```
-
 
 ### Build and run
 
 Manually, run in terminal
+
 ```bash
 cmake -S . -B build
 cmake --build build --target run_int8_baseline
@@ -61,26 +61,45 @@ cmake --build build --target run_int8_baseline
 - -i supplies the starting prompt.
 
 Alternatively, run in it terminal
+
 ```bash
 
-./run.sh
+./scripts/build.sh
+./scripts/run.sh
 ```
 
-## Building the Project & Running the Benchmarks
+## Building the Project
 
 ```bash
 
 # Check the Clang version & install CMake if not already installed
-./run.sh
+./scripts/build.sh
+./scripts/run.sh
 ```
 
-## Benchmark System
+## Profile & Benchmark
 
-> TODO: Decide which system to use for benchmarking and update the following information accordingly.
+Docker is used to ensure a consistent environment for profiling and benchmarking. The following commands will run the profiling and benchmarking scripts.
 
-- OS:
-- CPU:
-- RAM:
+> [!IMPORTANT]
+> Docker Desktop must be given more than these limits of CPU 10 and memory 8GB to run the profiling and benchmarking scripts.
+
+```bash
+# Build the Docker image for profiling and benchmarking
+docker compose build
+
+# Run the profiling script inside the Docker container
+docker compose run --rm -e RUNS=10 bench bash scripts/profile.sh
+
+```
+
+The profiling script will generate logs in the `logs/profile` directory, which can be used to analyze the performance of the model.
+
+### Benchmark System
+
+- OS: Ubuntu 24.04 LTS
+- CPU: 8 (aarch64 (Arm 64-bit))
+- RAM: 4 GB
 
 ## Generate Plots
 

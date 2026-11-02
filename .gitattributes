@@ -1,0 +1,8 @@
+# Shell scripts and Dockerfile must keep LF endings, or they break in the
+# Linux container when checked out on Windows
+*.sh        text eol=lf
+Dockerfile  text eol=lf
+*.yaml      text eol=lf
+
+*.bin       binary
+*.pt        binary
