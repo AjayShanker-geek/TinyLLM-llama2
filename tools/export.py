@@ -20,6 +20,7 @@ import shutil
 import struct
 import argparse
 import json
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -36,6 +37,14 @@ def serialize_fp32(file, tensor):
     d = tensor.detach().cpu().view(-1).to(torch.float32).numpy()
     b = struct.pack(f'{len(d)}f', *d)
     file.write(b)
+
+def serialize_fp16(file, tensor):
+    """Write finite IEEE binary16 values in little-endian order."""
+    values = tensor.detach().cpu().to(torch.float32).reshape(-1)
+    if not torch.isfinite(values).all() or torch.any(values.abs() > 65504):
+        raise ValueError("FP16 export needs finite values with magnitude <= 65504")
+    half = values.to(torch.float16).numpy().astype("<f2", copy=False)
+    file.write(half.tobytes())
 
 def serialize_int8(file, tensor):
     """ writes one int8 tensor to file that is open in wb mode """
@@ -125,6 +134,69 @@ def legacy_export(model, filepath):
     # write to binary file
     out_file.close()
     print(f"wrote {filepath}")
+
+# -----------------------------------------------------------------------------
+# FP16-weight format: CLI export version 3, L2FP16 header format version 1.
+
+def fp16_export(model, filepath):
+    """Export FP16 weights for run_fp16_baseline, without mutating the model."""
+    p = model.params
+    hidden = model.layers[0].feed_forward.w1.weight.shape[0]
+    kv_heads = p.n_heads if p.n_kv_heads is None else p.n_kv_heads
+    vocab = abs(p.vocab_size)
+    dims = (p.dim, hidden, p.n_layers, p.n_heads, kv_heads, vocab, p.max_seq_len)
+    if min(dims) <= 0 or max(dims) > 1_000_000:
+        raise ValueError("Invalid dimensions for the small-model FP16 runner")
+    d, h, layers, heads, kh, v, seq = dims
+    if d % heads or heads % kh or (d // heads) % 2:
+        raise ValueError("FP16 runner requires compatible heads and an even head size")
+    if max(d*kh, d*v, layers*d*h, layers*d*d, layers*seq*d, heads*seq) > 2**31-1:
+        raise ValueError("Dimensions exceed the FP16 runner's indexing limits")
+    if p.norm_eps != 1e-5:
+        raise ValueError("This C runner uses a fixed RMSNorm epsilon of 1e-5")
+
+    shared = torch.equal(model.tok_embeddings.weight, model.output.weight)
+    signed_vocab = vocab if shared else -vocab
+    config = struct.pack("<7i", d, h, layers, heads, kh, signed_vocab, seq)
+    header = b"L2FP16\0\0" + struct.pack("<I", 1) + config + bytes(24)
+    # This order is deliberately different from the INT8 version-2 format.
+    tensors = [
+        model.tok_embeddings.weight,
+        *[layer.attention_norm.weight for layer in model.layers],
+        *[layer.attention.wq.weight for layer in model.layers],
+        *[layer.attention.wk.weight for layer in model.layers],
+        *[layer.attention.wv.weight for layer in model.layers],
+        *[layer.attention.wo.weight for layer in model.layers],
+        *[layer.ffn_norm.weight for layer in model.layers],
+        *[layer.feed_forward.w1.weight for layer in model.layers],
+        *[layer.feed_forward.w2.weight for layer in model.layers],
+        *[layer.feed_forward.w3.weight for layer in model.layers],
+        model.norm.weight,
+        model.freqs_cos[:p.max_seq_len],
+        model.freqs_sin[:p.max_seq_len],
+    ]
+    if not shared:
+        tensors.append(model.output.weight)
+    kv_dim = d*kh//heads
+    count = v*d + 2*layers*d + 2*layers*d*d + 2*layers*d*kv_dim + 3*layers*d*h + d + seq*(d//heads)
+    if not shared:
+        count += v*d
+    if sum(t.numel() for t in tensors) != count:
+        raise ValueError("Model tensors do not match the FP16 checkpoint layout")
+
+    destination = Path(filepath)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=destination.name + ".", dir=destination.parent)
+    try:
+        with os.fdopen(descriptor, "wb") as output:
+            output.write(header)
+            for tensor in tensors:
+                serialize_fp16(output, tensor)
+        os.replace(temporary, destination)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+    print(f"wrote {destination}: {64 + 2*count} bytes (FP16 weights)")
 
 # -----------------------------------------------------------------------------
 # new version
@@ -364,6 +436,12 @@ def load_checkpoint(checkpoint):
     for k,v in list(state_dict.items()):
         if k.startswith(unwanted_prefix):
             state_dict[k[len(unwanted_prefix):]] = state_dict.pop(k)
+    # Transformer defaults to tied embeddings. Preserve an untied classifier
+    # when the checkpoint contains different embedding and output weights.
+    embedding = state_dict.get("tok_embeddings.weight")
+    classifier = state_dict.get("output.weight")
+    if embedding is not None and classifier is not None and not torch.equal(embedding, classifier):
+        model.output.weight = nn.Parameter(model.output.weight.detach().clone())
     model.load_state_dict(state_dict, strict=False)
     model.eval()
     return model
@@ -489,21 +567,25 @@ def load_hf_model(model_path):
 # -----------------------------------------------------------------------------
 # API entrypoint
 
-def model_export(model, filepath, version, dtype=torch.float32):
-    """
-    Versions docs:
-    v-1:huggingface export, i.e. intended for use outside of this repo, in HF
-    v0: legacy llama2.c float format, DEPRECATED
-    v1: float32 export
-    v2: int8 quantized Q8_0 export, similar to llama.cpp, in groups
-    # TODO: add dtype export support for other versions (?)
-    """
-    if version == 0:
-        legacy_export(model, filepath)
-    elif version == 1:
-        version1_export(model, filepath)
-    elif version == 2:
-        version2_export(model, filepath)
+def model_export(model, filepath, version, dtype=None):
+    """v0/v1: FP32; v2: INT8; v3: L2FP16; v-1: Hugging Face."""
+    if dtype is None:
+        dtype = torch.float16 if version == 3 else torch.float32
+    if dtype not in (torch.float16, torch.float32):
+        raise ValueError("dtype must be torch.float16 or torch.float32")
+    if version == 3:
+        if dtype != torch.float16:
+            raise ValueError("--version 3 requires --dtype fp16 (or omit --dtype)")
+        fp16_export(model, filepath)
+    elif version in (0, 1, 2):
+        if dtype != torch.float32:
+            raise ValueError("Use --version 3 for FP16; versions 0/1/2 do not support --dtype fp16")
+        if version == 0:
+            legacy_export(model, filepath)
+        elif version == 1:
+            version1_export(model, filepath)
+        else:
+            version2_export(model, filepath)
     elif version == -1:
         hf_export(model, filepath, dtype)
     else:
@@ -544,14 +626,16 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("filepath", type=str, help="the output filepath")
-    parser.add_argument("--version", default=0, type=int, help="the version to export with")
-    parser.add_argument("--dtype", type=str, help="dtype of the model (fp16, fp32)", default="fp32")
+    parser.add_argument("--version", default=0, type=int, choices=[-1, 0, 1, 2, 3],
+                        help="0/1: FP32, 2: INT8, 3: FP16 for C, -1: Hugging Face")
+    parser.add_argument("--dtype", choices=["fp16", "fp32"], default=None,
+                        help="Defaults to fp16 for version 3, fp32 otherwise")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--checkpoint", type=str, help="model checkpoint, .pt file")
     group.add_argument("--meta-llama", type=str, help="meta llama model path")
     group.add_argument("--hf", type=str, help="huggingface model path")
     args = parser.parse_args()
-    dtype = {"fp16": torch.float16, "fp32": torch.float32}[args.dtype]
+    dtype = None if args.dtype is None else {"fp16": torch.float16, "fp32": torch.float32}[args.dtype]
 
     if args.checkpoint:
         model = load_checkpoint(args.checkpoint)
@@ -564,4 +648,4 @@ if __name__ == "__main__":
         parser.error("Can't load input model!")
 
     # export
-    model_export(model, args.filepath, args.version, args.dtype)
+    model_export(model, args.filepath, args.version, dtype)
