@@ -2,6 +2,7 @@ services:
   bench:
     build: . # build the image from the Dockerfile in the current directory
     image: tinyllm-bench:1.0
+    platform: linux/arm64 # must match the Dockerfile's FROM --platform
     cpus: 8
     cpuset: "0-7"
     mem_limit: 4g

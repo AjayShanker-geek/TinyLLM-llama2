@@ -36,7 +36,7 @@ target_compile_options(no_optimization
     INTERFACE
         # $<$<CONFIG:Debug>:-O0>
         # $<$<CONFIG:Debug>:-g>
-        -O0 # Disable compiler optimizations
+        -O2 # Disable compiler optimizations
         -fno-tree-vectorize # Disable vectorization
         -Wall
         -Wextra
@@ -45,7 +45,7 @@ target_compile_options(no_optimization
 
 target_compile_options(simd_optimisation
     INTERFACE
-        -O0 # Disable compiler optimizations, same as the baseline
+        -O2 # Disable compiler optimizations, same as the baseline
         -march=${SIMD_ARCH} # Enable architecture-specific optimizations
         -fno-tree-vectorize # No auto-vectorization: only the hand-written NEON is SIMD
         -Wall
@@ -55,7 +55,7 @@ target_compile_options(simd_optimisation
 
 target_compile_options(openmp_optimisation
     INTERFACE
-        -O0 # Enable compiler optimizations
+        -O2 # Enable compiler optimizations
         -fno-tree-vectorize # Disable vectorization
         -fopenmp # Enable OpenMP support
         -march=${SIMD_ARCH} # Enable architecture-specific optimizations
@@ -102,7 +102,7 @@ target_include_directories(run_fp16_baseline PRIVATE include)
 target_link_libraries(run_fp16_baseline PRIVATE no_optimization)
 
 if(NOT WIN32)
-    target_link_libraries(run_fp16_baseline PRIVATE m)
+  target_link_libraries(run_fp16_baseline PRIVATE m)
 endif()
 
 

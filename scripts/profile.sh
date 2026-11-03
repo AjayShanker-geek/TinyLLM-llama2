@@ -8,8 +8,13 @@
 # Settings are environment variables (see SETTINGS below), e.g.
 #   docker compose run --rm -e RUNS=10 -e LABEL=nowait bench bash scripts/profile.sh
 #
+# Prompts: one per line in PROMPTS_FILE (default data/prompts.txt; blank lines and # comments
+# skipped). Timing and the thread sweep run every prompt RUNS times; the single-run profilers
+# (time -v, perf, gprof, valgrind) use only the first prompt. With a fixed -n every prompt does
+# the same number of forward() calls, so prompts vary the text, not the amount of work.
+#
 # What it does, for each binary:
-#   1. timing        1 warm-up + RUNS runs: wall time and the binary's own tok/s
+#   1. timing        1 warm-up, then RUNS runs of every prompt: wall time and the binary's own tok/s
 #   2. time -v       peak memory (max RSS), CPU %, page faults, context switches
 #   3. perf stat     task clock, context switches, hardware counters if the machine has them
 #   4. perf record   % of time spent in each function (all threads)
@@ -25,14 +30,17 @@
 #   results.csv     every measurement of this run, one row each
 #   perplexity.csv  one row per binary: tokens, mean NLL, perplexity (accuracy, separate from speed)
 #   system.txt      CPU, limits, compiler and settings of this run
-#   <binary>/       raw tool output: runs/run_01.txt, gprof.txt, perf.data, perplexity.txt, ...
+#   prompts.tsv     prompt id (p01, p02, ...) and the prompt text used
+#   <binary>/       raw tool output: runs/p01_run_01.txt, output.txt (run 1 of every prompt),
+#                   gprof.txt, perf.data, perplexity.txt, ...
 # Every run's rows are also appended to logs/profile/all_results.csv and all_perplexity.csv.
 #
 # CSV columns:
 #   run_id   timestamp of this profile run      label    LABEL setting (free text)
 #   arch     aarch64 / x86_64                   binary   e.g. run_fp32_openmp
 #   tool     timing, time, perf_stat, ...       metric   e.g. wall_s, max_rss_kb, self_pct
-#   item     function name (empty if n/a)       threads  OMP_NUM_THREADS used (1 if not OpenMP)
+#   item     function name, or prompt id (p01..) for timing/thread_sweep rows (empty if n/a)
+#   threads  OMP_NUM_THREADS used (1 if not OpenMP)
 #   repeat   1..RUNS for timing rows            value    the number
 #   unit     s, %, kB, count, ...
 #
@@ -53,11 +61,12 @@ cd "$ROOT"
 
 # SETTINGS (override with -e NAME=value)
 LABEL="${LABEL:-}"                     # tag for this run, e.g. the code version measured
-RUNS="${RUNS:-5}"                      # measured repeats per timing (after 1 warm-up)
+RUNS="${RUNS:-5}"                      # measured repeats per prompt (after 1 warm-up)
 STEPS="${STEPS:-128}"                  # tokens per run (-n)
 VALGRIND_STEPS="${VALGRIND_STEPS:-16}" # tokens for valgrind runs (~50x slower)
 THREADS_SWEEP="${THREADS_SWEEP:-1,2,4,8}"
-PROMPT="${PROMPT:-Once upon a time}"
+PROMPTS_FILE="${PROMPTS_FILE:-data/prompts.txt}" # one prompt per line
+PROMPT="${PROMPT:-Once upon a time}"             # used only if PROMPTS_FILE is missing or empty
 SEED="${SEED:-42}"
 TOP_N="${TOP_N:-15}" # functions kept per profiler in the CSV
 
@@ -69,7 +78,7 @@ TOKENIZER="${TOKENIZER:-models/tokenizer.bin}"
 PPL="${PPL:-1}"                       # 1 = run the perplexity step, 0 = skip it
 PPL_TEXT="${PPL_TEXT:-data/eval.txt}" # same text for every binary, so PPLs are comparable
 
-# ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp32_simd run_fp32_openmp)
+# ALL_BINARIES=(run_fp32_simd)
 ALL_BINARIES=(run_int8_baseline run_fp16_baseline run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd)
 
 # Fixed simulated cache for cachegrind: 32 KiB L1 I/D, 8 MiB last level
@@ -126,11 +135,33 @@ threads_for() {
   esac
 }
 
+# Fill PROMPTS from PROMPTS_FILE: blank lines and # comments skipped, Windows CRLF endings ok.
+# Falls back to the single PROMPT setting if the file is missing or has no prompts.
+load_prompts() {
+  local line
+  PROMPTS=()
+  if [[ -f "$PROMPTS_FILE" ]]; then
+    while IFS= read -r line || [[ -n "$line" ]]; do # `|| -n` keeps a last line without \n
+      line="${line%$'\r'}"
+      if [[ -z "${line//[[:space:]]/}" || "$line" == \#* ]]; then continue; fi
+      PROMPTS+=("$line")
+    done <"$PROMPTS_FILE"
+  fi
+  if ((${#PROMPTS[@]} == 0)); then
+    echo "No prompts in '$PROMPTS_FILE': using PROMPT=\"$PROMPT\"" >&2
+    PROMPTS=("$PROMPT")
+  fi
+  PROMPT="${PROMPTS[0]}" # the single-run steps (time -v, perf, gprof, valgrind) use the first prompt
+}
+
+prompt_id() { printf 'p%02d' "$(($1 + 1))"; } # PROMPTS index 0 -> p01
+
 # Command-line arguments for a binary, one per line (read with mapfile)
+# args_for <binary> <steps> [prompt]   (prompt defaults to the first one)
 args_for() {
-  local bin="$1" steps="$2"
+  local bin="$1" steps="$2" prompt="${3:-$PROMPT}"
   printf '%s\n' "$ROOT/$(model_for "$bin")" -z "$ROOT/$TOKENIZER" \
-    -t 0 -s "$SEED" -n "$steps" -i "$PROMPT"
+    -t 0 -s "$SEED" -n "$steps" -i "$prompt"
 }
 
 # Check that the model and tokenizer files exist for each binary. If any are missing, print an error and return
@@ -189,7 +220,8 @@ system_info() {
     echo "# OpenMP env"
     env | grep -E '^OMP_' || true
     echo "# settings"
-    echo "LABEL=$LABEL STEPS=$STEPS VALGRIND_STEPS=$VALGRIND_STEPS RUNS=$RUNS SEED=$SEED PROMPT=$PROMPT"
+    echo "LABEL=$LABEL STEPS=$STEPS VALGRIND_STEPS=$VALGRIND_STEPS RUNS=$RUNS SEED=$SEED"
+    echo "PROMPTS_FILE=$PROMPTS_FILE (${#PROMPTS[@]} prompts, see prompts.tsv; first: $PROMPT)"
     echo "PPL=$PPL PPL_TEXT=$PPL_TEXT"
   } >"$LOG_ROOT/system.txt"
 }
@@ -360,38 +392,46 @@ parse_massif() { # peak heap; the mmap-ed model weights are not heap, so not inc
   ' "$1"
 }
 
-# STEPS (each uses the globals NAME, BIN, OUT, ARGS, VG_ARGS set in MAIN)
+# STEPS (each uses the globals NAME, BIN, OUT, ARGS, VG_ARGS, PROMPTS set in MAIN)
 
-# timed_run <threads> <output file>: run the binary once; sets WALL (s) and TOK (tok/s)
+# timed_run <threads> <output file> <binary args...>: run the binary once; sets WALL (s) and TOK (tok/s)
 timed_run() {
   local threads="$1" logf="$2" start end
+  shift 2
   start="$(date +%s.%N)"
-  OMP_NUM_THREADS="$threads" "$BIN" "${ARGS[@]}" >"$logf" 2>&1 || return 1
+  OMP_NUM_THREADS="$threads" "$BIN" "$@" >"$logf" 2>&1 || return 1
   end="$(date +%s.%N)"
   WALL="$(awk -v s="$start" -v e="$end" 'BEGIN { printf "%.6f", e - s }')"
   TOK="$(parse_tok_s "$logf")"
 }
 
-# run_repeats <tool> <threads> <file prefix>: 1 warm-up + RUNS measured runs
-# CSV: wall_s, tok_s and bandwidth per repeat. Files: runs/<prefix>warmup.txt, runs/<prefix>run_NN.txt
+# run_repeats <tool> <threads> <file prefix>: 1 warm-up (first prompt), then RUNS runs of every prompt
+# CSV: wall_s, tok_s and bandwidth per run, item = prompt id (p01 = first prompt)
+# Files: runs/<prefix>warmup.txt, runs/<prefix>p01_run_01.txt, runs/<prefix>p01_run_02.txt, ...
 # bandwidth ~= model_bytes * tok/s: every weight is read once per token (KV cache and
 # activations are small next to the weights, so this is an estimate)
 run_repeats() {
-  local tool="$1" threads="$2" prefix="$3" r logf model_bytes bw
+  local tool="$1" threads="$2" prefix="$3" i r pid logf model_bytes bw
+  local -a pargs
   model_bytes="$(stat -c %s "$(model_for "$NAME")")"
   mkdir -p "$OUT/runs"
-  timed_run "$threads" "$OUT/runs/${prefix}warmup.txt" || return 1
-  for ((r = 1; r <= RUNS; r++)); do
-    logf="$OUT/runs/${prefix}run_$(printf '%02d' "$r").txt"
-    timed_run "$threads" "$logf" || return 1
-    bw=""
-    if [[ -n "$TOK" ]]; then
-      bw="$(awk -v b="$model_bytes" -v t="$TOK" 'BEGIN { printf "%.4f", b * t / 1e9 }')"
-    fi
-    csv_row "$tool" wall_s "" "$threads" "$r" "$WALL" s
-    csv_row "$tool" tok_s "" "$threads" "$r" "$TOK" tok/s
-    csv_row "$tool" bandwidth "" "$threads" "$r" "$bw" GB/s
-    printf '  threads=%s run %d: %s s, %s tok/s, %s GB/s\n' "$threads" "$r" "$WALL" "${TOK:-?}" "${bw:-?}"
+  timed_run "$threads" "$OUT/runs/${prefix}warmup.txt" "${ARGS[@]}" || return 1
+  for ((i = 0; i < ${#PROMPTS[@]}; i++)); do
+    pid="$(prompt_id "$i")"
+    mapfile -t pargs < <(args_for "$NAME" "$STEPS" "${PROMPTS[i]}")
+    for ((r = 1; r <= RUNS; r++)); do
+      logf="$OUT/runs/${prefix}${pid}_run_$(printf '%02d' "$r").txt"
+      timed_run "$threads" "$logf" "${pargs[@]}" || return 1
+      bw=""
+      if [[ -n "$TOK" ]]; then
+        bw="$(awk -v b="$model_bytes" -v t="$TOK" 'BEGIN { printf "%.4f", b * t / 1e9 }')"
+      fi
+      csv_row "$tool" wall_s "$pid" "$threads" "$r" "$WALL" s
+      csv_row "$tool" tok_s "$pid" "$threads" "$r" "$TOK" tok/s
+      csv_row "$tool" bandwidth "$pid" "$threads" "$r" "$bw" GB/s
+      printf '  threads=%s %s run %d: %s s, %s tok/s, %s GB/s\n' \
+        "$threads" "$pid" "$r" "$WALL" "${TOK:-?}" "${bw:-?}"
+    done
   done
 }
 
@@ -404,16 +444,31 @@ run_meta() {
   csv_row meta valgrind_steps "" "$threads" "" "$VALGRIND_STEPS" tokens
   csv_row meta runs "" "$threads" "" "$RUNS" count
   csv_row meta seed "" "$threads" "" "$SEED" ""
+  csv_row meta prompts "$PROMPTS_FILE" "$threads" "" "${#PROMPTS[@]}" count
   csv_row meta model_bytes "$(basename "$model")" "$threads" "" "$(stat -c %s "$model")" B
 }
 
-# CSV tool=timing. Files: runs/, output.txt (the generated text of run 1)
-run_timing() {
-  run_repeats timing "$(threads_for "$NAME")" "" &&
-    cp "$OUT/runs/run_01.txt" "$OUT/output.txt"
+# prompts.tsv in the run folder: "p01<TAB>prompt text", so CSV prompt ids can be looked up
+write_prompts_tsv() {
+  local i
+  for ((i = 0; i < ${#PROMPTS[@]}; i++)); do
+    printf '%s\t%s\n' "$(prompt_id "$i")" "${PROMPTS[i]}"
+  done >"$LOG_ROOT/prompts.tsv"
 }
 
-# CSV tool=thread_sweep: timing for each thread count. Files: runs/sweep_t<N>_*
+# CSV tool=timing. Files: runs/, output.txt (the generated text of run 1 of every prompt)
+run_timing() {
+  local i pid
+  run_repeats timing "$(threads_for "$NAME")" "" || return 1
+  for ((i = 0; i < ${#PROMPTS[@]}; i++)); do
+    pid="$(prompt_id "$i")"
+    printf '=== %s: %s\n' "$pid" "${PROMPTS[i]}"
+    cat "$OUT/runs/${pid}_run_01.txt"
+    echo
+  done >"$OUT/output.txt"
+}
+
+# CSV tool=thread_sweep: timing for each thread count. Files: runs/sweep_t<N>_p01_run_01.txt, ...
 run_thread_sweep() {
   local t list
   IFS=',' read -ra list <<<"$THREADS_SWEEP"
@@ -514,11 +569,13 @@ run_perplexity() {
 ##################################################################################
 # MAIN
 ##################################################################################
+load_prompts
 check_inputs
 build
 mkdir -p "$LOG_ROOT"
 echo "$CSV_HEADER" >"$RESULTS_CSV"
 system_info
+write_prompts_tsv
 
 for NAME in "${BINARIES[@]}"; do
   BIN="$BUILD_DIR/$NAME"

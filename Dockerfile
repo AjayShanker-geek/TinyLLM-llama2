@@ -1,5 +1,7 @@
 # Benchmark/profiling environment. Models are mounted from ./models, not exported here.
-FROM ubuntu:24.04
+# Pinned to ARM64 (aarch64) so every machine builds and runs the same architecture.
+# On an x86-64 host this runs under QEMU emulation: results are slow and not comparable.
+FROM --platform=linux/arm64 ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
