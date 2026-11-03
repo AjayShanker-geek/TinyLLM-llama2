@@ -8,14 +8,19 @@ cd "$ROOT"
 # Run the binaries
 echo "Running the binaries..."
 
-./build/run_fp32_baseline || {
+echo "Running run_fp32_baseline with input 'Once upon a time'..."
+./build/run_fp32_baseline models/stories110M.bin \
+  -z models/tokenizer.bin \
+  -t 0 \
+  -n 128 \
+  -i "Once upon a time" || {
   echo "run_fp32_baseline failed"
   exit 1
 }
 
 sleep 2
 
-echo "Running run_int8_baseline with input 'Once upon a time'..."s
+echo "Running run_int8_baseline with input 'Once upon a time'..."
 ./build/run_int8_baseline models/stories110M_int8.bin \
   -z models/tokenizer.bin \
   -t 0 \
@@ -29,24 +34,34 @@ sleep 2
 
 echo "Running run_fp16_baseline with input 'Once upon a time'..."
 ./build/run_fp16_baseline models/stories110M_fp16.bin \
-    -z models/tokenizer.bin \
-    -t 0 \
-    -n 128 \
-    -i "Once upon a time" || {
-    echo "run_fp16_baseline failed"
-    exit 1
+  -z models/tokenizer.bin \
+  -t 0 \
+  -n 128 \
+  -i "Once upon a time" || {
+  echo "run_fp16_baseline failed"
+  exit 1
 }
 
 sleep 2
 
-./build/run_fp32_simd || {
+echo "Running run_fp32_simd with input 'Once upon a time'..."
+./build/run_fp32_simd models/stories110M.bin \
+  -z models/tokenizer.bin \
+  -t 0 \
+  -n 128 \
+  -i "Once upon a time" || {
   echo "run_fp32_simd failed"
   exit 1
 }
 
 sleep 2
 
-./build/run_fp32_openmp ./models/stories110M.bin -i "Once upon a time" -z ./models/tokenizer.bin -t 0 || {
+echo "Running run_fp32_openmp with input 'Once upon a time'..."
+./build/run_fp32_openmp models/stories110M.bin \
+  -z models/tokenizer.bin \
+  -t 0 \
+  -n 128 \
+  -i "Once upon a time" || {
   echo "run_fp32_openmp failed"
   exit 1
 }
