@@ -79,10 +79,10 @@ target_compile_options(openmp_simd_aggressive_optimisation
 # Build for FP32 baseline binary
 add_executable(run_fp32_baseline
     include/run_fp32_baseline.h
-#    include/tokenizer.h
+    include/tokenizer.h
     include/perplexity.h    
     src/run_fp32_baseline.c
-#    src/tokenizer.c
+    src/tokenizer.c
     src/perplexity.c    
 )
 
