@@ -79,13 +79,16 @@ target_compile_options(openmp_simd_aggressive_optimisation
 # Build for FP32 baseline binary
 add_executable(run_fp32_baseline
     include/run_fp32_baseline.h
+#    include/tokenizer.h
+    include/perplexity.h    
     src/run_fp32_baseline.c
+#    src/tokenizer.c
+    src/perplexity.c    
 )
 
-target_link_libraries(run_fp32_baseline
-    PRIVATE
-        no_optimization
-)
+target_include_directories(run_fp32_baseline PRIVATE include)
+
+target_link_libraries(run_fp32_baseline PRIVATE no_optimization)
 
 # Build for FP16 binary
 add_executable(run_fp16_baseline
@@ -101,10 +104,6 @@ target_include_directories(run_fp16_baseline PRIVATE include)
 
 target_link_libraries(run_fp16_baseline PRIVATE no_optimization)
 
-if(NOT WIN32)
-  target_link_libraries(run_fp16_baseline PRIVATE m)
-endif()
-
 
 # Build for INT8 binary
 add_executable(run_int8_baseline
@@ -115,10 +114,6 @@ add_executable(run_int8_baseline
     src/tokenizer.c
     src/perplexity.c
 )
-
-if(NOT WIN32)
-  target_link_libraries(run_int8_baseline PRIVATE m)
-endif()
 
 target_link_libraries(run_int8_baseline
     PRIVATE
