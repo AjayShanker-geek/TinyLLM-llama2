@@ -921,8 +921,6 @@ int main(int argc, char *argv[]) {
     unsigned long long rng_seed = 0; // seed rng with time by default
     char *mode = "generate";    // generate|chat
     char *system_prompt = NULL; // the (optional) system prompt to use in chat mode
-
-    printf("Running FP32 baseline model for inference...\n");
     
     // poor man's C argparse so we can override the defaults above from the command line
     if (argc >= 2) { checkpoint_path = argv[1]; } else { error_usage(); }
@@ -979,13 +977,3 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 #endif
-
-
-
-//int main(int argc, char *argv[])
-//{
-//
-//  printf("Running FP32 baseline model for inference...\n");
-//
-//  return 0;
-//}
