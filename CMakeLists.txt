@@ -201,6 +201,24 @@ target_link_libraries(run_fp32_openmp_simd
         openmp_simd_aggressive_optimisation
 )
 
+# Build for OpenMP + NEON SIMD binary (4-row NEON kernel inside OpenMP threads)
+add_executable(run_fp32_openmp_neon
+    include/run_fp32_openmp_neon.h
+    include/tokenizer.h
+    include/util.h
+    include/sampler.h
+    include/perplexity.h
+    src/run_fp32_openmp_neon.c
+    src/tokenizer.c
+    src/util.c
+    src/perplexity.c
+)
+
+target_link_libraries(run_fp32_openmp_neon
+    PRIVATE
+        openmp_optimisation
+)
+
 foreach(lib no_optimization simd_optimisation openmp_optimisation openmp_simd_aggressive_optimisation)
   # Debug symbols so perf/valgrind can show function names and lines
   target_compile_options(${lib} INTERFACE -g)

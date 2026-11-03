@@ -79,7 +79,7 @@ PPL="${PPL:-1}"                       # 1 = run the perplexity step, 0 = skip it
 PPL_TEXT="${PPL_TEXT:-data/eval.txt}" # same text for every binary, so PPLs are comparable
 
 # ALL_BINARIES=(run_fp32_simd)
-ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp16_baseline run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd)
+ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp16_baseline run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd run_fp32_openmp_neon)
 
 # Fixed simulated cache for cachegrind: 32 KiB L1 I/D, 8 MiB last level
 CACHEGRIND_CACHE=(--I1=32768,8,64 --D1=32768,8,64 --LL=8388608,16,64)
@@ -604,7 +604,7 @@ for NAME in "${BINARIES[@]}"; do
     step "$NAME: callgrind" run_callgrind
     step "$NAME: cachegrind" run_cachegrind
     ;;
-  run_fp32_openmp | run_fp32_openmp_simd)
+  run_fp32_openmp | run_fp32_openmp_simd | run_fp32_openmp_neon)
     # gprof only sees the main thread, and valgrind runs threads one at a time,
     # so neither says much about a multi-threaded build
     step "$NAME: thread sweep" run_thread_sweep
