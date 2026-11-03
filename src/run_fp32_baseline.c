@@ -3,12 +3,9 @@
  * @brief This file contains the implementation of the baseline FP32 model for inference.
  * @author TODO: Update author name
  **/
-
+#define _POSIX_C_SOURCE 200809L
 
 #include "run_fp32_baseline.h"
-
-
-#define _POSIX_C_SOURCE 200809L
 
 #include <stdio.h>
 #include <stdint.h>
