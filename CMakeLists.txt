@@ -80,10 +80,10 @@ target_compile_options(openmp_simd_aggressive_optimisation
 add_executable(run_fp32_baseline
     include/run_fp32_baseline.h
     include/tokenizer.h
-    include/perplexity.h    
+    include/perplexity.h
     src/run_fp32_baseline.c
     src/tokenizer.c
-    src/perplexity.c    
+    src/perplexity.c
 )
 
 target_include_directories(run_fp32_baseline PRIVATE include)
@@ -103,6 +103,18 @@ add_executable(run_fp16_baseline
 target_include_directories(run_fp16_baseline PRIVATE include)
 
 target_link_libraries(run_fp16_baseline PRIVATE no_optimization)
+
+# Build for FP16 binary using the _Float16 type (hardware FP16->FP32 conversion on ARM64)
+add_executable(run_fp16_baseline_native
+    include/run_fp16_baseline_native.h
+    include/tokenizer.h
+    include/perplexity.h
+    src/run_fp16_baseline_native.c
+    src/tokenizer.c
+    src/perplexity.c
+)
+
+target_link_libraries(run_fp16_baseline_native PRIVATE no_optimization)
 
 
 # Build for INT8 binary
