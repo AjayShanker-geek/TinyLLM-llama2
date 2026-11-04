@@ -1,0 +1,901 @@
+binary,threads,prompt_id,repeat,bandwidth,tok_s,wall_s,precision,method
+run_fp32_baseline,1,p01,1,7.6761,17.509996,7.39722,FP32,baseline
+run_fp32_baseline,1,p01,2,7.7693,17.722579,7.310686,FP32,baseline
+run_fp32_baseline,1,p01,3,7.6655,17.485887,7.405908,FP32,baseline
+run_fp32_baseline,1,p01,4,7.4932,17.092867,7.573787,FP32,baseline
+run_fp32_baseline,1,p01,5,7.4801,17.063012,7.586741,FP32,baseline
+run_fp32_baseline,1,p02,1,7.6319,17.409184,7.450608,FP32,baseline
+run_fp32_baseline,1,p02,2,7.5717,17.271862,7.495292,FP32,baseline
+run_fp32_baseline,1,p02,3,7.4892,17.08367,7.587446,FP32,baseline
+run_fp32_baseline,1,p02,4,7.5276,17.171444,7.551818,FP32,baseline
+run_fp32_baseline,1,p02,5,7.5892,17.311887,7.481072,FP32,baseline
+run_fp32_baseline,1,p03,1,7.4681,17.035547,7.598413,FP32,baseline
+run_fp32_baseline,1,p03,2,7.5717,17.271862,7.500566,FP32,baseline
+run_fp32_baseline,1,p03,3,7.6141,17.368709,7.458003,FP32,baseline
+run_fp32_baseline,1,p03,4,7.5717,17.271862,7.496121,FP32,baseline
+run_fp32_baseline,1,p03,5,7.3246,16.708328,7.743845,FP32,baseline
+run_fp32_baseline,1,p04,1,7.4912,17.088267,7.588435,FP32,baseline
+run_fp32_baseline,1,p04,2,7.5226,17.159843,7.54485,FP32,baseline
+run_fp32_baseline,1,p04,3,7.5624,17.250747,7.50562,FP32,baseline
+run_fp32_baseline,1,p04,4,7.5094,17.129755,7.556158,FP32,baseline
+run_fp32_baseline,1,p04,5,7.4461,16.985422,7.633122,FP32,baseline
+run_fp32_baseline,1,p05,1,7.3439,16.752407,7.736934,FP32,baseline
+run_fp32_baseline,1,p05,2,7.3517,16.770104,7.727446,FP32,baseline
+run_fp32_baseline,1,p05,3,7.4551,17.005892,7.619494,FP32,baseline
+run_fp32_baseline,1,p05,4,7.5338,17.185386,7.542513,FP32,baseline
+run_fp32_baseline,1,p05,5,7.4993,17.106681,7.56783,FP32,baseline
+run_fp32_baseline,1,p06,1,7.5348,17.187711,7.533382,FP32,baseline
+run_fp32_baseline,1,p06,2,7.5409,17.20168,7.526365,FP32,baseline
+run_fp32_baseline,1,p06,3,7.5429,17.206341,7.531501,FP32,baseline
+run_fp32_baseline,1,p06,4,7.5256,17.166802,7.540634,FP32,baseline
+run_fp32_baseline,1,p06,5,7.5307,17.178412,7.537568,FP32,baseline
+run_fp32_baseline,1,p07,1,7.5399,17.19935,7.542248,FP32,baseline
+run_fp32_baseline,1,p07,2,7.5593,17.24372,7.509657,FP32,baseline
+run_fp32_baseline,1,p07,3,7.5185,17.150574,7.54788,FP32,baseline
+run_fp32_baseline,1,p07,4,7.611,17.361586,7.458945,FP32,baseline
+run_fp32_baseline,1,p07,5,7.4581,17.012726,7.606738,FP32,baseline
+run_fp32_baseline,1,p08,1,7.5368,17.192365,7.528787,FP32,baseline
+run_fp32_baseline,1,p08,2,7.5675,17.262471,7.498642,FP32,baseline
+run_fp32_baseline,1,p08,3,7.5717,17.271862,7.507704,FP32,baseline
+run_fp32_baseline,1,p08,4,7.5297,17.176089,7.535442,FP32,baseline
+run_fp32_baseline,1,p08,5,7.5655,17.25778,7.503906,FP32,baseline
+run_fp32_baseline,1,p09,1,7.6037,17.344988,7.467005,FP32,baseline
+run_fp32_baseline,1,p09,2,7.5023,17.113597,7.571543,FP32,baseline
+run_fp32_baseline,1,p09,3,7.5155,17.143629,7.550037,FP32,baseline
+run_fp32_baseline,1,p09,4,7.6016,17.340251,7.470598,FP32,baseline
+run_fp32_baseline,1,p09,5,7.5491,17.220339,7.523503,FP32,baseline
+run_fp32_baseline,1,p10,1,7.5532,17.229684,7.516431,FP32,baseline
+run_fp32_baseline,1,p10,2,7.5084,17.127444,7.561124,FP32,baseline
+run_fp32_baseline,1,p10,3,7.6037,17.344988,7.466586,FP32,baseline
+run_fp32_baseline,1,p10,4,7.5256,17.166802,7.545208,FP32,baseline
+run_fp32_baseline,1,p10,5,7.5491,17.220339,7.518862,FP32,baseline
+run_fp32_baseline,1,p11,1,7.584,17.300095,7.488013,FP32,baseline
+run_fp32_baseline,1,p11,2,7.5501,17.222674,7.529886,FP32,baseline
+run_fp32_baseline,1,p11,3,7.5327,17.18306,7.538546,FP32,baseline
+run_fp32_baseline,1,p11,4,7.5511,17.22501,7.517209,FP32,baseline
+run_fp32_baseline,1,p11,5,7.5226,17.159843,7.548993,FP32,baseline
+run_fp32_baseline,1,p12,1,7.5307,17.178412,7.539735,FP32,baseline
+run_fp32_baseline,1,p12,2,7.5409,17.20168,7.530345,FP32,baseline
+run_fp32_baseline,1,p12,3,7.5892,17.311887,7.479303,FP32,baseline
+run_fp32_baseline,1,p12,4,7.5063,17.122826,7.566956,FP32,baseline
+run_fp32_baseline,1,p12,5,7.5409,17.20168,7.52645,FP32,baseline
+run_fp32_baseline,1,p13,1,7.5409,17.20168,7.526935,FP32,baseline
+run_fp32_baseline,1,p13,2,7.5882,17.309527,7.485001,FP32,baseline
+run_fp32_baseline,1,p13,3,7.5114,17.134377,7.555473,FP32,baseline
+run_fp32_baseline,1,p13,4,7.5307,17.178412,7.540565,FP32,baseline
+run_fp32_baseline,1,p13,5,7.5185,17.150574,7.554133,FP32,baseline
+run_fp32_baseline,1,p14,1,7.545,17.211004,7.526382,FP32,baseline
+run_fp32_baseline,1,p14,2,7.5348,17.187711,7.534114,FP32,baseline
+run_fp32_baseline,1,p14,3,7.545,17.211004,7.522252,FP32,baseline
+run_fp32_baseline,1,p14,4,7.5778,17.285967,7.493838,FP32,baseline
+run_fp32_baseline,1,p14,5,7.5532,17.229684,7.514185,FP32,baseline
+run_fp32_baseline,1,p15,1,7.5226,17.159843,7.544557,FP32,baseline
+run_fp32_baseline,1,p15,2,7.5758,17.281263,7.500011,FP32,baseline
+run_fp32_baseline,1,p15,3,7.5256,17.166802,7.540093,FP32,baseline
+run_fp32_baseline,1,p15,4,7.5338,17.185386,7.536367,FP32,baseline
+run_fp32_baseline,1,p15,5,7.5104,17.132065,7.557371,FP32,baseline
+run_fp32_baseline,1,p16,1,7.5748,17.278912,7.497551,FP32,baseline
+run_fp32_baseline,1,p16,2,7.5114,17.134377,7.556139,FP32,baseline
+run_fp32_baseline,1,p16,3,7.5297,17.176089,7.537557,FP32,baseline
+run_fp32_baseline,1,p16,4,7.5276,17.171444,7.541159,FP32,baseline
+run_fp32_baseline,1,p16,5,7.5003,17.108986,7.581591,FP32,baseline
+run_fp32_baseline,1,p17,1,7.5124,17.136689,7.554622,FP32,baseline
+run_fp32_baseline,1,p17,2,7.5104,17.132065,7.557322,FP32,baseline
+run_fp32_baseline,1,p17,3,7.546,17.213337,7.522966,FP32,baseline
+run_fp32_baseline,1,p17,4,7.5215,17.157525,7.549664,FP32,baseline
+run_fp32_baseline,1,p17,5,7.5104,17.132065,7.558772,FP32,baseline
+run_fp32_baseline,1,p18,1,7.5748,17.278912,7.49667,FP32,baseline
+run_fp32_baseline,1,p18,2,7.5175,17.148258,7.550736,FP32,baseline
+run_fp32_baseline,1,p18,3,7.4581,17.012726,7.61909,FP32,baseline
+run_fp32_baseline,1,p18,4,7.4993,17.106681,7.569422,FP32,baseline
+run_fp32_baseline,1,p18,5,7.5378,17.194693,7.531939,FP32,baseline
+run_fp32_baseline,1,p19,1,7.4821,17.067598,7.587384,FP32,baseline
+run_fp32_baseline,1,p19,2,7.5195,17.15289,7.551891,FP32,baseline
+run_fp32_baseline,1,p19,3,7.5573,17.239039,7.514464,FP32,baseline
+run_fp32_baseline,1,p19,4,7.5246,17.164482,7.551776,FP32,baseline
+run_fp32_baseline,1,p19,5,7.5246,17.164482,7.544381,FP32,baseline
+run_fp32_baseline,1,p20,1,7.4952,17.097469,7.572756,FP32,baseline
+run_fp32_baseline,1,p20,2,7.5013,17.111291,7.571845,FP32,baseline
+run_fp32_baseline,1,p20,3,7.5175,17.148258,7.548188,FP32,baseline
+run_fp32_baseline,1,p20,4,7.5114,17.134377,7.560712,FP32,baseline
+run_fp32_baseline,1,p20,5,7.5717,17.271862,7.493756,FP32,baseline
+run_fp16_baseline,1,p01,1,2.6714,12.187742,10.580447,FP16,baseline (software decode)
+run_fp16_baseline,1,p01,2,2.683,12.240675,10.523684,FP16,baseline (software decode)
+run_fp16_baseline,1,p01,3,2.6801,12.227179,10.53476,FP16,baseline (software decode)
+run_fp16_baseline,1,p01,4,2.6819,12.235331,10.526966,FP16,baseline (software decode)
+run_fp16_baseline,1,p01,5,2.6805,12.228954,10.532876,FP16,baseline (software decode)
+run_fp16_baseline,1,p02,1,2.6822,12.236621,10.526251,FP16,baseline (software decode)
+run_fp16_baseline,1,p02,2,2.6755,12.206054,10.559686,FP16,baseline (software decode)
+run_fp16_baseline,1,p02,3,2.6818,12.235103,10.525851,FP16,baseline (software decode)
+run_fp16_baseline,1,p02,4,2.5558,11.660233,11.043643,FP16,baseline (software decode)
+run_fp16_baseline,1,p02,5,2.6753,12.205282,10.553583,FP16,baseline (software decode)
+run_fp16_baseline,1,p03,1,2.6658,12.161947,10.590614,FP16,baseline (software decode)
+run_fp16_baseline,1,p03,2,2.6774,12.215143,10.544551,FP16,baseline (software decode)
+run_fp16_baseline,1,p03,3,2.6806,12.22962,10.531846,FP16,baseline (software decode)
+run_fp16_baseline,1,p03,4,2.6784,12.219291,10.540678,FP16,baseline (software decode)
+run_fp16_baseline,1,p03,5,2.6832,12.241237,10.521296,FP16,baseline (software decode)
+run_fp16_baseline,1,p04,1,2.6813,12.232684,10.531097,FP16,baseline (software decode)
+run_fp16_baseline,1,p04,2,2.6737,12.198109,10.55867,FP16,baseline (software decode)
+run_fp16_baseline,1,p04,3,2.6828,12.239387,10.52409,FP16,baseline (software decode)
+run_fp16_baseline,1,p04,4,2.6816,12.233868,10.528692,FP16,baseline (software decode)
+run_fp16_baseline,1,p04,5,2.6797,12.225366,10.536142,FP16,baseline (software decode)
+run_fp16_baseline,1,p05,1,2.6811,12.231958,10.530537,FP16,baseline (software decode)
+run_fp16_baseline,1,p05,2,2.6738,12.198401,10.559032,FP16,baseline (software decode)
+run_fp16_baseline,1,p05,3,2.6815,12.233548,10.529755,FP16,baseline (software decode)
+run_fp16_baseline,1,p05,4,2.6809,12.23089,10.530859,FP16,baseline (software decode)
+run_fp16_baseline,1,p05,5,2.684,12.244841,10.519126,FP16,baseline (software decode)
+run_fp16_baseline,1,p06,1,2.683,12.240632,10.520122,FP16,baseline (software decode)
+run_fp16_baseline,1,p06,2,2.6773,12.214535,10.547594,FP16,baseline (software decode)
+run_fp16_baseline,1,p06,3,2.6771,12.21336,10.546952,FP16,baseline (software decode)
+run_fp16_baseline,1,p06,4,2.6855,12.251713,10.512669,FP16,baseline (software decode)
+run_fp16_baseline,1,p06,5,2.6828,12.239757,10.524092,FP16,baseline (software decode)
+run_fp16_baseline,1,p07,1,2.6821,12.236478,10.526594,FP16,baseline (software decode)
+run_fp16_baseline,1,p07,2,2.6871,12.259026,10.507047,FP16,baseline (software decode)
+run_fp16_baseline,1,p07,3,2.6831,12.240905,10.523278,FP16,baseline (software decode)
+run_fp16_baseline,1,p07,4,2.68,12.226682,10.534895,FP16,baseline (software decode)
+run_fp16_baseline,1,p07,5,2.6793,12.223745,10.535194,FP16,baseline (software decode)
+run_fp16_baseline,1,p08,1,2.6788,12.221259,10.538375,FP16,baseline (software decode)
+run_fp16_baseline,1,p08,2,2.6747,12.20269,10.556898,FP16,baseline (software decode)
+run_fp16_baseline,1,p08,3,2.6814,12.233258,10.534951,FP16,baseline (software decode)
+run_fp16_baseline,1,p08,4,2.6876,12.261545,10.504479,FP16,baseline (software decode)
+run_fp16_baseline,1,p08,5,2.6784,12.219601,10.540939,FP16,baseline (software decode)
+run_fp16_baseline,1,p09,1,2.6834,12.242199,10.520486,FP16,baseline (software decode)
+run_fp16_baseline,1,p09,2,2.6874,12.260329,10.504993,FP16,baseline (software decode)
+run_fp16_baseline,1,p09,3,2.6848,12.248802,10.514136,FP16,baseline (software decode)
+run_fp16_baseline,1,p09,4,2.6821,12.236319,10.526838,FP16,baseline (software decode)
+run_fp16_baseline,1,p09,5,2.6782,12.21856,10.540958,FP16,baseline (software decode)
+run_fp16_baseline,1,p10,1,2.6819,12.235665,10.530261,FP16,baseline (software decode)
+run_fp16_baseline,1,p10,2,2.6807,12.229932,10.532027,FP16,baseline (software decode)
+run_fp16_baseline,1,p10,3,2.6752,12.20501,10.552293,FP16,baseline (software decode)
+run_fp16_baseline,1,p10,4,2.6868,12.257666,10.507758,FP16,baseline (software decode)
+run_fp16_baseline,1,p10,5,2.6838,12.243908,10.518367,FP16,baseline (software decode)
+run_fp16_baseline,1,p11,1,2.6738,12.198552,10.558687,FP16,baseline (software decode)
+run_fp16_baseline,1,p11,2,2.6884,12.265122,10.500835,FP16,baseline (software decode)
+run_fp16_baseline,1,p11,3,2.6772,12.214231,10.544528,FP16,baseline (software decode)
+run_fp16_baseline,1,p11,4,2.679,12.222259,10.536412,FP16,baseline (software decode)
+run_fp16_baseline,1,p11,5,2.6787,12.220951,10.540787,FP16,baseline (software decode)
+run_fp16_baseline,1,p12,1,2.6833,12.241788,10.523006,FP16,baseline (software decode)
+run_fp16_baseline,1,p12,2,2.679,12.222178,10.53866,FP16,baseline (software decode)
+run_fp16_baseline,1,p12,3,2.678,12.217888,10.543036,FP16,baseline (software decode)
+run_fp16_baseline,1,p12,4,2.6867,12.257311,10.507671,FP16,baseline (software decode)
+run_fp16_baseline,1,p12,5,2.6822,12.236845,10.526492,FP16,baseline (software decode)
+run_fp16_baseline,1,p13,1,2.6837,12.243732,10.518417,FP16,baseline (software decode)
+run_fp16_baseline,1,p13,2,2.6744,12.201395,10.557236,FP16,baseline (software decode)
+run_fp16_baseline,1,p13,3,2.6786,12.220436,10.540622,FP16,baseline (software decode)
+run_fp16_baseline,1,p13,4,2.6828,12.239537,10.525501,FP16,baseline (software decode)
+run_fp16_baseline,1,p13,5,2.6855,12.251748,10.512598,FP16,baseline (software decode)
+run_fp16_baseline,1,p14,1,2.6848,12.248759,10.516741,FP16,baseline (software decode)
+run_fp16_baseline,1,p14,2,2.6853,12.250882,10.514684,FP16,baseline (software decode)
+run_fp16_baseline,1,p14,3,2.68,12.226723,10.534435,FP16,baseline (software decode)
+run_fp16_baseline,1,p14,4,2.6828,12.239724,10.524521,FP16,baseline (software decode)
+run_fp16_baseline,1,p14,5,2.6854,12.25151,10.514196,FP16,baseline (software decode)
+run_fp16_baseline,1,p15,1,2.6847,12.248064,10.516202,FP16,baseline (software decode)
+run_fp16_baseline,1,p15,2,2.6846,12.247803,10.516986,FP16,baseline (software decode)
+run_fp16_baseline,1,p15,3,2.681,12.231574,10.530153,FP16,baseline (software decode)
+run_fp16_baseline,1,p15,4,2.6806,12.229482,10.531035,FP16,baseline (software decode)
+run_fp16_baseline,1,p15,5,2.6837,12.243866,10.519908,FP16,baseline (software decode)
+run_fp16_baseline,1,p16,1,2.6864,12.255846,10.511569,FP16,baseline (software decode)
+run_fp16_baseline,1,p16,2,2.6827,12.2392,10.523987,FP16,baseline (software decode)
+run_fp16_baseline,1,p16,3,2.6818,12.234792,10.530294,FP16,baseline (software decode)
+run_fp16_baseline,1,p16,4,2.6876,12.261527,10.504557,FP16,baseline (software decode)
+run_fp16_baseline,1,p16,5,2.6794,12.223862,10.536598,FP16,baseline (software decode)
+run_fp16_baseline,1,p17,1,2.6802,12.227832,10.533795,FP16,baseline (software decode)
+run_fp16_baseline,1,p17,2,2.6838,12.244104,10.517226,FP16,baseline (software decode)
+run_fp16_baseline,1,p17,3,2.6835,12.242748,10.520711,FP16,baseline (software decode)
+run_fp16_baseline,1,p17,4,2.6841,12.245326,10.518455,FP16,baseline (software decode)
+run_fp16_baseline,1,p17,5,2.6834,12.242136,10.521935,FP16,baseline (software decode)
+run_fp16_baseline,1,p18,1,2.6804,12.228538,10.531825,FP16,baseline (software decode)
+run_fp16_baseline,1,p18,2,2.674,12.199361,10.560268,FP16,baseline (software decode)
+run_fp16_baseline,1,p18,3,2.6839,12.244445,10.519509,FP16,baseline (software decode)
+run_fp16_baseline,1,p18,4,2.6873,12.260053,10.503893,FP16,baseline (software decode)
+run_fp16_baseline,1,p18,5,2.6844,12.247019,10.518151,FP16,baseline (software decode)
+run_fp16_baseline,1,p19,1,2.6808,12.230455,10.53154,FP16,baseline (software decode)
+run_fp16_baseline,1,p19,2,2.6838,12.244259,10.518613,FP16,baseline (software decode)
+run_fp16_baseline,1,p19,3,2.6878,12.262586,10.506981,FP16,baseline (software decode)
+run_fp16_baseline,1,p19,4,2.6833,12.241902,10.522937,FP16,baseline (software decode)
+run_fp16_baseline,1,p19,5,2.6775,12.215417,10.544467,FP16,baseline (software decode)
+run_fp16_baseline,1,p20,1,2.6836,12.243366,10.522057,FP16,baseline (software decode)
+run_fp16_baseline,1,p20,2,2.6808,12.230364,10.531769,FP16,baseline (software decode)
+run_fp16_baseline,1,p20,3,2.6796,12.224877,10.537051,FP16,baseline (software decode)
+run_fp16_baseline,1,p20,4,2.688,12.263101,10.503751,FP16,baseline (software decode)
+run_fp16_baseline,1,p20,5,2.6837,12.243731,10.519493,FP16,baseline (software decode)
+run_fp16_baseline_native,1,p01,1,3.664,16.715918,7.722544,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p01,2,3.6579,16.688286,7.737559,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p01,3,3.6458,16.632853,7.761129,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p01,4,3.6606,16.700513,7.731396,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p01,5,3.6654,16.722484,7.718551,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p02,1,3.6584,16.690272,7.73392,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p02,2,3.6691,16.73921,7.711517,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p02,3,3.6761,16.771224,7.697136,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p02,4,3.6712,16.748964,7.708417,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p02,5,3.6642,16.716795,7.723547,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p03,1,3.6689,16.738161,7.711056,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p03,2,3.6473,16.639632,7.762247,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p03,3,3.6628,16.71056,7.723615,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p03,4,3.6623,16.708322,7.727453,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p03,5,3.6798,16.788065,7.690588,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p04,1,3.6614,16.704366,7.725523,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p04,2,3.6682,16.734999,7.712947,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p04,3,3.6631,16.711722,7.779803,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p04,4,3.6729,16.756589,7.703778,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p04,5,3.661,16.702428,7.729873,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p05,1,3.6748,16.765456,7.698334,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p05,2,3.667,16.729592,7.715667,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p05,3,3.6834,16.804331,7.696048,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p05,4,3.6632,16.712257,7.724271,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p05,5,3.6718,16.751581,7.704391,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p06,1,3.6756,16.768915,7.697536,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p06,2,3.6509,16.656097,7.749252,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p06,3,3.6586,16.691249,7.739024,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p06,4,3.6517,16.659893,7.747806,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p06,5,3.6768,16.774458,7.695162,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p07,1,3.6648,16.719451,7.719982,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p07,2,3.6623,16.708387,7.725092,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p07,3,3.6646,16.718812,7.719242,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p07,4,3.6724,16.754236,7.706831,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p07,5,3.6386,16.600101,7.775383,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p08,1,3.6646,16.718697,7.71995,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p08,2,3.6694,16.740823,7.710004,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p08,3,3.6738,16.760528,7.706929,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p08,4,3.654,16.670601,7.743044,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p08,5,3.6619,16.706516,7.725639,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p09,1,3.6759,16.770519,7.696144,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p09,2,3.6645,16.718236,7.721016,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p09,3,3.6505,16.654524,7.7525,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p09,4,3.6616,16.704856,7.726244,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p09,5,3.6791,16.784899,7.689639,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p10,1,3.6573,16.68556,7.734919,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p10,2,3.6606,16.700399,7.730633,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p10,3,3.6485,16.645253,7.754361,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p10,4,3.6665,16.727472,7.716231,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p10,5,3.6509,16.656044,7.749168,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p11,1,3.6393,16.603258,7.77622,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p11,2,3.6704,16.74531,7.708258,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p11,3,3.6573,16.68554,7.737293,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p11,4,3.6608,16.701245,7.728878,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p11,5,3.6497,16.650737,7.752965,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p12,1,3.6778,16.778848,7.692264,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p12,2,3.6558,16.678723,7.739788,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p12,3,3.6582,16.689676,7.733536,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p12,4,3.6575,16.686418,7.734831,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p12,5,3.678,16.780073,7.691422,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p13,1,3.6554,16.676669,7.739225,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p13,2,3.6587,16.691716,7.732013,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p13,3,3.6446,16.627312,7.763639,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p13,4,3.674,16.761488,7.699845,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p13,5,3.6607,16.701067,7.732201,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p14,1,3.6416,16.613718,7.770173,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p14,2,3.6785,16.781977,7.690521,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p14,3,3.661,16.702416,7.730839,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p14,4,3.6621,16.707238,7.730062,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p14,5,3.66,16.698002,7.731533,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p15,1,3.6792,16.785341,7.690174,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p15,2,3.6543,16.671686,7.740376,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p15,3,3.6633,16.712963,7.724125,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p15,4,3.6461,16.634206,7.760325,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p15,5,3.6709,16.747488,7.706938,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p16,1,3.6369,16.592423,7.780638,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p16,2,3.6573,16.685352,7.737617,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p16,3,3.6579,16.688163,7.734824,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p16,4,3.6736,16.75999,7.70365,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p16,5,3.6589,16.692683,7.733319,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p17,1,3.6564,16.681579,7.736155,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p17,2,3.6536,16.668419,7.743717,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p17,3,3.6629,16.710937,7.723154,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p17,4,3.6521,16.661856,7.746697,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p17,5,3.646,16.633898,7.75953,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p18,1,3.6622,16.707927,7.725973,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p18,2,3.6608,16.701454,7.728595,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p18,3,3.6547,16.673665,7.742511,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p18,4,3.6617,16.705493,7.726551,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p18,5,3.6648,16.719791,7.721034,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p19,1,3.6642,16.716945,7.721156,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p19,2,3.6566,16.682258,7.739938,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p19,3,3.6711,16.748461,7.707012,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p19,4,3.6736,16.760008,7.713649,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p19,5,3.6623,16.70806,7.724728,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p20,1,3.6332,16.575519,7.788431,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p20,2,3.6491,16.648261,7.753317,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p20,3,3.6584,16.690682,7.736277,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p20,4,3.655,16.67501,7.741075,FP16,baseline (_Float16)
+run_fp16_baseline_native,1,p20,5,3.6642,16.71684,7.720995,FP16,baseline (_Float16)
+run_int8_baseline,1,p01,1,4.0234,34.555929,3.766925,INT8,baseline
+run_int8_baseline,1,p01,2,4.0243,34.563519,3.764657,INT8,baseline
+run_int8_baseline,1,p01,3,4.0414,34.710077,3.749417,INT8,baseline
+run_int8_baseline,1,p01,4,3.9936,34.299975,3.794924,INT8,baseline
+run_int8_baseline,1,p01,5,4.0428,34.722294,3.747908,INT8,baseline
+run_int8_baseline,1,p02,1,4.0373,34.674938,3.754968,INT8,baseline
+run_int8_baseline,1,p02,2,3.9962,34.321813,3.794221,INT8,baseline
+run_int8_baseline,1,p02,3,4.0633,34.89837,3.728261,INT8,baseline
+run_int8_baseline,1,p02,4,4.0496,34.781091,3.741376,INT8,baseline
+run_int8_baseline,1,p02,5,4.023,34.552619,3.76879,INT8,baseline
+run_int8_baseline,1,p03,1,4.063,34.896152,3.730942,INT8,baseline
+run_int8_baseline,1,p03,2,3.9527,33.948498,3.833327,INT8,baseline
+run_int8_baseline,1,p03,3,4.0611,34.879532,3.731512,INT8,baseline
+run_int8_baseline,1,p03,4,4.0501,34.784958,3.740777,INT8,baseline
+run_int8_baseline,1,p03,5,4.0119,34.457055,3.777298,INT8,baseline
+run_int8_baseline,1,p04,1,4.0493,34.778405,3.74124,INT8,baseline
+run_int8_baseline,1,p04,2,4.0665,34.926095,3.725915,INT8,baseline
+run_int8_baseline,1,p04,3,3.978,34.165514,3.808777,INT8,baseline
+run_int8_baseline,1,p04,4,4.0736,34.986947,3.720622,INT8,baseline
+run_int8_baseline,1,p04,5,4.0668,34.928618,3.726605,INT8,baseline
+run_int8_baseline,1,p05,1,4.0173,34.503703,3.77293,INT8,baseline
+run_int8_baseline,1,p05,2,4.0463,34.752849,3.744445,INT8,baseline
+run_int8_baseline,1,p05,3,4.0651,34.913949,3.730232,INT8,baseline
+run_int8_baseline,1,p05,4,4.0223,34.545966,3.769031,INT8,baseline
+run_int8_baseline,1,p05,5,4.0563,34.838352,3.736544,INT8,baseline
+run_int8_baseline,1,p06,1,4.0051,34.398363,3.782346,INT8,baseline
+run_int8_baseline,1,p06,2,4.0486,34.77261,3.744607,INT8,baseline
+run_int8_baseline,1,p06,3,4.0032,34.382186,3.785368,INT8,baseline
+run_int8_baseline,1,p06,4,3.9806,34.187847,3.806147,INT8,baseline
+run_int8_baseline,1,p06,5,4.0357,34.661509,3.755315,INT8,baseline
+run_int8_baseline,1,p07,1,4.0657,34.918934,3.729063,INT8,baseline
+run_int8_baseline,1,p07,2,3.9742,34.132811,3.811878,INT8,baseline
+run_int8_baseline,1,p07,3,4.0568,34.842211,3.734246,INT8,baseline
+run_int8_baseline,1,p07,4,4.0339,34.645624,3.756047,INT8,baseline
+run_int8_baseline,1,p07,5,4.0055,34.401631,3.783673,INT8,baseline
+run_int8_baseline,1,p08,1,4.0429,34.722871,3.744531,INT8,baseline
+run_int8_baseline,1,p08,2,4.0534,34.813483,3.736977,INT8,baseline
+run_int8_baseline,1,p08,3,3.9648,34.052593,3.824576,INT8,baseline
+run_int8_baseline,1,p08,4,4.0659,34.921194,3.72741,INT8,baseline
+run_int8_baseline,1,p08,5,4.0241,34.561918,3.76152,INT8,baseline
+run_int8_baseline,1,p09,1,4.0131,34.467524,3.775626,INT8,baseline
+run_int8_baseline,1,p09,2,4.0228,34.550585,3.766171,INT8,baseline
+run_int8_baseline,1,p09,3,4.0201,34.52761,3.769291,INT8,baseline
+run_int8_baseline,1,p09,4,4.0591,34.86275,3.730229,INT8,baseline
+run_int8_baseline,1,p09,5,4.0572,34.846133,3.733062,INT8,baseline
+run_int8_baseline,1,p10,1,3.9633,34.039846,3.822138,INT8,baseline
+run_int8_baseline,1,p10,2,4.0625,34.891938,3.732988,INT8,baseline
+run_int8_baseline,1,p10,3,4.0507,34.790206,3.738096,INT8,baseline
+run_int8_baseline,1,p10,4,4.0059,34.405265,3.78286,INT8,baseline
+run_int8_baseline,1,p10,5,4.0087,34.429629,3.778348,INT8,baseline
+run_int8_baseline,1,p11,1,4.0719,34.972495,3.720387,INT8,baseline
+run_int8_baseline,1,p11,2,4.0246,34.566124,3.764188,INT8,baseline
+run_int8_baseline,1,p11,3,4.0549,34.826342,3.737843,INT8,baseline
+run_int8_baseline,1,p11,4,4.0045,34.393283,3.784404,INT8,baseline
+run_int8_baseline,1,p11,5,4.0168,34.498744,3.776035,INT8,baseline
+run_int8_baseline,1,p12,1,4.0726,34.978307,3.718849,INT8,baseline
+run_int8_baseline,1,p12,2,4.0069,34.413731,3.781683,INT8,baseline
+run_int8_baseline,1,p12,3,4.0254,34.573234,3.764004,INT8,baseline
+run_int8_baseline,1,p12,4,4.0626,34.892359,3.729361,INT8,baseline
+run_int8_baseline,1,p12,5,3.9925,34.290145,3.794768,INT8,baseline
+run_int8_baseline,1,p13,1,4.0664,34.925223,3.726061,INT8,baseline
+run_int8_baseline,1,p13,2,4.0489,34.7749,3.74175,INT8,baseline
+run_int8_baseline,1,p13,3,3.9911,34.278465,3.796278,INT8,baseline
+run_int8_baseline,1,p13,4,4.013,34.466009,3.775227,INT8,baseline
+run_int8_baseline,1,p13,5,4.0677,34.936436,3.725281,INT8,baseline
+run_int8_baseline,1,p14,1,3.9989,34.345004,3.791008,INT8,baseline
+run_int8_baseline,1,p14,2,4.0478,34.765521,3.742675,INT8,baseline
+run_int8_baseline,1,p14,3,4.0477,34.764788,3.743746,INT8,baseline
+run_int8_baseline,1,p14,4,4.0107,34.446715,3.782941,INT8,baseline
+run_int8_baseline,1,p14,5,3.9956,34.317021,3.79309,INT8,baseline
+run_int8_baseline,1,p15,1,4.0136,34.471299,3.774945,INT8,baseline
+run_int8_baseline,1,p15,2,4.0516,34.797961,3.741428,INT8,baseline
+run_int8_baseline,1,p15,3,4.047,34.758236,3.74312,INT8,baseline
+run_int8_baseline,1,p15,4,3.9431,33.86591,3.843323,INT8,baseline
+run_int8_baseline,1,p15,5,4.0695,34.951814,3.72243,INT8,baseline
+run_int8_baseline,1,p16,1,4.0763,35.009916,3.7168,INT8,baseline
+run_int8_baseline,1,p16,2,4.0171,34.501547,3.772074,INT8,baseline
+run_int8_baseline,1,p16,3,3.9995,34.350626,3.78783,INT8,baseline
+run_int8_baseline,1,p16,4,4.0682,34.940619,3.723937,INT8,baseline
+run_int8_baseline,1,p16,5,3.9816,34.197069,3.805893,INT8,baseline
+run_int8_baseline,1,p17,1,4.0572,34.845891,3.73455,INT8,baseline
+run_int8_baseline,1,p17,2,4.0072,34.416553,3.781806,INT8,baseline
+run_int8_baseline,1,p17,3,4.0411,34.707929,3.754425,INT8,baseline
+run_int8_baseline,1,p17,4,4.0613,34.881293,3.730392,INT8,baseline
+run_int8_baseline,1,p17,5,3.999,34.34595,3.789058,INT8,baseline
+run_int8_baseline,1,p18,1,4.0231,34.553142,3.767134,INT8,baseline
+run_int8_baseline,1,p18,2,4.0609,34.877904,3.730661,INT8,baseline
+run_int8_baseline,1,p18,3,3.9698,34.095176,3.816366,INT8,baseline
+run_int8_baseline,1,p18,4,4.0308,34.619621,3.815442,INT8,baseline
+run_int8_baseline,1,p18,5,4.0306,34.617869,3.759778,INT8,baseline
+run_int8_baseline,1,p19,1,3.9938,34.301229,3.797401,INT8,baseline
+run_int8_baseline,1,p19,2,4.0687,34.94505,3.721246,INT8,baseline
+run_int8_baseline,1,p19,3,4.0694,34.950609,3.722361,INT8,baseline
+run_int8_baseline,1,p19,4,4.0011,34.364219,3.788012,INT8,baseline
+run_int8_baseline,1,p19,5,4.0108,34.447257,3.776441,INT8,baseline
+run_int8_baseline,1,p20,1,4.0249,34.568672,3.764378,INT8,baseline
+run_int8_baseline,1,p20,2,3.9999,34.354079,3.793294,INT8,baseline
+run_int8_baseline,1,p20,3,4.0145,34.479062,3.774263,INT8,baseline
+run_int8_baseline,1,p20,4,4.0069,34.414037,3.780684,INT8,baseline
+run_int8_baseline,1,p20,5,4.0629,34.89466,3.730609,INT8,baseline
+run_fp32_simd,1,p01,1,28.713,65.497679,2.045203,FP32,SIMD
+run_fp32_simd,1,p01,2,28.2182,64.368981,2.078341,FP32,SIMD
+run_fp32_simd,1,p01,3,28.3619,64.696893,2.06813,FP32,SIMD
+run_fp32_simd,1,p01,4,28.1184,64.141414,2.085368,FP32,SIMD
+run_fp32_simd,1,p01,5,26.8052,61.145883,2.181199,FP32,SIMD
+run_fp32_simd,1,p02,1,28.3619,64.696893,2.075256,FP32,SIMD
+run_fp32_simd,1,p02,2,28.2039,64.336373,2.077848,FP32,SIMD
+run_fp32_simd,1,p02,3,28.4198,64.828994,2.064391,FP32,SIMD
+run_fp32_simd,1,p02,4,28.4053,64.795918,2.06508,FP32,SIMD
+run_fp32_simd,1,p02,5,27.63,63.027295,2.118194,FP32,SIMD
+run_fp32_simd,1,p03,1,28.3331,64.631043,2.070882,FP32,SIMD
+run_fp32_simd,1,p03,2,28.0759,64.044377,2.085806,FP32,SIMD
+run_fp32_simd,1,p03,3,28.1753,64.271255,2.080452,FP32,SIMD
+run_fp32_simd,1,p03,4,27.935,63.723031,2.096156,FP32,SIMD
+run_fp32_simd,1,p03,5,27.7125,63.21553,2.114244,FP32,SIMD
+run_fp32_simd,1,p04,1,28.1896,64.303797,2.079488,FP32,SIMD
+run_fp32_simd,1,p04,2,28.2611,64.467005,2.074575,FP32,SIMD
+run_fp32_simd,1,p04,3,28.3475,64.663951,2.06845,FP32,SIMD
+run_fp32_simd,1,p04,4,28.0617,64.012097,2.087151,FP32,SIMD
+run_fp32_simd,1,p04,5,27.6712,63.121272,2.116607,FP32,SIMD
+run_fp32_simd,1,p05,1,28.1468,64.206269,2.082822,FP32,SIMD
+run_fp32_simd,1,p05,2,28.1896,64.303797,2.081016,FP32,SIMD
+run_fp32_simd,1,p05,3,28.1326,64.173825,2.083998,FP32,SIMD
+run_fp32_simd,1,p05,4,28.09,64.07669,2.084961,FP32,SIMD
+run_fp32_simd,1,p05,5,27.6987,63.18408,2.114396,FP32,SIMD
+run_fp32_simd,1,p06,1,28.09,64.07669,2.087848,FP32,SIMD
+run_fp32_simd,1,p06,2,28.1896,64.303797,2.080616,FP32,SIMD
+run_fp32_simd,1,p06,3,28.2325,64.401623,2.076639,FP32,SIMD
+run_fp32_simd,1,p06,4,28.4053,64.795918,2.06454,FP32,SIMD
+run_fp32_simd,1,p06,5,27.7263,63.247012,2.111049,FP32,SIMD
+run_fp32_simd,1,p07,1,28.2039,64.336373,2.070809,FP32,SIMD
+run_fp32_simd,1,p07,2,28.0194,63.91545,2.092071,FP32,SIMD
+run_fp32_simd,1,p07,3,27.9771,63.819095,2.092712,FP32,SIMD
+run_fp32_simd,1,p07,4,27.921,63.691073,2.100014,FP32,SIMD
+run_fp32_simd,1,p07,5,27.5889,62.933598,2.124673,FP32,SIMD
+run_fp32_simd,1,p08,1,28.0617,64.012097,2.088548,FP32,SIMD
+run_fp32_simd,1,p08,2,27.9771,63.819095,2.093722,FP32,SIMD
+run_fp32_simd,1,p08,3,28.1753,64.271255,2.081395,FP32,SIMD
+run_fp32_simd,1,p08,4,28.1184,64.141414,2.085248,FP32,SIMD
+run_fp32_simd,1,p08,5,27.3988,62.5,2.136051,FP32,SIMD
+run_fp32_simd,1,p09,1,28.2182,64.368981,2.078897,FP32,SIMD
+run_fp32_simd,1,p09,2,28.4344,64.862104,2.063785,FP32,SIMD
+run_fp32_simd,1,p09,3,28.1896,64.303797,2.072822,FP32,SIMD
+run_fp32_simd,1,p09,4,28.4926,64.994882,2.059071,FP32,SIMD
+run_fp32_simd,1,p09,5,27.754,63.31007,2.110166,FP32,SIMD
+run_fp32_simd,1,p10,1,28.1468,64.206269,2.082182,FP32,SIMD
+run_fp32_simd,1,p10,2,27.9912,63.851181,2.093992,FP32,SIMD
+run_fp32_simd,1,p10,3,27.907,63.659148,2.098408,FP32,SIMD
+run_fp32_simd,1,p10,4,28.0476,63.979849,2.090978,FP32,SIMD
+run_fp32_simd,1,p10,5,27.6163,62.996032,2.119683,FP32,SIMD
+run_fp32_simd,1,p11,1,28.4053,64.795918,2.06229,FP32,SIMD
+run_fp32_simd,1,p11,2,28.4198,64.828994,2.064954,FP32,SIMD
+run_fp32_simd,1,p11,3,28.1184,64.141414,2.083471,FP32,SIMD
+run_fp32_simd,1,p11,4,28.0759,64.044377,2.086869,FP32,SIMD
+run_fp32_simd,1,p11,5,27.4394,62.59241,2.133101,FP32,SIMD
+run_fp32_simd,1,p12,1,28.09,64.07669,2.080184,FP32,SIMD
+run_fp32_simd,1,p12,2,27.9771,63.819095,2.094332,FP32,SIMD
+run_fp32_simd,1,p12,3,28.1326,64.173825,2.082581,FP32,SIMD
+run_fp32_simd,1,p12,4,28.0476,63.979849,2.089253,FP32,SIMD
+run_fp32_simd,1,p12,5,27.8233,63.468266,2.10672,FP32,SIMD
+run_fp32_simd,1,p13,1,28.3619,64.696893,2.064119,FP32,SIMD
+run_fp32_simd,1,p13,2,27.4936,62.716049,2.121839,FP32,SIMD
+run_fp32_simd,1,p13,3,27.893,63.627255,2.102908,FP32,SIMD
+run_fp32_simd,1,p13,4,28.0194,63.91545,2.09086,FP32,SIMD
+run_fp32_simd,1,p13,5,27.6575,63.089916,2.118852,FP32,SIMD
+run_fp32_simd,1,p14,1,27.9912,63.851181,2.089563,FP32,SIMD
+run_fp32_simd,1,p14,2,28.0759,64.044377,2.088729,FP32,SIMD
+run_fp32_simd,1,p14,3,28.1184,64.141414,2.083832,FP32,SIMD
+run_fp32_simd,1,p14,4,27.879,63.595393,2.102249,FP32,SIMD
+run_fp32_simd,1,p14,5,27.6712,63.121272,2.119994,FP32,SIMD
+run_fp32_simd,1,p15,1,27.63,63.027295,2.1189,FP32,SIMD
+run_fp32_simd,1,p15,2,27.9771,63.819095,2.093374,FP32,SIMD
+run_fp32_simd,1,p15,3,28.1468,64.206269,2.080578,FP32,SIMD
+run_fp32_simd,1,p15,4,28.1611,64.238746,2.073933,FP32,SIMD
+run_fp32_simd,1,p15,5,27.8094,63.436563,2.107958,FP32,SIMD
+run_fp32_simd,1,p16,1,27.8372,63.5,2.114076,FP32,SIMD
+run_fp32_simd,1,p16,2,28.1042,64.109036,2.08415,FP32,SIMD
+run_fp32_simd,1,p16,3,28.2899,64.53252,2.072249,FP32,SIMD
+run_fp32_simd,1,p16,4,28.1753,64.271255,2.081659,FP32,SIMD
+run_fp32_simd,1,p16,5,28.09,64.07669,2.086051,FP32,SIMD
+run_fp32_simd,1,p17,1,27.9771,63.819095,2.114156,FP32,SIMD
+run_fp32_simd,1,p17,2,28.2325,64.401623,2.076455,FP32,SIMD
+run_fp32_simd,1,p17,3,27.9771,63.819095,2.094512,FP32,SIMD
+run_fp32_simd,1,p17,4,28.0476,63.979849,2.090663,FP32,SIMD
+run_fp32_simd,1,p17,5,28.1753,64.271255,2.081028,FP32,SIMD
+run_fp32_simd,1,p18,1,27.907,63.659148,2.109602,FP32,SIMD
+run_fp32_simd,1,p18,2,28.3619,64.696893,2.067256,FP32,SIMD
+run_fp32_simd,1,p18,3,28.3186,64.598169,2.072473,FP32,SIMD
+run_fp32_simd,1,p18,4,28.1896,64.303797,2.082144,FP32,SIMD
+run_fp32_simd,1,p18,5,27.9771,63.819095,2.09395,FP32,SIMD
+run_fp32_simd,1,p19,1,27.5616,62.871287,2.126269,FP32,SIMD
+run_fp32_simd,1,p19,2,28.0194,63.91545,2.092454,FP32,SIMD
+run_fp32_simd,1,p19,3,28.2039,64.336373,2.073537,FP32,SIMD
+run_fp32_simd,1,p19,4,28.5071,65.028162,2.058208,FP32,SIMD
+run_fp32_simd,1,p19,5,28.09,64.07669,2.08922,FP32,SIMD
+run_fp32_simd,1,p20,1,27.907,63.659148,2.104404,FP32,SIMD
+run_fp32_simd,1,p20,2,28.2755,64.499746,2.072635,FP32,SIMD
+run_fp32_simd,1,p20,3,27.935,63.723031,2.095693,FP32,SIMD
+run_fp32_simd,1,p20,4,28.3475,64.663951,2.069324,FP32,SIMD
+run_fp32_simd,1,p20,5,28.1326,64.173825,2.083015,FP32,SIMD
+run_fp32_simd_4row,1,p01,1,45.0076,102.667745,1.331522,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p01,2,48.1613,109.861592,1.248079,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p01,3,47.9126,109.29432,1.254869,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p01,4,48.1197,109.766638,1.250127,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p01,5,48.2448,110.051993,1.248328,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p02,1,48.203,109.95671,1.24705,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p02,2,48.3285,110.243056,1.245513,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p02,3,48.3285,110.243056,1.246706,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p02,4,46.1263,105.219553,1.299991,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p02,5,46.9827,107.172996,1.304848,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p03,1,47.8714,109.200344,1.257524,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p03,2,48.0781,109.671848,1.251356,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p03,3,48.2448,110.051993,1.248375,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p03,4,48.2448,110.051993,1.247203,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p03,5,48.1197,109.766638,1.25072,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p04,1,48.2448,110.051993,1.248474,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p04,2,47.6257,108.639863,1.26263,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p04,3,46.4728,106.010017,1.289267,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p04,4,48.4547,110.530896,1.242965,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p04,5,48.0781,109.671848,1.252811,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p05,1,47.5038,108.361775,1.265086,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p05,2,47.5038,108.361775,1.266717,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p05,3,47.7073,108.82605,1.260258,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p05,4,48.1197,109.766638,1.251955,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p05,5,48.3285,110.243056,1.246719,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p06,1,46.05,105.045492,1.302171,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p06,2,47.8714,109.200344,1.25791,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p06,3,48.3705,110.338836,1.245053,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p06,4,48.2866,110.147441,1.247475,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p06,5,46.9035,106.992418,1.280441,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p07,1,48.2866,110.147441,1.246522,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p07,2,48.203,109.95671,1.249016,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p07,3,47.7073,108.82605,1.26044,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p07,4,46.3954,105.833333,1.292475,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p07,5,47.6257,108.639863,1.283738,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p08,1,48.0366,109.577222,1.25251,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p08,2,48.3285,110.243056,1.246428,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p08,3,48.1197,109.766638,1.250362,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p08,4,47.9952,109.482759,1.252702,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p08,5,48.2448,110.051993,1.245936,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p09,1,48.2866,110.147441,1.246057,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p09,2,48.0366,109.577222,1.25206,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p09,3,46.2029,105.394191,1.303428,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p09,4,48.1613,109.861592,1.250044,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p09,5,47.7483,108.919383,1.261728,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p10,1,47.1418,107.535986,1.277102,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p10,2,48.2448,110.051993,1.249012,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p10,3,48.3285,110.243056,1.247633,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p10,4,47.4633,108.269395,1.266026,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p10,5,48.1613,109.861592,1.25064,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p11,1,46.012,104.958678,1.304234,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p11,2,48.0366,109.577222,1.252932,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p11,3,48.0366,109.577222,1.252318,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p11,4,48.0366,109.577222,1.253097,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p11,5,48.2866,110.147441,1.246151,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p12,1,48.1613,109.861592,1.249492,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p12,2,47.4229,108.177172,1.267015,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p12,3,47.6665,108.732877,1.267576,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p12,4,47.1817,107.627119,1.273882,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p12,5,47.4229,108.177172,1.278786,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p13,1,48.1197,109.766638,1.251612,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p13,2,48.203,109.95671,1.24859,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p13,3,48.2448,110.051993,1.246775,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p13,4,48.203,109.95671,1.249161,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p13,5,48.0781,109.671848,1.251686,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p14,1,48.3285,110.243056,1.244251,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p14,2,48.1613,109.861592,1.248061,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p14,3,45.7097,104.269294,1.313899,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p14,4,47.585,108.547009,1.264523,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p14,5,47.6257,108.639863,1.263051,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p15,1,48.2448,110.051993,1.247998,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p15,2,48.203,109.95671,1.248151,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p15,3,48.2448,110.051993,1.246458,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p15,4,48.3285,110.243056,1.246135,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p15,5,48.1197,109.766638,1.249411,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p16,1,46.2797,105.56941,1.297293,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p16,2,47.9126,109.29432,1.253703,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p16,3,48.3285,110.243056,1.245484,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p16,4,48.203,109.95671,1.248802,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p16,5,47.4229,108.177172,1.268796,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p17,1,47.5038,108.361775,1.260316,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p17,2,47.7483,108.919383,1.260365,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p17,3,48.2866,110.147441,1.248407,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p17,4,46.9431,107.082631,1.279665,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p17,5,46.9035,106.992418,1.302805,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p18,1,48.203,109.95671,1.244669,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p18,2,47.9952,109.482759,1.253745,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p18,3,48.5392,110.723627,1.240452,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p18,4,48.1197,109.766638,1.24606,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p18,5,48.1197,109.766638,1.251565,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p19,1,48.1197,109.766638,1.25132,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p19,2,47.585,108.547009,1.263202,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p19,3,45.227,103.168156,1.319329,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p19,4,47.5444,108.454313,1.265702,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p19,5,48.0366,109.577222,1.252806,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p20,1,48.1197,109.766638,1.251119,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p20,2,47.302,107.901444,1.272308,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p20,3,47.9952,109.482759,1.256046,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p20,4,48.1613,109.861592,1.250213,FP32,SIMD 4-row
+run_fp32_simd_4row,1,p20,5,48.1613,109.861592,1.248791,FP32,SIMD 4-row
+run_fp32_openmp,8,p01,1,52.8722,120.607787,1.148405,FP32,OpenMP
+run_fp32_openmp,8,p01,2,52.6224,120.037807,1.153307,FP32,OpenMP
+run_fp32_openmp,8,p01,3,52.5727,119.924457,1.1544,FP32,OpenMP
+run_fp32_openmp,8,p01,4,52.6722,120.151372,1.154148,FP32,OpenMP
+run_fp32_openmp,8,p01,5,51.7902,118.139535,1.171823,FP32,OpenMP
+run_fp32_openmp,8,p02,1,50.3386,114.82821,1.218177,FP32,OpenMP
+run_fp32_openmp,8,p02,2,52.3256,119.360902,1.15987,FP32,OpenMP
+run_fp32_openmp,8,p02,3,52.3748,119.473189,1.158632,FP32,OpenMP
+run_fp32_openmp,8,p02,4,51.9836,118.580766,1.167285,FP32,OpenMP
+run_fp32_openmp,8,p02,5,52.4242,119.585687,1.15867,FP32,OpenMP
+run_fp32_openmp,8,p03,1,52.722,120.265152,1.151361,FP32,OpenMP
+run_fp32_openmp,8,p03,2,52.0809,118.802619,1.166903,FP32,OpenMP
+run_fp32_openmp,8,p03,3,52.1785,119.025305,1.164149,FP32,OpenMP
+run_fp32_openmp,8,p03,4,51.5027,117.483811,1.17666,FP32,OpenMP
+run_fp32_openmp,8,p03,5,49.6207,113.190731,1.229634,FP32,OpenMP
+run_fp32_openmp,8,p04,1,51.694,117.920149,1.174747,FP32,OpenMP
+run_fp32_openmp,8,p04,2,52.2765,119.248826,1.16294,FP32,OpenMP
+run_fp32_openmp,8,p04,3,51.5982,117.701576,1.17551,FP32,OpenMP
+run_fp32_openmp,8,p04,4,51.694,117.920149,1.175545,FP32,OpenMP
+run_fp32_openmp,8,p04,5,51.2656,116.94291,1.18207,FP32,OpenMP
+run_fp32_openmp,8,p05,1,51.5504,117.592593,1.177465,FP32,OpenMP
+run_fp32_openmp,8,p05,2,51.9351,118.470149,1.173354,FP32,OpenMP
+run_fp32_openmp,8,p05,3,50.9839,116.300366,1.189034,FP32,OpenMP
+run_fp32_openmp,8,p05,4,48.5392,110.723627,1.254858,FP32,OpenMP
+run_fp32_openmp,8,p05,5,49.2694,112.389381,1.227524,FP32,OpenMP
+run_fp32_openmp,8,p06,1,52.1296,118.913858,1.164687,FP32,OpenMP
+run_fp32_openmp,8,p06,2,51.5982,117.701576,1.175931,FP32,OpenMP
+run_fp32_openmp,8,p06,3,51.8867,118.359739,1.168949,FP32,OpenMP
+run_fp32_openmp,8,p06,4,51.5504,117.592593,1.179094,FP32,OpenMP
+run_fp32_openmp,8,p06,5,52.1785,119.025305,1.164307,FP32,OpenMP
+run_fp32_openmp,8,p07,1,52.1296,118.913858,1.163598,FP32,OpenMP
+run_fp32_openmp,8,p07,2,49.8428,113.697404,1.214302,FP32,OpenMP
+run_fp32_openmp,8,p07,3,49.3131,112.488928,1.252601,FP32,OpenMP
+run_fp32_openmp,8,p07,4,51.4551,117.375231,1.180078,FP32,OpenMP
+run_fp32_openmp,8,p07,5,52.1296,118.913858,1.163086,FP32,OpenMP
+run_fp32_openmp,8,p08,1,51.3602,117.158672,1.180614,FP32,OpenMP
+run_fp32_openmp,8,p08,2,51.2185,116.835327,1.183398,FP32,OpenMP
+run_fp32_openmp,8,p08,3,51.8384,118.249534,1.169536,FP32,OpenMP
+run_fp32_openmp,8,p08,4,51.7902,118.139535,1.172792,FP32,OpenMP
+run_fp32_openmp,8,p08,5,51.8867,118.359739,1.168819,FP32,OpenMP
+run_fp32_openmp,8,p09,1,49.8428,113.697404,1.214485,FP32,OpenMP
+run_fp32_openmp,8,p09,2,50.9373,116.193962,1.22185,FP32,OpenMP
+run_fp32_openmp,8,p09,3,52.1785,119.025305,1.165883,FP32,OpenMP
+run_fp32_openmp,8,p09,4,52.3256,119.360902,1.16089,FP32,OpenMP
+run_fp32_openmp,8,p09,5,51.6461,117.810761,1.17475,FP32,OpenMP
+run_fp32_openmp,8,p10,1,51.0775,116.513761,1.187835,FP32,OpenMP
+run_fp32_openmp,8,p10,2,50.9839,116.300366,1.191314,FP32,OpenMP
+run_fp32_openmp,8,p10,3,52.2765,119.248826,1.161094,FP32,OpenMP
+run_fp32_openmp,8,p10,4,52.1296,118.913858,1.165532,FP32,OpenMP
+run_fp32_openmp,8,p10,5,50.067,114.208633,1.210487,FP32,OpenMP
+run_fp32_openmp,8,p11,1,51.6461,117.810761,1.195998,FP32,OpenMP
+run_fp32_openmp,8,p11,2,52.1785,119.025305,1.164611,FP32,OpenMP
+run_fp32_openmp,8,p11,3,52.4736,119.698398,1.157404,FP32,OpenMP
+run_fp32_openmp,8,p11,4,51.8867,118.359739,1.17229,FP32,OpenMP
+run_fp32_openmp,8,p11,5,52.2765,119.248826,1.161122,FP32,OpenMP
+run_fp32_openmp,8,p12,1,52.3748,119.473189,1.158721,FP32,OpenMP
+run_fp32_openmp,8,p12,2,52.5231,119.811321,1.156046,FP32,OpenMP
+run_fp32_openmp,8,p12,3,52.5727,119.924457,1.154403,FP32,OpenMP
+run_fp32_openmp,8,p12,4,49.9771,114.003591,1.212444,FP32,OpenMP
+run_fp32_openmp,8,p12,5,50.6592,115.5596,1.213835,FP32,OpenMP
+run_fp32_openmp,8,p13,1,52.2765,119.248826,1.161384,FP32,OpenMP
+run_fp32_openmp,8,p13,2,52.722,120.265152,1.15214,FP32,OpenMP
+run_fp32_openmp,8,p13,3,52.4242,119.585687,1.158194,FP32,OpenMP
+run_fp32_openmp,8,p13,4,52.6722,120.151372,1.154333,FP32,OpenMP
+run_fp32_openmp,8,p13,5,52.5727,119.924457,1.155379,FP32,OpenMP
+run_fp32_openmp,8,p14,1,52.5727,119.924457,1.153588,FP32,OpenMP
+run_fp32_openmp,8,p14,2,52.6224,120.037807,1.158258,FP32,OpenMP
+run_fp32_openmp,8,p14,3,51.2656,116.94291,1.182594,FP32,OpenMP
+run_fp32_openmp,8,p14,4,50.6592,115.5596,1.216782,FP32,OpenMP
+run_fp32_openmp,8,p14,5,51.6461,117.810761,1.178354,FP32,OpenMP
+run_fp32_openmp,8,p15,1,51.9836,118.580766,1.171361,FP32,OpenMP
+run_fp32_openmp,8,p15,2,52.772,120.379147,1.15282,FP32,OpenMP
+run_fp32_openmp,8,p15,3,52.6722,120.151372,1.152241,FP32,OpenMP
+run_fp32_openmp,8,p15,4,52.6722,120.151372,1.154237,FP32,OpenMP
+run_fp32_openmp,8,p15,5,52.5727,119.924457,1.156075,FP32,OpenMP
+run_fp32_openmp,8,p16,1,50.8443,115.981735,1.190678,FP32,OpenMP
+run_fp32_openmp,8,p16,2,51.6461,117.810761,1.187138,FP32,OpenMP
+run_fp32_openmp,8,p16,3,51.2185,116.835327,1.204373,FP32,OpenMP
+run_fp32_openmp,8,p16,4,52.3748,119.473189,1.15867,FP32,OpenMP
+run_fp32_openmp,8,p16,5,52.722,120.265152,1.151352,FP32,OpenMP
+run_fp32_openmp,8,p17,1,52.8722,120.607787,1.15252,FP32,OpenMP
+run_fp32_openmp,8,p17,2,53.0233,120.952381,1.146307,FP32,OpenMP
+run_fp32_openmp,8,p17,3,52.2275,119.136961,1.162446,FP32,OpenMP
+run_fp32_openmp,8,p17,4,52.0322,118.691589,1.169154,FP32,OpenMP
+run_fp32_openmp,8,p17,5,52.5231,119.811321,1.156219,FP32,OpenMP
+run_fp32_openmp,8,p18,1,51.4076,117.266851,1.180729,FP32,OpenMP
+run_fp32_openmp,8,p18,2,48.7091,111.111111,1.254964,FP32,OpenMP
+run_fp32_openmp,8,p18,3,52.0322,118.691589,1.169939,FP32,OpenMP
+run_fp32_openmp,8,p18,4,52.6224,120.037807,1.154389,FP32,OpenMP
+run_fp32_openmp,8,p18,5,52.9728,120.837298,1.147281,FP32,OpenMP
+run_fp32_openmp,8,p19,1,52.6224,120.037807,1.154958,FP32,OpenMP
+run_fp32_openmp,8,p19,2,52.0322,118.691589,1.166157,FP32,OpenMP
+run_fp32_openmp,8,p19,3,52.6722,120.151372,1.155318,FP32,OpenMP
+run_fp32_openmp,8,p19,4,52.0322,118.691589,1.166839,FP32,OpenMP
+run_fp32_openmp,8,p19,5,51.4076,117.266851,1.180467,FP32,OpenMP
+run_fp32_openmp,8,p20,1,46.5506,106.187291,1.307596,FP32,OpenMP
+run_fp32_openmp,8,p20,2,52.2765,119.248826,1.16217,FP32,OpenMP
+run_fp32_openmp,8,p20,3,52.0809,118.802619,1.166242,FP32,OpenMP
+run_fp32_openmp,8,p20,4,52.5231,119.811321,1.156738,FP32,OpenMP
+run_fp32_openmp,8,p20,5,52.3748,119.473189,1.160733,FP32,OpenMP
+run_fp32_openmp_simd,8,p01,1,54.7438,124.877089,1.128408,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p01,2,57.5744,131.334023,1.070273,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p01,3,57.9339,132.154006,1.054923,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p01,4,58.6047,133.684211,1.044602,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p01,5,58.359,133.12369,1.047099,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p02,1,57.8737,132.016632,1.054789,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p02,2,58.359,133.12369,1.048143,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p02,3,58.359,133.12369,1.045881,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p02,4,58.4202,133.263379,1.046319,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p02,5,57.3964,130.927835,1.062675,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p03,1,55.842,127.382146,1.093849,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p03,2,58.1153,132.56785,1.052148,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p03,3,57.9339,132.154006,1.055247,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p03,4,58.176,132.706374,1.050282,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p03,5,57.6937,131.606218,1.06032,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p04,1,57.8136,131.879543,1.056224,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p04,2,58.4816,133.403361,1.054212,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p04,3,57.9942,132.291667,1.054617,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p04,4,57.8136,131.879543,1.057874,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p04,5,57.1606,130.390144,1.071151,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p05,1,56.0105,127.7666,1.093305,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p05,2,58.4816,133.403361,1.046074,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p05,3,57.9339,132.154006,1.053815,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p05,4,57.8737,132.016632,1.054619,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p05,5,57.9942,132.291667,1.053,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p06,1,58.2369,132.845188,1.048686,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p06,2,58.5431,133.543638,1.045862,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p06,3,58.2979,132.984293,1.050332,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p06,4,58.0547,132.429614,1.053415,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p06,5,56.7528,129.459735,1.074211,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p07,1,55.0143,125.494071,1.10638,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p07,2,58.359,133.12369,1.04729,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p07,3,58.7283,133.966245,1.042522,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p07,4,57.9942,132.291667,1.054739,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p07,5,58.359,133.12369,1.048357,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p08,1,57.8737,132.016632,1.055126,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p08,2,58.0547,132.429614,1.052763,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p08,3,57.8737,132.016632,1.055325,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p08,4,58.0547,132.429614,1.051972,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p08,5,57.8136,131.879543,1.056896,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p09,1,55.9542,127.638191,1.094281,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p09,2,58.4816,133.403361,1.045877,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p09,3,58.176,132.706374,1.050593,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p09,4,57.3964,130.927835,1.063559,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p09,5,57.5149,131.198347,1.061534,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p10,1,58.1153,132.56785,1.051135,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p10,2,58.4816,133.403361,1.045609,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p10,3,56.6373,129.196338,1.081672,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p10,4,57.8136,131.879543,1.058898,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p10,5,57.634,131.469979,1.060054,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p11,1,54.6364,124.631992,1.116061,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p11,2,58.2369,132.845188,1.049496,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p11,3,58.6665,133.825079,1.040509,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p11,4,58.2369,132.845188,1.04951,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p11,5,58.4816,133.403361,1.04527,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p12,1,57.634,131.469979,1.059475,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p12,2,57.634,131.469979,1.059051,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p12,3,57.8136,131.879543,1.057308,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p12,4,57.8737,132.016632,1.057339,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p12,5,58.1153,132.56785,1.051551,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p13,1,55.1232,125.742574,1.107983,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p13,2,57.9339,132.154006,1.056559,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p13,3,58.4202,133.263379,1.045633,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p13,4,58.2979,132.984293,1.048976,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p13,5,58.1153,132.56785,1.050993,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p14,1,57.9339,132.154006,1.054146,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p14,2,57.8737,132.016632,1.056608,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p14,3,57.9339,132.154006,1.054841,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p14,4,58.176,132.706374,1.04993,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p14,5,58.4202,133.263379,1.045896,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p15,1,54.476,124.266145,1.126396,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p15,2,57.5149,131.198347,1.06293,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p15,3,57.634,131.469979,1.059668,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p15,4,57.8136,131.879543,1.058401,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p15,5,57.8737,132.016632,1.056361,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p16,1,58.359,133.12369,1.049491,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p16,2,58.2369,132.845188,1.04965,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p16,3,58.2369,132.845188,1.049029,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p16,4,58.1153,132.56785,1.05059,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p16,5,57.8136,131.879543,1.058106,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p17,1,55.5633,126.746507,1.100556,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p17,2,58.1153,132.56785,1.051676,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p17,3,58.0547,132.429614,1.052499,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p17,4,57.6937,131.606218,1.060919,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p17,5,57.8136,131.879543,1.05688,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p18,1,57.9942,132.291667,1.053439,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p18,2,58.2369,132.845188,1.049483,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p18,3,57.8737,132.016632,1.056858,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p18,4,57.9339,132.154006,1.054529,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p18,5,57.8737,132.016632,1.055663,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p19,1,55.3424,126.242545,1.105319,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p19,2,57.8136,131.879543,1.057527,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p19,3,58.6665,133.825079,1.042309,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p19,4,57.4556,131.062951,1.063047,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p19,5,58.4202,133.263379,1.050637,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p20,1,58.2979,132.984293,1.048327,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p20,2,58.0547,132.429614,1.052559,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p20,3,58.2369,132.845188,1.048644,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p20,4,57.4556,131.062951,1.062113,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_simd,8,p20,5,57.2194,130.524152,1.067258,FP32,OpenMP + -O3 SIMD
+run_fp32_openmp_neon,8,p01,1,151.2893,345.108696,0.47128,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p01,2,152.9518,348.901099,0.468853,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p01,3,151.7015,346.049046,0.47137,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p01,4,155.9509,355.742297,0.460427,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p01,5,139.8856,319.095477,0.501633,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p02,1,140.948,321.518987,0.499463,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p02,2,144.609,329.87013,0.499298,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p02,3,148.8622,339.572193,0.477787,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p02,4,150.4715,343.243243,0.472599,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p02,5,151.2893,345.108696,0.472771,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p03,1,152.116,346.994536,0.469464,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p03,2,152.9518,348.901099,0.468442,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p03,3,152.5328,347.945205,0.468881,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p03,4,150.4715,343.243243,0.474148,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p03,5,152.116,346.994536,0.4697,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p04,1,149.2613,340.482574,0.476013,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p04,2,150.4715,343.243243,0.478007,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p04,3,146.8983,335.092348,0.4843,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p04,4,151.2893,345.108696,0.473161,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p04,5,150.4715,343.243243,0.462608,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p05,1,152.9518,348.901099,0.468645,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p05,2,151.2893,345.108696,0.473968,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p05,3,155.9509,355.742297,0.458473,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p05,4,147.6776,336.870027,0.480417,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p05,5,153.7969,350.828729,0.463833,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p06,1,151.7015,346.049046,0.47167,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p06,2,152.5328,347.945205,0.468841,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p06,3,141.6653,323.155216,0.504429,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p06,4,137.8081,314.356436,0.517359,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p06,5,153.7969,350.828729,0.465955,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p07,1,155.0821,353.760446,0.465784,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p07,2,151.2893,345.108696,0.472062,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p07,3,155.5153,354.748603,0.461769,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p07,4,156.3889,356.741573,0.45929,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p07,5,158.6167,361.823362,0.454299,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p08,1,148.8622,339.572193,0.477762,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p08,2,148.0704,337.765957,0.479644,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p08,3,152.116,346.994536,0.470157,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p08,4,151.7015,346.049046,0.471552,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p08,5,149.2613,340.482574,0.476369,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p09,1,149.6625,341.397849,0.476826,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p09,2,150.0659,342.318059,0.474594,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p09,3,153.7969,350.828729,0.467214,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p09,4,152.5328,347.945205,0.468619,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p09,5,157.2725,358.757062,0.456508,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p10,1,151.2893,345.108696,0.473537,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p10,2,150.8793,344.173442,0.473562,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p10,3,148.4652,338.666667,0.477384,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p10,4,148.4652,338.666667,0.479044,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p10,5,140.2379,319.899244,0.500616,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p11,1,133.5119,304.556355,0.533359,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p11,2,150.8793,344.173442,0.473282,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p11,3,147.2869,335.978836,0.482122,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p11,4,146.8983,335.092348,0.487332,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p11,5,151.2893,345.108696,0.472627,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p12,1,155.9509,355.742297,0.461687,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p12,2,149.2613,340.482574,0.477539,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p12,3,154.2229,351.800554,0.465195,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p12,4,154.2229,351.800554,0.463711,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p12,5,153.7969,350.828729,0.466118,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p13,1,153.3732,349.862259,0.466563,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p13,2,148.0704,337.765957,0.48054,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p13,3,151.2893,345.108696,0.470385,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p13,4,151.7015,346.049046,0.470952,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p13,5,150.4715,343.243243,0.473251,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p14,1,158.6167,361.823362,0.455181,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p14,2,152.5328,347.945205,0.469095,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p14,3,148.4652,338.666667,0.480221,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p14,4,152.116,346.994536,0.468994,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p14,5,149.2613,340.482574,0.477237,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p15,1,155.0821,353.760446,0.46137,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p15,2,142.3899,324.808184,0.495363,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p15,3,136.457,311.27451,0.529778,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p15,4,150.0659,342.318059,0.474934,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p15,5,149.2613,340.482574,0.477967,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p16,1,150.0659,342.318059,0.476641,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p16,2,147.2869,335.978836,0.482562,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p16,3,149.2613,340.482574,0.477592,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p16,4,148.4652,338.666667,0.479765,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p16,5,149.2613,340.482574,0.478171,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p17,1,147.2869,335.978836,0.480875,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p17,2,155.9509,355.742297,0.460288,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p17,3,153.3732,349.862259,0.46611,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p17,4,148.4652,338.666667,0.479553,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p17,5,146.8983,335.092348,0.483747,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p18,1,151.2893,345.108696,0.47253,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p18,2,156.3889,356.741573,0.459778,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p18,3,148.4652,338.666667,0.476748,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p18,4,152.5328,347.945205,0.46808,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p18,5,154.2229,351.800554,0.462376,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p19,1,151.7015,346.049046,0.472199,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p19,2,154.6513,352.777778,0.464787,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p19,3,149.6625,341.397849,0.476006,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p19,4,142.3899,324.808184,0.512168,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p19,5,138.8391,316.708229,0.525032,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p20,1,152.116,346.994536,0.473862,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p20,2,153.3732,349.862259,0.468077,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p20,3,152.5328,347.945205,0.469894,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p20,4,150.0659,342.318059,0.476703,FP32,OpenMP + NEON
+run_fp32_openmp_neon,8,p20,5,155.5153,354.748603,0.465292,FP32,OpenMP + NEON

@@ -1,0 +1,5 @@
+Once upon a time, there was a doggy named Max. Max was a good doggy who loved to play and run around. One day, Max's owner took him to the park to play fetch. Max was so happy and excited to play with his owner.
+But then, Max saw a squirrel and ran after it. His owner called for him to come back, but Max didn't listen. He chased the squirrel up a tree and got stuck. His owner tried to help him, but he couldn't reach him.
+Max's owner had to call the fire departmentforward steps: 128; timed steps: 127; forward seconds: 3.634738
+forward tokens/s: 34.940619
+

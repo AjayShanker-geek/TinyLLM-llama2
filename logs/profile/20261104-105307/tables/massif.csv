@@ -1,0 +1,5 @@
+binary,peak_heap_bytes,peak_heap_extra_bytes,precision,method
+run_fp32_baseline,77577365.0,568011.0,FP32,baseline
+run_fp16_baseline,77583509.0,568027.0,FP16,baseline (software decode)
+run_fp16_baseline_native,77583509.0,568027.0,FP16,baseline (_Float16)
+run_int8_baseline,175891861.0,572163.0,INT8,baseline
