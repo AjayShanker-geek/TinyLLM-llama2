@@ -1,0 +1,91 @@
+binary,function,Ir,precision,method,pct_of_total
+run_fp32_baseline,,12384208655.0,FP32,baseline,99.85750308306478
+run_fp32_baseline,_IO_file_underflow@@GLIBC_2.17,3317.0,FP32,baseline,2.6745942914390107e-05
+run_fp32_baseline,_IO_switch_to_get_mode,2568.0,FP32,baseline,2.0706536449850407e-05
+run_fp32_baseline,__printf_buffer,15418.0,FP32,baseline,0.0001243198516292031
+run_fp32_baseline,__underflow,3317.0,FP32,baseline,2.6745942914390107e-05
+run_fp32_baseline,__vfscanf_internal,2048.0,FP32,baseline,1.65136240846159e-05
+run_fp32_baseline,__vsprintf_internal,44460.0,FP32,baseline,0.00035849400722755026
+run_fp32_baseline,_dl_name_match_p,1006.0,FP32,baseline,8.111672768126755e-06
+run_fp32_baseline,check_match,7706.0,FP32,baseline,6.213573593557135e-05
+run_fp32_baseline,compare_tokens,3042529.0,FP32,baseline,0.024532802818624185
+run_fp32_baseline,expf@@GLIBC_2.27,11971200.0,FP32,baseline,0.09652729328210638
+run_fp32_baseline,read,1836.0,FP32,baseline,1.4804205966481833e-05
+run_fp32_baseline,sincosf,2511800.0,FP32,baseline,0.020253379382684678
+run_fp32_baseline,strchrnul,53184.0,FP32,baseline,0.00042883817544736916
+run_fp32_baseline,sysmalloc,1234.0,FP32,baseline,9.950103574421886e-06
+run_fp16_baseline,,36945853059.0,FP16,baseline (software decode),99.93335814479724
+run_fp16_baseline,_IO_file_underflow@@GLIBC_2.17,3317.0,FP16,baseline (software decode),8.972020443997957e-06
+run_fp16_baseline,_IO_sgetn,1344028.0,FP16,baseline (software decode),0.003635407504765054
+run_fp16_baseline,__GI___tunables_init'2,7545.0,FP16,baseline (software decode),2.0408168299657697e-05
+run_fp16_baseline,__printf_buffer,173099.0,FP16,baseline (software decode),0.00046820855195526146
+run_fp16_baseline,__underflow,3317.0,FP16,baseline (software decode),8.972020443997957e-06
+run_fp16_baseline,__vsprintf_internal,44460.0,FP16,baseline (software decode),0.00012025807324092527
+run_fp16_baseline,alloc_perturb,224154.0,FP16,baseline (software decode),0.000606305176546252
+run_fp16_baseline,check_match,7759.0,FP16,baseline (software decode),2.0987008328302726e-05
+run_fp16_baseline,compare_tokens,3042529.0,FP16,baseline (software decode),0.008229614829501556
+run_fp16_baseline,do_lookup_x,4110.0,FP16,baseline (software decode),1.1116974381920892e-05
+run_fp16_baseline,expf@@GLIBC_2.27,11971200.0,FP16,baseline (software decode),0.03238041939680082
+run_fp16_baseline,powf@@GLIBC_2.27,5126400.0,FP16,baseline (software decode),0.01386619403199009
+run_fp16_baseline,sincosf,2531096.0,FP16,baseline (software decode),0.006846260192258502
+run_fp16_baseline,softmax,134249.0,FP16,baseline (software decode),0.00036312474301666614
+run_fp16_baseline_native,,14349100669.0,FP16,baseline (_Float16),99.80762276541577
+run_fp16_baseline_native,_IO_file_xsgetn,4513039.0,FP16,baseline (_Float16),0.03139121429475625
+run_fp16_baseline_native,__GI___tunables_init'2,7545.0,FP16,baseline (_Float16),5.248053736161728e-05
+run_fp16_baseline_native,__printf_buffer,157674.0,FP16,baseline (_Float16),0.0010967284622870302
+run_fp16_baseline_native,__printf_buffer'2,104854.0,FP16,baseline (_Float16),0.0007293299224009302
+run_fp16_baseline_native,__vsprintf_internal,44460.0,FP16,baseline (_Float16),0.00030924913069549424
+run_fp16_baseline_native,alloc_perturb,224154.0,FP16,baseline (_Float16),0.0015591414674295506
+run_fp16_baseline_native,check_match,7759.0,FP16,baseline (_Float16),5.396905094616149e-05
+run_fp16_baseline_native,compare_tokens,3042529.0,FP16,baseline (_Float16),0.021162830597522074
+run_fp16_baseline_native,expf@@GLIBC_2.27,11971200.0,FP16,baseline (_Float16),0.08326772814624159
+run_fp16_baseline_native,forward,11653.0,FP16,baseline (_Float16),8.105443364810155e-05
+run_fp16_baseline_native,rmsnorm,517296.0,FP16,baseline (_Float16),0.0035981407627588033
+run_fp16_baseline_native,rmsnorm'2,3793504.0,FP16,baseline (_Float16),0.026386365593564557
+run_fp16_baseline_native,sincosf,2531096.0,FP16,baseline (_Float16),0.01760547093357721
+run_fp16_baseline_native,unlink_chunk.isra.0,703730.0,FP16,baseline (_Float16),0.004894914321735047
+run_int8_baseline,,334498912.0,INT8,baseline,2.900103325676874
+run_int8_baseline,_IO_file_underflow@@GLIBC_2.17,3531.0,INT8,baseline,3.0613746339973276e-05
+run_int8_baseline,_IO_file_xsgetn,4513189.0,INT8,baseline,0.03912931838865977
+run_int8_baseline,_IO_switch_to_get_mode,2568.0,INT8,baseline,2.2264542792707837e-05
+run_int8_baseline,__GI___tunables_init'2,7545.0,INT8,baseline,6.541509944352828e-05
+run_int8_baseline,__printf_buffer,15425.0,INT8,baseline,0.0001337346466423358
+run_int8_baseline,__printf_buffer'2,104854.0,INT8,baseline,0.0009090834774091072
+run_int8_baseline,check_match,7706.0,INT8,baseline,6.68109683647222e-05
+run_int8_baseline,compare_tokens,3042529.0,INT8,baseline,0.02637870604305085
+run_int8_baseline,expf@@GLIBC_2.27,11971200.0,INT8,baseline,0.10379022378507168
+run_int8_baseline,matmul,11173284368.0,INT8,baseline,96.87230060219218
+run_int8_baseline,rmsnorm,160128.0,INT8,baseline,0.0013883086870368848
+run_int8_baseline,rmsnorm'2,3843072.0,INT8,baseline,0.03331940848888524
+run_int8_baseline,sincosf,2511800.0,INT8,baseline,0.02177728916928487
+run_int8_baseline,strchrnul,53262.0,INT8,baseline,0.0004617811831095034
+run_fp32_simd,,2750030206.0,FP32,SIMD,99.1841688945741
+run_fp32_simd,_IO_file_underflow@@GLIBC_2.17,3531.0,FP32,SIMD,0.00012735107403643594
+run_fp32_simd,_IO_file_xsgetn,4513001.0,FP32,SIMD,0.16276848611654188
+run_fp32_simd,_IO_switch_to_get_mode,2568.0,FP32,SIMD,9.261896293558977e-05
+run_fp32_simd,__printf_buffer,157626.0,FP32,SIMD,0.0056850298487871
+run_fp32_simd,__printf_buffer'2,104697.0,FP32,SIMD,0.003776062134917228
+run_fp32_simd,__vsprintf_internal,44460.0,FP32,SIMD,0.0016035198956839258
+run_fp32_simd,_dl_cache_libcmp,1139.0,FP32,SIMD,4.1079828186774433e-05
+run_fp32_simd,_dl_lookup_symbol_x,1262.0,FP32,SIMD,4.5516016832053854e-05
+run_fp32_simd,alloc_perturb,224140.0,FP32,SIMD,0.00808396197522706
+run_fp32_simd,check_match,7706.0,FP32,SIMD,0.00027792902195547303
+run_fp32_simd,compare_tokens,3042529.0,FP32,SIMD,0.109733598396206
+run_fp32_simd,expf@@GLIBC_2.27,11971200.0,FP32,SIMD,0.4317601748810484
+run_fp32_simd,sincosf,2531102.0,FP32,SIMD,0.09128817847515465
+run_fp32_simd,sysmalloc,1234.0,FP32,SIMD,4.4506152750201624e-05
+run_fp32_simd_4row,,1419677650.0,FP32,SIMD 4-row,98.26106190090314
+run_fp32_simd_4row,_IO_file_underflow@@GLIBC_2.17,3531.0,FP32,SIMD 4-row,0.000244393373081621
+run_fp32_simd_4row,_IO_file_xsgetn,4513001.0,FP32,SIMD 4-row,0.31236123962354256
+run_fp32_simd_4row,_IO_switch_to_get_mode,2568.0,FP32,SIMD 4-row,0.00017774063496845167
+run_fp32_simd_4row,__GI___tunables_init'2,7545.0,FP32,SIMD 4-row,0.0005222169356841775
+run_fp32_simd_4row,__printf_buffer,15418.0,FP32,SIMD 4-row,0.001067135946239715
+run_fp32_simd_4row,__printf_buffer'2,104697.0,FP32,SIMD 4-row,0.00724646077075233
+run_fp32_simd_4row,__vsprintf_internal,44460.0,FP32,SIMD 4-row,0.00307723856335567
+run_fp32_simd_4row,_int_free,2656549.0,FP32,SIMD 4-row,0.18386943383364693
+run_fp32_simd_4row,alloc_perturb,224140.0,FP32,SIMD 4-row,0.015513545919715247
+run_fp32_simd_4row,check_match,7706.0,FP32,SIMD 4-row,0.000533360332191156
+run_fp32_simd_4row,compare_tokens,3042529.0,FP32,SIMD 4-row,0.21058451572037704
+run_fp32_simd_4row,do_lookup_x,4083.0,FP32,SIMD 4-row,0.00028259930396269006
+run_fp32_simd_4row,expf@@GLIBC_2.27,11971200.0,FP32,SIMD 4-row,0.8285703618903149
+run_fp32_simd_4row,sincosf,2511806.0,FP32,SIMD 4-row,0.17385124351930167

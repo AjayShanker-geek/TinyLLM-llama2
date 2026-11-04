@@ -1,0 +1,22 @@
+# started on Wed Nov  4 11:34:11 2026
+
+
+ Performance counter stats for '/workspace/build-build/run_fp16_baseline /workspace/models/stories110M_fp16.bin -z /workspace/models/tokenizer.bin -t 0 -s 42 -n 128 -i Robbie had just turned three and was so excited.':
+
+          10468.08 msec task-clock                       #    0.997 CPUs utilized             
+              1790      context-switches                 #  170.996 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+              3206      page-faults                      #  306.264 /sec                      
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      cache-references                                                      
+   <not supported>      cache-misses                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+      10.501611505 seconds time elapsed
+
+      10.445017000 seconds user
+       0.023011000 seconds sys
+
+

@@ -102,7 +102,7 @@ models/
 *.pt
 
 # Logs and figures
-logs/*
+# logs/*
 
 # Docker build
 build-docker/

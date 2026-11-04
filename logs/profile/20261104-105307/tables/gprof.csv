@@ -1,0 +1,91 @@
+binary,function,calls,self_pct,self_s,precision,method
+run_fp32_baseline,build_tokenizer,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,build_transformer,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,decode,128.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,encode,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,forward,128.0,100.0,7.42,FP32,baseline
+run_fp32_baseline,free_run_state,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,free_tokenizer,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,free_transformer,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,generate,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,malloc_run_state,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,memory_map_weights,1.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,rmsnorm,3200.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,safe_printf,128.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,sample,117.0,0.0,0.0,FP32,baseline
+run_fp32_baseline,softmax,18432.0,0.0,0.0,FP32,baseline
+run_fp16_baseline,_init,,39.36,9.16,FP16,baseline (software decode)
+run_fp16_baseline,build_tokenizer,1.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,build_transformer,1.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,decode,128.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,encode,1.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,forward,128.0,0.21,0.05,FP16,baseline (software decode)
+run_fp16_baseline,fp16_to_fp32,1135017984.0,57.41,13.36,FP16,baseline (software decode)
+run_fp16_baseline,free_run_state,1.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,free_tokenizer,1.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,generate,1.0,0.04,0.01,FP16,baseline (software decode)
+run_fp16_baseline,matmul,10880.0,2.97,0.69,FP16,baseline (software decode)
+run_fp16_baseline,rmsnorm,3200.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,safe_printf,128.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,sample,117.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline,softmax,18432.0,0.0,0.0,FP16,baseline (software decode)
+run_fp16_baseline_native,build_tokenizer,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,build_transformer,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,decode,128.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,encode,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,forward,128.0,100.0,7.66,FP16,baseline (_Float16)
+run_fp16_baseline_native,free_run_state,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,free_tokenizer,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,free_transformer,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,generate,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,malloc_run_state,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,memory_map_weights,1.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,rmsnorm,3200.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,safe_printf,128.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,sample,117.0,0.0,0.0,FP16,baseline (_Float16)
+run_fp16_baseline_native,softmax,18432.0,0.0,0.0,FP16,baseline (_Float16)
+run_int8_baseline,_init,,0.26,0.01,INT8,baseline
+run_int8_baseline,build_tokenizer,1.0,0.0,0.0,INT8,baseline
+run_int8_baseline,build_transformer,1.0,0.0,0.0,INT8,baseline
+run_int8_baseline,decode,128.0,0.0,0.0,INT8,baseline
+run_int8_baseline,encode,1.0,0.0,0.0,INT8,baseline
+run_int8_baseline,forward,128.0,1.85,0.07,INT8,baseline
+run_int8_baseline,free_run_state,1.0,0.0,0.0,INT8,baseline
+run_int8_baseline,init_quantized_tensors,7.0,0.0,0.0,INT8,baseline
+run_int8_baseline,matmul,10880.0,97.36,3.69,INT8,baseline
+run_int8_baseline,memory_map_weights,1.0,0.53,0.02,INT8,baseline
+run_int8_baseline,quantize,6272.0,0.0,0.0,INT8,baseline
+run_int8_baseline,rmsnorm,3200.0,0.0,0.0,INT8,baseline
+run_int8_baseline,safe_printf,128.0,0.0,0.0,INT8,baseline
+run_int8_baseline,sample,117.0,0.0,0.0,INT8,baseline
+run_int8_baseline,softmax,18432.0,0.0,0.0,INT8,baseline
+run_fp32_simd,build_tokenizer,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,build_transformer,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,decode,128.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,encode,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,forward,128.0,2.48,0.05,FP32,SIMD
+run_fp32_simd,free_run_state,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,free_tokenizer,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,free_transformer,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,generate,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,malloc_run_state,1.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,matmul_basic_rows,10880.0,96.53,1.95,FP32,SIMD
+run_fp32_simd,rmsnorm,3200.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,safe_printf,128.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,sample,117.0,0.0,0.0,FP32,SIMD
+run_fp32_simd,softmax,18432.0,0.99,0.02,FP32,SIMD
+run_fp32_simd_4row,_init,,0.85,0.01,FP32,SIMD 4-row
+run_fp32_simd_4row,build_tokenizer,1.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,build_transformer,1.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,decode,128.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,encode,1.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,forward,128.0,5.98,0.07,FP32,SIMD 4-row
+run_fp32_simd_4row,free_run_state,1.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,free_tokenizer,1.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,generate,1.0,0.85,0.01,FP32,SIMD 4-row
+run_fp32_simd_4row,matmul_4row,10880.0,92.31,1.08,FP32,SIMD 4-row
+run_fp32_simd_4row,matmul_basic_rows,10880.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,rmsnorm,3200.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,safe_printf,128.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,sample,117.0,0.0,0.0,FP32,SIMD 4-row
+run_fp32_simd_4row,softmax,18432.0,0.0,0.0,FP32,SIMD 4-row
