@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG CMakeFiles/test_matmul_simd.dir/tests/test_matmul_simd.c.o CMakeFiles/test_matmul_simd.dir/src/tokenizer.c.o -o test_matmul_simd  -lm 

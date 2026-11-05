@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG CMakeFiles/run_fp32_baseline.dir/src/run_fp32_baseline.c.o CMakeFiles/run_fp32_baseline.dir/src/tokenizer.c.o CMakeFiles/run_fp32_baseline.dir/src/perplexity.c.o CMakeFiles/run_fp32_baseline.dir/src/agreement.c.o -o run_fp32_baseline  -lm 

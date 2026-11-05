@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG CMakeFiles/run_fp16_baseline.dir/src/run_fp16_baseline.c.o CMakeFiles/run_fp16_baseline.dir/src/tokenizer.c.o CMakeFiles/run_fp16_baseline.dir/src/perplexity.c.o CMakeFiles/run_fp16_baseline.dir/src/agreement.c.o -o run_fp16_baseline  -lm 

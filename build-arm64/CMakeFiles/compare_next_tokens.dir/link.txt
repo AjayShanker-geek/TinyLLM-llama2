@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG CMakeFiles/compare_next_tokens.dir/src/compare_next_tokens.c.o -o compare_next_tokens 

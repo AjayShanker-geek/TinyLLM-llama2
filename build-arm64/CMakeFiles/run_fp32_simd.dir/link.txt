@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG CMakeFiles/run_fp32_simd.dir/src/run_fp32_simd.c.o CMakeFiles/run_fp32_simd.dir/src/tokenizer.c.o CMakeFiles/run_fp32_simd.dir/src/perplexity.c.o CMakeFiles/run_fp32_simd.dir/src/agreement.c.o -o run_fp32_simd  -lm 
