@@ -49,8 +49,9 @@
 #   check every row scored the same text), threads, tokens (scored), mean_nll (nats),
 #   perplexity (exp(mean_nll), lower is better), wall_s (time of the ppl run)
 #
-# Note: the binaries print tok/s differently (run_fp32_openmp includes sampling and
-# printing, run_int8_baseline times only forward()), so compare binaries by wall_s.
+# Note: every binary prints "achieved tok/s" the same way (llama2.c style): tokens 2..N,
+# including forward(), sampling and printing; excluding model loading and the first step.
+# wall_s also includes model loading, so compare binaries by tok_s, not wall_s.
 #
 # This script expects the Ubuntu container's GNU tools (date +%N, stat -c).
 

@@ -618,18 +618,14 @@ void generate(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler, 
     }
 
     // start the main loop
-    double forward_seconds = 0.0;
-    int timed_steps = 0;
+    double start = 0.0;
     int next;        // will store the next token in the sequence
     int token = prompt_tokens[0]; // kick off with the first token in the prompt
     int pos = 0;     // position in the sequence
     while (pos < steps) {
 
         // forward the transformer to get logits for the next token
-        double begin = time_in_seconds();
         float* logits = forward(transformer, token, pos);
-        double elapsed = time_in_seconds() - begin;
-        if (pos > 0) { forward_seconds += elapsed; timed_steps++; }
 
         // advance the state state machine
         if (pos < num_prompt_tokens - 1) {
@@ -650,18 +646,16 @@ void generate(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler, 
         fflush(stdout);
         token = next;
 
-
+        // init the timer here because the first iteration can be slower
+        if (start == 0.0) { start = time_in_seconds(); }
     }
     printf("\n");
 
-    /* Time only forward() (includes on-demand FP16 decoding), omit first step.
-     * Printing, sampling and checkpoint loading are outside this measurement.
-     * Prompt and generated steps are both counted; this is not decode-only.
-     */
-    fprintf(stderr, "forward steps: %d; timed steps: %d; forward seconds: %.6f\n",
-            pos, timed_steps, forward_seconds);
-    if (timed_steps > 0 && forward_seconds > 0.0) {
-        fprintf(stderr, "forward tokens/s: %.6f\n", timed_steps / forward_seconds);
+    // report achieved tok/s (pos-1 because the timer starts after first iteration)
+    // includes forward(), sampling and printing; excludes checkpoint loading and the first step
+    if (pos > 1) {
+        double end = time_in_seconds();
+        fprintf(stderr, "achieved tok/s: %f\n", (pos - 1) / (end - start));
     }
 
     free(prompt_tokens);
