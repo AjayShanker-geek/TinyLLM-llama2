@@ -1,0 +1,1 @@
+/usr/bin/cc -O3 -DNDEBUG -fopenmp CMakeFiles/run_fp32_openmp_neon.dir/src/run_fp32_openmp_neon.c.o CMakeFiles/run_fp32_openmp_neon.dir/src/tokenizer.c.o CMakeFiles/run_fp32_openmp_neon.dir/src/util.c.o CMakeFiles/run_fp32_openmp_neon.dir/src/perplexity.c.o CMakeFiles/run_fp32_openmp_neon.dir/src/agreement.c.o -o run_fp32_openmp_neon  -lm 

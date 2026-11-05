@@ -1,0 +1,13 @@
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp32_baseline.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp16_baseline.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp16_baseline_native.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_int8_baseline.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp32_simd.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp32_simd_4row.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/test_matmul_simd.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp32_openmp.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp32_openmp_simd.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/run_fp32_openmp_neon.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/compare_next_tokens.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/edit_cache.dir
+/workspace/TinyLLM-llama2/build-arm64/CMakeFiles/rebuild_cache.dir
