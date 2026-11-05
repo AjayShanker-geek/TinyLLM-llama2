@@ -12,6 +12,7 @@
 #endif
 #include "run_fp16_baseline_native.h"
 #include "perplexity.h"
+#include "agreement.h"
 #include "tokenizer.h"
 /* FP16 stored weights, FP32 products/accumulation/activations/KV cache.
  * Adapted from this repository's INT8 baseline; uses the L2FP16 v1 format.
@@ -776,9 +777,10 @@ void error_usage() {
     fprintf(stderr, "  -n <int>    number of steps to run for, default 256. 0 = max_seq_len\n");
     fprintf(stderr, "  -i <string> input prompt\n");
     fprintf(stderr, "  -z <string> optional path to custom tokenizer\n");
-    fprintf(stderr, "  -m <string> mode: generate|chat|ppl, default: generate\n");
+    fprintf(stderr, "  -m <string> mode: generate|chat|ppl|agreement, default: generate\n");
     fprintf(stderr, "  -y <string> (optional) system prompt in chat mode\n");
     fprintf(stderr, "  -f <string> text file to score in ppl mode\n");
+    fprintf(stderr, "  -o <string> output CSV for agreement mode\n");
     exit(EXIT_FAILURE);
 }
 
@@ -795,6 +797,8 @@ int main(int argc, char *argv[]) {
     char *mode = "generate";    // generate|chat
     char *system_prompt = NULL; // the (optional) system prompt to use in chat mode
     char *text_path = NULL;     // evaluation text file for ppl mode
+    char *agreement_path = NULL; // CSV output for agreement mode
+    int agreement_status = 0;
 
     // poor man's C argparse so we can override the defaults above from the command line
     if (argc >= 2) { checkpoint_path = argv[1]; } else { error_usage(); }
@@ -812,6 +816,7 @@ int main(int argc, char *argv[]) {
         else if (argv[i][1] == 'z') { tokenizer_path = argv[i + 1]; }
         else if (argv[i][1] == 'm') { mode = argv[i + 1]; }
         else if (argv[i][1] == 'y') { system_prompt = argv[i + 1]; }
+        else if (argv[i][1] == 'o') { agreement_path = argv[i + 1]; }
         else if (argv[i][1] == 'f') { text_path = argv[i + 1]; }
         else { error_usage(); }
     }
@@ -840,6 +845,11 @@ int main(int argc, char *argv[]) {
         generate(&transformer, &tokenizer, &sampler, prompt, steps);
     } else if (strcmp(mode, "chat") == 0) {
         chat(&transformer, &tokenizer, &sampler, prompt, system_prompt, steps);
+    } else if (strcmp(mode, "agreement") == 0) {
+        if (text_path == NULL || agreement_path == NULL) { error_usage(); }
+        agreement_status = agreement_file(
+            &transformer, forward_cb, transformer.config.vocab_size,
+            transformer.config.seq_len, &tokenizer, text_path, agreement_path);
     } else if (strcmp(mode, "ppl") == 0) {
         if (text_path == NULL) { error_usage(); }
         perplexity_file(&transformer, forward_cb, transformer.config.vocab_size, transformer.config.seq_len,
@@ -853,6 +863,6 @@ int main(int argc, char *argv[]) {
     free_sampler(&sampler);
     free_tokenizer(&tokenizer);
     free_transformer(&transformer);
-    return 0;
+    return agreement_status ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 #endif
