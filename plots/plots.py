@@ -15,6 +15,8 @@ Figures:
     4_tok_s_boxplot.*      raw tok/s of every run: (a) timing runs, (b) thread sweep; mean marked
     5_cachegrind.*         simulated I1 / D1 / LL data miss rates
     6_perf_breakdown.*     share of CPU time per function group (perf record)
+    7_next_token_agreement.*  (a) % of positions whose argmax differs from FP32,
+                           (b) what those mismatches were: FP32 right / this binary right / both wrong
 
 Colour encodes precision (FP32 / FP16 / INT8) wherever binaries are compared, the same in
 every figure. Palette checked for colour-blind separation; values are printed on the marks.
@@ -348,13 +350,15 @@ def plot_cachegrind(data: RunData):
         for p, v in zip(pos, df[m]):
             text = f"{v:.2f}" if v >= 0.01 else (f"{v:.4f}" if v >= 0.0001 else "<0.0001")
             ax.text(p, v, text, ha="center", va="bottom", fontsize=8, color=INK)
-    ax.set_xticks(x, [label(b) for b in df["binary"]], fontsize=8.5)
+    ax.set_xticks(x, [label(b) + ("\n[1 thr]" if "openmp" in str(b) else "") for b in df["binary"]],
+                  fontsize=8.5)
     ax.set_ylabel("Miss rate (%)")
     ax.set_ylim(0, df[metrics].to_numpy().max() * 1.15)
     ax.grid(axis="x", visible=False)
     ax.set_title("Simulated cache miss rates (cachegrind)")
     ax.legend(title="Cache", loc="upper left")
-    subtitle(fig, "Cachegrind with a fixed 32 KiB L1 I/D and 8 MiB last-level cache, 16 tokens. "
+    subtitle(fig, "Cachegrind with a fixed 32 KiB L1 I/D and 8 MiB last-level cache, 16 tokens, 1 thread "
+                  "(OpenMP builds run with OMP_NUM_THREADS=1: valgrind cannot model per-core caches). "
                   "Data miss rate = (read + write misses) / (reads + writes).")
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     return fig
@@ -416,6 +420,73 @@ def plot_perf_breakdown(data: RunData):
 
 
 # ----------------------------------------------------------------------------
+# 7. Next-token agreement vs FP32
+
+MISMATCH_KINDS = [  # column, legend label, colour
+    ("ref_right_only", "FP32 right, this binary wrong", SERIES[3]),
+    ("cand_right_only", "This binary right, FP32 wrong", SERIES[4]),
+    ("both_wrong", "Both wrong (different tokens)", NEUTRAL),
+]
+
+
+def plot_agreement(data: RunData):
+    df = data.agreement
+    if df.empty:
+        return None
+    ref = str(df["reference"].iloc[0])
+    has_kinds = all(c in df.columns for c, _, _ in MISMATCH_KINDS) and df["ref_right_only"].notna().any()
+    fig, axes = plt.subplots(1, 2 if has_kinds else 1, figsize=(14 if has_kinds else 9, 5.5),
+                             squeeze=False, sharey=True)
+    y = np.arange(len(df))[::-1]  # first binary at the top
+
+    # (a) flip rate: share of positions whose argmax differs from the reference
+    ax = axes[0, 0]
+    colours = [PRECISION_COLOURS.get(p, NEUTRAL) for p in df["precision"]]
+    ax.barh(y, df["flip_pct"], color=colours, height=0.7, edgecolor=SURFACE, linewidth=2)
+    for yi, (_, row) in zip(y, df.iterrows()):
+        note = "reference" if str(row["binary"]) == ref else \
+            f"{int(row['mismatches'])} of {int(row['positions'])} differ"
+        ax.text(row["flip_pct"], yi, f"  {row['agreement_pct']:.2f}% agree · {note}",
+                va="center", ha="left", fontsize=8.5, color=INK)
+    ax.set_yticks(y, [label(b) for b in df["binary"]], fontsize=8.5)
+    ax.set_xlim(0, max(df["flip_pct"].max(), 0.5) * 1.9)  # room for the labels; 0.5% if nothing differs
+    ax.set_xlabel(f"Positions whose top-1 token differs from {one_line(ref)} (%, lower is better)")
+    ax.grid(axis="y", visible=False)
+    ax.set_title("(a) Disagreement with FP32 (1 − agreement)")
+    precision_legend(ax, df["precision"], loc="lower right")
+
+    # (b) what kind of mismatch: did the change lose or gain a correct prediction?
+    if has_kinds:
+        ax = axes[0, 1]
+        left = np.zeros(len(df))
+        for col, name, colour in MISMATCH_KINDS:
+            values = df[col].fillna(0).to_numpy(dtype=float)
+            ax.barh(y, values, left=left, color=colour, height=0.7, edgecolor=SURFACE, linewidth=2, label=name)
+            for yi, l, v in zip(y, left, values):
+                if v > 0:
+                    ax.text(l + v / 2, yi, f"{int(v)}", ha="center", va="center", fontsize=8,
+                            color="white" if colour == NEUTRAL else INK)
+            left += values
+        for yi, total, (_, row) in zip(y, left, df.iterrows()):
+            acc = row.get("top1_acc_pct", np.nan)
+            ax.text(total, yi, f"  top-1 acc {acc:.2f}%" if pd.notna(acc) else "", va="center",
+                    ha="left", fontsize=8.5, color=INK_2)
+        ax.set_xlim(0, max(left.max(), 1) * 1.6)
+        ax.set_xlabel("Mismatched positions (count)")
+        ax.grid(axis="y", visible=False)
+        ax.set_title("(b) Kind of mismatch, and top-1 accuracy on the true text")
+        ax.legend(loc="lower right")
+
+    fig.suptitle("Next-token agreement with the FP32 baseline", x=0.01, ha="left", fontweight="bold", fontsize=13)
+    text = df["text"].iloc[0] if "text" in df else ""
+    subtitle(fig, f"Teacher forcing on {text} ({int(df['positions'].iloc[0])} positions): at each position "
+                  "both models see the same true context; argmax of the logits compared (temperature-independent). "
+                  "Top-1 accuracy = argmax equals the true next token.")
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    return fig
+
+
+# ----------------------------------------------------------------------------
 
 
 FIGURES = [
@@ -425,6 +496,7 @@ FIGURES = [
     ("4_tok_s_boxplot", plot_tok_s_boxplot),
     ("5_cachegrind", plot_cachegrind),
     ("6_perf_breakdown", plot_perf_breakdown),
+    ("7_next_token_agreement", plot_agreement),
 ]
 
 
@@ -449,7 +521,8 @@ def main() -> None:
             continue
         for ext in ("png", "pdf"):
             fig.savefig(out / f"{name}.{ext}", dpi=200, bbox_inches="tight")
-        print(f"wrote {(out / name).relative_to(ROOT)}.png/.pdf")
+        shown = out / name
+        print(f"wrote {shown.relative_to(ROOT) if shown.is_relative_to(ROOT) else shown}.png/.pdf")
         if not args.show:
             plt.close(fig)
     if args.show:
