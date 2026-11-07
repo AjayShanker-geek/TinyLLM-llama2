@@ -1,7 +1,0 @@
-Lila and Tom are friends. They like to play in the park. One day, they see a big tree with many leaves. They want to climb the tree.
-"Can we climb the tree?" Lila asks Tom.
-"Yes, we can. But we have to be careful. The tree is very high." Tom says.
-They hold hands and walk to the tree. They find a low branch and pull themselves up. They feel happy and brave. They climb higher and higher. They see birds and squirrels and flowers.
-"Look, Lila, I found a leaf!"forward steps: 128; timed steps: 127; forward seconds: 3.678216
-forward tokens/s: 34.527610
-

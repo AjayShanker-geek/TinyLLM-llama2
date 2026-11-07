@@ -1,0 +1,188 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 8K of event 'cpu-clock'
+# Event count (approx.): 8343343335
+#
+# Overhead  Command          Shared Object     Symbol                   
+# ........  ...............  ................  .........................
+#
+    48.33%  run_fp32_openmp  run_fp32_openmp   [.] matmul_nowait
+            |
+            ---matmul_nowait
+               |          
+               |--18.42%--0xffff8c4bfc2c
+               |          start_thread
+               |          thread_start
+               |          
+               |--16.09%--forward._omp_fn.2
+               |          |          
+               |          |--14.13%--0xffff8c4bfc2c
+               |          |          start_thread
+               |          |          thread_start
+               |          |          
+               |           --1.96%--GOMP_parallel
+               |                     forward
+               |                     generate
+               |                     main
+               |                     __libc_start_call_main
+               |                     __libc_start_main@@GLIBC_2.34
+               |                     _start
+               |          
+               |--11.30%--forward._omp_fn.0
+               |          |          
+               |          |--9.83%--0xffff8c4bfc2c
+               |          |          start_thread
+               |          |          thread_start
+               |          |          
+               |           --1.48%--GOMP_parallel
+               |                     forward
+               |                     generate
+               |                     main
+               |                     __libc_start_call_main
+               |                     __libc_start_main@@GLIBC_2.34
+               |                     _start
+               |          
+                --2.52%--GOMP_parallel
+                          forward
+                          generate
+                          main
+                          __libc_start_call_main
+                          __libc_start_main@@GLIBC_2.34
+                          _start
+
+    42.44%  run_fp32_openmp  run_fp32_openmp   [.] matmul._omp_fn.0
+            |
+            ---matmul._omp_fn.0
+               |          
+               |--36.96%--0xffff8c4bfc2c
+               |          start_thread
+               |          thread_start
+               |          
+                --5.46%--GOMP_parallel
+                          forward
+                          generate
+                          main
+                          __libc_start_call_main
+                          __libc_start_main@@GLIBC_2.34
+                          _start
+
+     2.65%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022e54
+            |
+            ---0xffff8c4c2e54
+
+     1.54%  run_fp32_openmp  run_fp32_openmp   [.] forward._omp_fn.1
+            |
+            ---forward._omp_fn.1
+               |          
+                --1.37%--0xffff8c4bfc2c
+                          start_thread
+                          thread_start
+
+     1.42%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022b28
+            |
+            ---0xffff8c4c2b28
+
+     0.92%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022e64
+            |
+            ---0xffff8c4c2e64
+
+     0.61%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022b38
+            |
+            ---0xffff8c4c2b38
+
+     0.29%  run_fp32_openmp  [unknown]         [k] 0xffff8000802bcb5c
+     0.19%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x00000000000419c0
+     0.13%  run_fp32_openmp  [unknown]         [k] 0xffff8000802d09c0
+     0.07%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022b34
+     0.07%  run_fp32_openmp  run_fp32_openmp   [.] rmsnorm
+     0.05%  run_fp32_openmp  libm.so.6         [.] expf@@GLIBC_2.27
+     0.05%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b0298
+     0.05%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b5668
+     0.05%  run_fp32_openmp  [unknown]         [k] 0xffff8000814dc4d0
+     0.04%  run_fp32_openmp  libc.so.6         [.] syscall
+     0.04%  run_fp32_openmp  libm.so.6         [.] powf@@GLIBC_2.27
+     0.04%  run_fp32_openmp  run_fp32_openmp   [.] expf@plt
+     0.02%  run_fp32_openmp  libc.so.6         [.] __memcpy_generic
+     0.02%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022b40
+     0.02%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022e60
+     0.02%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022e6c
+     0.02%  run_fp32_openmp  run_fp32_openmp   [.] sample
+     0.02%  run_fp32_openmp  [unknown]         [k] 0xffff8000800b59f8
+     0.02%  run_fp32_openmp  [unknown]         [k] 0xffff80008011d2c4
+     0.02%  run_fp32_openmp  [unknown]         [k] 0xffff800080354588
+     0.02%  run_fp32_openmp  [unknown]         [k] 0xffff800080354a68
+     0.02%  run_fp32_openmp  [unknown]         [k] 0xffff8000814dcf80
+     0.02%  run_fp32_openmp  [unknown]         [k] 0xffff8000814dcfcc
+     0.01%  run_fp32_openmp  libc.so.6         [.] _IO_file_xsgetn
+     0.01%  run_fp32_openmp  libc.so.6         [.] __vfprintf_internal
+     0.01%  run_fp32_openmp  libc.so.6         [.] msort_with_tmp.part.0
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x000000000001fc34
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x000000000001fc38
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000020250
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x00000000000202c0
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x00000000000202f8
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000020a18
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000022b30
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x000000000002304c
+     0.01%  run_fp32_openmp  libgomp.so.1.0.0  [.] 0x0000000000023054
+     0.01%  run_fp32_openmp  libm.so.6         [.] __sincosf
+     0.01%  run_fp32_openmp  run_fp32_openmp   [.] powf@plt
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008014e244
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802b844c
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802bbf84
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802bc050
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802bcb58
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802be81c
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802beb74
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802becc4
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802c12e0
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802ceac4
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802cef24
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802d080c
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802d4e80
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802e9930
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000802f6e84
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080318ff8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008031ef24
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008031f188
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080327c14
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803381a8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008033b954
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080356744
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080366b90
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080368e24
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803af6b8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803afbfc
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803afc64
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b0280
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b0284
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b19c4
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b3470
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b3548
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b54e8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b5ca4
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000803b5cac
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008046bf68
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008075d80c
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008076b458
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080b2b528
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080c9ba28
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080c9f0b8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff800080ca8ba8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff80008149ca8c
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814c8524
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814cbd98
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814cc52c
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814d1ce8
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814d1d10
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814dc280
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814dc5d4
+     0.01%  run_fp32_openmp  [unknown]         [k] 0xffff8000814dcb84
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

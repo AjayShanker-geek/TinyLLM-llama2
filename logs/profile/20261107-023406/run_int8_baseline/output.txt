@@ -1,0 +1,62 @@
+=== p01: Robbie had just turned three and was so excited.
+Robbie had just turned three and was so excited. He was going to the park with his mom and dad. He put on his shoes and grabbed his hat.
+When they got to the park, Robbie saw a big slide. He ran over to it and started to climb up. His mom and dad watched him and smiled.
+When Robbie got to the top, he looked down and saw a big puddle. He wanted to jump in it, but his mom said no. She said it was too deep.
+Robbie was sad, but then he saw something else.achieved tok/s: 34.833201
+
+
+=== p02: Once upon a time there was a little boy called Tim.
+Once upon a time there was a little boy called Tim. He was three years old and loved to explore. One day, he decided to go on an adventure. He put on his shoes and grabbed his hat.
+Tim walked through the forest and soon he came to a big lake. He saw a boat and decided to get in. He was so excited! He started to row the boat and soon he was far away from the shore.
+Suddenly, he heard a loud noise. He looked around and saw a big, scary monster! Tim was so scared that he started to cryachieved tok/s: 34.645870
+
+
+=== p03: Once upon a time, there was a little girl who had a smooth doll.
+Once upon a time, there was a little girl who had a smooth doll. She loved her doll very much and played with her every day. One day, the little girl went to the park with her doll. She was having so much fun playing on the swings and the slide.
+Suddenly, a big dog came running towards her. The little girl got scared and ran away, leaving her doll behind. The dog picked up the doll in its mouth and ran away with it. The little girl was very sad and cried a lot.
+The little girl's mommy tried to find the doll, butachieved tok/s: 35.026944
+
+
+=== p04: Once upon a time, there was a little boy named Jake.
+Once upon a time, there was a little boy named Jake. Jake was three years old and he loved to explore. One day, Jake was walking in the park when he saw a big, shiny box. He was so excited and he wanted to open it.
+Jake asked his mom, "Mommy, can I open the box?" His mom said, "Yes, but be careful. Don't be careless."
+Jake opened the box and inside he found a big, red balloon. He was so happy and he wanted to play with it. He grabbed theachieved tok/s: 34.563026
+
+
+=== p05: Once there was a very clever girl named Mia.
+Once there was a very clever girl named Mia. She was always looking for ways to help people. One day, Mia saw a man who was very sad. She asked him why he was so sad and he said he was looking for a special gift. Mia thought for a moment and then she had an idea. She said, "I can help you find the gift!"
+The man was very happy and he thanked Mia. He said, "I'm sure you can find it!" Mia smiled and said, "I'm sure I can!"
+Mia and the man went on a longachieved tok/s: 34.334859
+
+
+=== p06: One day there was a little girl named Mia.
+One day there was a little girl named Mia. She was three years old and loved to explore. She was walking in the park when she saw a big, red balloon. She was so excited and ran over to it.
+Mia asked her mom, "Can I have the balloon?" Her mom said, "Yes, but you have to be careful. Don't let it go!"
+Mia was so happy and held the balloon tightly. She ran around the park with it, feeling the wind on her face. Suddenly, the balloon slipped out of herachieved tok/s: 32.997262
+
+
+=== p07: Once upon a time, there was a big park.
+Once upon a time, there was a big park. In the park, there was a swing. A little boy named Tim loved to play on the swing. One day, Tim saw a big, red ball near the swing. He wanted to play with the ball, but he was scared. He thought the ball might be dangerous.
+Tim's friend, Sue, came to the park too. She saw Tim looking at the ball. Sue said, "Let's play with the ball together!" Tim was still scared, but he wanted to be brave. So, he said, "Okay, let'sachieved tok/s: 34.935324
+
+
+=== p08: One morning, Jane woke up and smiled.
+One morning, Jane woke up and smiled. She was excited to go outside and play. She put on her shoes and ran out the door.
+Jane saw a big, green tree in the garden. She ran over to it and touched its trunk. It felt rough and bumpy.
+Jane looked around and saw a big, yellow butterfly. She smiled and followed it around the garden. The butterfly flew up and down and Jane laughed.
+Suddenly, Jane heard a noise. It was her mom calling her. She ran back to the house and saw her momachieved tok/s: 34.817738
+
+
+=== p09: Once upon a time, there was a doggy named Max.
+Once upon a time, there was a doggy named Max. Max was a good doggy who loved to play and run around. One day, Max's owner took him to the park to play fetch. Max was so happy and excited to play with his owner.
+But then, Max saw a squirrel and ran after it. His owner called for him to come back, but Max didn't listen. He chased the squirrel up a tree and got stuck. His owner tried to help him, but he couldn't reach him.
+Max's owner had to call the fire departmentachieved tok/s: 34.413700
+
+
+=== p10: Once upon a time there was a little girl who wanted a castle.
+Once upon a time there was a little girl who wanted a castle. She asked her mom if she could have one and her mom said yes. The little girl was so excited!
+The next day, the little girl and her mom went to the store to buy the castle. The little girl saw a big, beautiful castle and she wanted it so badly. But her mom said it was too expensive.
+The little girl was so sad. She wanted the castle so badly. But then her mom said, "Let's look around and see if we can find something else."
+So they looked around and found a small, cheapachieved tok/s: 34.219377
+
+

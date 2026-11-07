@@ -1,0 +1,41 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 7K of event 'cpu-clock'
+# Event count (approx.): 7727727720
+#
+# Overhead  Command          Shared Object             Symbol                          
+# ........  ...............  ........................  ................................
+#
+    99.73%  run_fp16_baseli  run_fp16_baseline_native  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.04%  run_fp16_baseli  run_fp16_baseline_native  [.] rmsnorm
+     0.03%  run_fp16_baseli  libc.so.6                 [.] msort_with_tmp.part.0
+     0.03%  run_fp16_baseli  libm.so.6                 [.] powf@@GLIBC_2.27
+     0.03%  run_fp16_baseli  [unknown]                 [k] 0xffff800080ca8ba8
+     0.01%  run_fp16_baseli  libc.so.6                 [.] _IO_str_init_static_internal
+     0.01%  run_fp16_baseli  libc.so.6                 [.] alloc_perturb
+     0.01%  run_fp16_baseli  libc.so.6                 [.] cfree@GLIBC_2.17
+     0.01%  run_fp16_baseli  libc.so.6                 [.] strcmp
+     0.01%  run_fp16_baseli  libm.so.6                 [.] __sincosf
+     0.01%  run_fp16_baseli  libm.so.6                 [.] expf@@GLIBC_2.27
+     0.01%  run_fp16_baseli  run_fp16_baseline_native  [.] sample
+     0.01%  run_fp16_baseli  run_fp16_baseline_native  [.] softmax
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000802d4e80
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000803271cc
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff800080327cdc
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000803b5ca4
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

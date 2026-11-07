@@ -1,0 +1,53 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 7K of event 'cpu-clock'
+# Event count (approx.): 7377377370
+#
+# Overhead  Command          Shared Object      Symbol                   
+# ........  ...............  .................  .........................
+#
+    99.42%  run_fp32_baseli  run_fp32_baseline  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.11%  run_fp32_baseli  [unknown]          [k] 0xffff800080ca8ba8
+     0.04%  run_fp32_baseli  libm.so.6          [.] powf@@GLIBC_2.27
+     0.03%  run_fp32_baseli  libc.so.6          [.] msort_with_tmp.part.0
+     0.03%  run_fp32_baseli  libm.so.6          [.] expf@@GLIBC_2.27
+     0.03%  run_fp32_baseli  run_fp32_baseline  [.] rmsnorm
+     0.03%  run_fp32_baseli  run_fp32_baseline  [.] sample
+     0.03%  run_fp32_baseli  [unknown]          [k] 0xffff8000803b5ca4
+     0.03%  run_fp32_baseli  [unknown]          [k] 0xffff8000814cc52c
+     0.01%  run_fp32_baseli  libc.so.6          [.] __printf_buffer
+     0.01%  run_fp32_baseli  libc.so.6          [.] _int_free
+     0.01%  run_fp32_baseli  libc.so.6          [.] strcmp
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] expf@plt
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] sincosf@plt
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000802bcb5c
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000802d4e80
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff800080338288
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008033b450
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803b14d0
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803c7128
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008075d2a0
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff800080b6c158
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008149ca88
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008149ca8c
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008149f520
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008149f798
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000814c8ba8
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000814cbd98
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000814dc4d0
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

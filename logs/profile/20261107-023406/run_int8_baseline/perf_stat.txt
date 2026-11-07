@@ -1,0 +1,22 @@
+# started on Sat Nov  7 02:46:00 2026
+
+
+ Performance counter stats for '/workspace/build-docker/run_int8_baseline /workspace/models/stories110M_int8.bin -z /workspace/models/tokenizer.bin -t 0 -s 42 -n 128 -i Robbie had just turned three and was so excited.':
+
+           3724.71 msec task-clock                       #    0.996 CPUs utilized             
+              1041      context-switches                 #  279.485 /sec                      
+                 2      cpu-migrations                   #    0.537 /sec                      
+              3395      page-faults                      #  911.481 /sec                      
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      cache-references                                                      
+   <not supported>      cache-misses                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+       3.740002876 seconds time elapsed
+
+       3.711913000 seconds user
+       0.012992000 seconds sys
+
+

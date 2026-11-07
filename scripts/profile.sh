@@ -25,6 +25,9 @@
 #                    always 1 thread (OMP_NUM_THREADS=1), also for the OpenMP builds
 #        massif      peak heap memory
 #        thread sweep  timing repeated for each thread count in THREADS_SWEEP (OpenMP)
+#        cachegrind sweep  total simulated cache misses for each THREADS_SWEEP count (OpenMP,
+#                    CG_SWEEP=0 skips). Valgrind runs threads one at a time on ONE shared
+#                    simulated cache: totals are meaningful, per-core behaviour is not
 #   6. perplexity    accuracy on PPL_TEXT (`-m ppl -f`), skipped if the file is missing or PPL=0
 #   7. agreement     teacher-forced argmax trace on AGREE_TEXT (`-m agreement -f -o`); after all
 #                    binaries, compare_next_tokens compares each trace with run_fp32_baseline's
@@ -78,6 +81,7 @@ RUNS="${RUNS:-5}"                      # measured repeats per prompt (after 1 wa
 STEPS="${STEPS:-128}"                  # tokens per run (-n)
 VALGRIND_STEPS="${VALGRIND_STEPS:-16}" # tokens for valgrind runs (~50x slower)
 THREADS_SWEEP="${THREADS_SWEEP:-1,2,4,6,8,10}"
+CG_SWEEP="${CG_SWEEP:-1}"                        # 1 = cachegrind at every THREADS_SWEEP count for OpenMP builds, 0 = skip
 PROMPTS_FILE="${PROMPTS_FILE:-data/prompts.txt}" # one prompt per line
 PROMPT="${PROMPT:-Once upon a time}"             # used only if PROMPTS_FILE is missing or empty
 SEED="${SEED:-42}"
@@ -100,6 +104,8 @@ ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp16_baseline run_fp16_bas
 
 # Fixed simulated cache for cachegrind: 32 KiB L1 I/D, 8 MiB last level
 CACHEGRIND_CACHE=(--I1=32768,8,64 --D1=32768,8,64 --LL=8388608,16,64)
+# Alternative (larger L1, 128-byte lines); swap it in above to use it:
+# CACHEGRIND_CACHE=(--I1=131072,8,128 --D1=65536,8,128 --LL=8388608,16,128)
 
 # PATHS
 RUN_ID="$(date +%Y%m%d-%H%M%S)"
@@ -255,6 +261,7 @@ system_info() {
     env | grep -E '^OMP_' || true
     echo "# settings"
     echo "LABEL=$LABEL STEPS=$STEPS VALGRIND_STEPS=$VALGRIND_STEPS RUNS=$RUNS SEED=$SEED"
+    echo "THREADS_SWEEP=$THREADS_SWEEP CG_SWEEP=$CG_SWEEP"
     echo "PROMPTS_FILE=$PROMPTS_FILE (${#PROMPTS[@]} prompts, see prompts.tsv; first: $PROMPT)"
     echo "PPL=$PPL PPL_TEXT=$PPL_TEXT"
     echo "AGREE=$AGREE AGREE_TEXT=$AGREE_TEXT AGREE_REF=$AGREE_REF"
@@ -569,6 +576,25 @@ run_cachegrind() {
     } | add_rows cachegrind 1
 }
 
+# CSV tool=cachegrind_sweep: total simulated misses (Ir, Dr, Dw, D1mr, DLmr, ... + miss rates)
+# for each thread count in THREADS_SWEEP, threads=<N>. Files: cachegrind_t<N>.out/.txt/.log
+# OMP_WAIT_POLICY=passive: idle libgomp threads sleep instead of spinning; valgrind would
+# otherwise count the spinning as extra instructions and memory reads.
+run_cachegrind_sweep() {
+  local t list out
+  IFS=',' read -ra list <<<"$THREADS_SWEEP"
+  for t in "${list[@]}"; do
+    out="$OUT/cachegrind_t${t}"
+    echo "  $t thread(s)"
+    OMP_NUM_THREADS="$t" OMP_WAIT_POLICY=passive \
+      valgrind --tool=cachegrind --cache-sim=yes "${CACHEGRIND_CACHE[@]}" \
+      --cachegrind-out-file="$out.out" \
+      "$BIN" "${VG_ARGS[@]}" >/dev/null 2>"$out.log" &&
+      cg_annotate "$out.out" >"$out.txt" &&
+      parse_cachegrind_totals "$out.out" | add_rows cachegrind_sweep "$t" || return 1
+  done
+}
+
 # CSV tool=massif. Files: massif.out, massif.txt, massif.log
 run_massif() {
   valgrind --tool=massif --massif-out-file="$OUT/massif.out" \
@@ -713,6 +739,7 @@ for NAME in "${BINARIES[@]}"; do
     # gprof only sees the main thread, so it is skipped. Cachegrind runs with 1 thread
     # (see run_cachegrind): valgrind cannot model per-core caches of a multi-threaded run
     step "$NAME: thread sweep" run_thread_sweep
+    if [[ "$CG_SWEEP" == 1 ]]; then step "$NAME: cachegrind thread sweep" run_cachegrind_sweep; fi
     step "$NAME: cachegrind (1 thread)" run_cachegrind
     ;;
   esac

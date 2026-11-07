@@ -24,10 +24,25 @@ else()
 endif()
 set(SIMD_ARCH "${DEFAULT_SIMD_ARCH}" CACHE STRING "Value passed to -march for SIMD/OpenMP builds")
 
+# -march for the FP16 builds. On ARM64, +fp16 = FP16 arithmetic (scalar and NEON) and
+# +fp16fml = FMLAL/FMLSL (FP16 multiply, FP32 accumulate); every Apple M-series, Graviton 2+
+# and Cortex-A76+ has both. A CPU without them crashes with "Illegal instruction".
+# On x86-64, x86-64-v3 includes F16C (hardware FP16 <-> FP32 conversion).
+# Check the CPU in Docker: grep -o -w 'fphp\|asimdhp\|asimdfhm' /proc/cpuinfo | sort -u
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64|amd64)$")
+  set(DEFAULT_FP16_ARCH "x86-64-v3")
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64|ARM64)$")
+  set(DEFAULT_FP16_ARCH "armv8.2-a+fp16fml")
+else()
+  set(DEFAULT_FP16_ARCH "native")
+endif()
+set(FP16_ARCH "${DEFAULT_FP16_ARCH}" CACHE STRING "Value passed to -march for the FP16 builds (scalar, no SIMD)")
+
 include_directories(include)
 
 # Ensure no optimzation done by the compiler
 add_library(no_optimization INTERFACE)
+add_library(fp16_optimisation INTERFACE)
 add_library(simd_optimisation INTERFACE)
 add_library(openmp_optimisation INTERFACE)
 add_library(openmp_simd_aggressive_optimisation INTERFACE)
@@ -38,6 +53,21 @@ target_compile_options(no_optimization
         # $<$<CONFIG:Debug>:-g>
         -O2 # Disable compiler optimizations
         -fno-tree-vectorize # Disable vectorization
+        -Wall
+        -Wextra
+        -Wpedantic
+)
+
+# Same as no_optimization, plus -march with the FP16 extensions (FP16_ARCH).
+# Scalar only: the FP16 builds must not use SIMD, so both auto-vectorizers are off
+# (loop vectorizer and SLP, which packs neighbouring scalar operations into vectors).
+# -march only makes the FP16 instructions available; the code stays scalar.
+target_compile_options(fp16_optimisation
+    INTERFACE
+        -O2 # same as the baseline
+        -march=${FP16_ARCH} # FP16 arithmetic + FMLAL on ARM64, F16C on x86-64
+        -fno-tree-vectorize # No loop auto-vectorization, same as the baseline
+        -fno-tree-slp-vectorize # No SLP (straight-line) vectorization either
         -Wall
         -Wextra
         -Wpedantic
@@ -102,7 +132,7 @@ add_executable(run_fp16_baseline
 
 target_include_directories(run_fp16_baseline PRIVATE include)
 
-target_link_libraries(run_fp16_baseline PRIVATE no_optimization)
+target_link_libraries(run_fp16_baseline PRIVATE fp16_optimisation)
 
 # Build for FP16 binary using the _Float16 type (hardware FP16->FP32 conversion on ARM64)
 add_executable(run_fp16_baseline_native
@@ -114,7 +144,7 @@ add_executable(run_fp16_baseline_native
     src/perplexity.c
 )
 
-target_link_libraries(run_fp16_baseline_native PRIVATE no_optimization)
+target_link_libraries(run_fp16_baseline_native PRIVATE fp16_optimisation)
 
 
 # Build for INT8 binary
@@ -231,7 +261,7 @@ target_link_libraries(run_fp32_openmp_neon
         openmp_optimisation
 )
 
-foreach(lib no_optimization simd_optimisation openmp_optimisation openmp_simd_aggressive_optimisation)
+foreach(lib no_optimization fp16_optimisation simd_optimisation openmp_optimisation openmp_simd_aggressive_optimisation)
   # Debug symbols so perf/valgrind can show function names and lines
   target_compile_options(${lib} INTERFACE -g)
   if(NOT WIN32)

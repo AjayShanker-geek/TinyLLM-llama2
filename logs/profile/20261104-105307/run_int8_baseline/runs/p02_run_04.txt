@@ -1,5 +1,0 @@
-Once upon a time there was a little boy called Tim. He was three years old and loved to explore. One day, he decided to go on an adventure. He put on his shoes and grabbed his hat.
-Tim walked through the forest and soon he came to a big lake. He saw a boat and decided to get in. He was so excited! He started to row the boat and soon he was far away from the shore.
-Suddenly, he heard a loud noise. He looked around and saw a big, scary monster! Tim was so scared that he started to cryforward steps: 128; timed steps: 127; forward seconds: 3.651409
-forward tokens/s: 34.781091
-

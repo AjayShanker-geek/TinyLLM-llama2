@@ -1,0 +1,22 @@
+# started on Fri Nov  6 01:23:18 2026
+
+
+ Performance counter stats for '/workspace/build-docker/run_fp32_baseline /workspace/models/stories110M.bin -z /workspace/models/tokenizer.bin -t 0 -s 42 -n 128 -i Robbie had just turned three and was so excited.':
+
+           7560.93 msec task-clock                       #    0.989 CPUs utilized             
+              3410      context-switches                 #  451.003 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+              5114      page-faults                      #  676.372 /sec                      
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      cache-references                                                      
+   <not supported>      cache-misses                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+       7.647509128 seconds time elapsed
+
+       7.533794000 seconds user
+       0.026977000 seconds sys
+
+

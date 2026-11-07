@@ -1,0 +1,22 @@
+# started on Sat Nov  7 03:13:01 2026
+
+
+ Performance counter stats for '/workspace/build-docker/run_fp32_simd /workspace/models/stories110M.bin -z /workspace/models/tokenizer.bin -t 0 -s 42 -n 128 -i Robbie had just turned three and was so excited.':
+
+           2054.26 msec task-clock                       #    0.966 CPUs utilized             
+              3371      context-switches                 #    1.641 K/sec                     
+                 0      cpu-migrations                   #    0.000 /sec                      
+              5102      page-faults                      #    2.484 K/sec                     
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      cache-references                                                      
+   <not supported>      cache-misses                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+       2.127613209 seconds time elapsed
+
+       2.021672000 seconds user
+       0.032848000 seconds sys
+
+

@@ -1,0 +1,120 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 96.83      3.67     3.67    10880     0.00     0.00  matmul
+  1.85      3.74     0.07      128     0.00     0.03  forward
+  0.53      3.76     0.02        1     0.02     0.02  memory_map_weights
+  0.26      3.77     0.01     6272     0.00     0.00  quantize
+  0.26      3.78     0.01     3200     0.00     0.00  rmsnorm
+  0.26      3.79     0.01      117     0.00     0.00  sample
+  0.00      3.79     0.00    18432     0.00     0.00  softmax
+  0.00      3.79     0.00      128     0.00     0.00  decode
+  0.00      3.79     0.00      128     0.00     0.00  safe_printf
+  0.00      3.79     0.00        7     0.00     0.00  init_quantized_tensors
+  0.00      3.79     0.00        1     0.00     0.00  build_tokenizer
+  0.00      3.79     0.00        1     0.00     0.02  build_transformer
+  0.00      3.79     0.00        1     0.00     0.00  encode
+  0.00      3.79     0.00        1     0.00     0.00  free_run_state
+  0.00      3.79     0.00        1     0.00     0.00  free_tokenizer
+  0.00      3.79     0.00        1     0.00     0.00  free_transformer
+  0.00      3.79     0.00        1     0.00     3.77  generate
+  0.00      3.79     0.00        1     0.00     0.00  malloc_run_state
+  0.00      3.79     0.00        1     0.00     0.02  read_checkpoint
+
+			Call graph
+
+
+granularity: each sample hit covers 4 byte(s) for 0.26% of 3.79 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00    3.79                 main [1]
+                0.00    3.77       1/1           generate [2]
+                0.00    0.02       1/1           build_transformer [5]
+                0.00    0.00       1/1           malloc_run_state [20]
+                0.00    0.00       1/1           build_tokenizer [15]
+                0.00    0.00       1/1           free_tokenizer [18]
+                0.00    0.00       1/1           free_run_state [17]
+                0.00    0.00       1/1           free_transformer [19]
+-----------------------------------------------
+                0.00    3.77       1/1           main [1]
+[2]     99.5    0.00    3.77       1         generate [2]
+                0.07    3.69     128/128         forward [3]
+                0.01    0.00     117/117         sample [10]
+                0.00    0.00     128/128         decode [12]
+                0.00    0.00     128/128         safe_printf [13]
+                0.00    0.00       1/1           encode [16]
+-----------------------------------------------
+                0.07    3.69     128/128         generate [2]
+[3]     99.2    0.07    3.69     128         forward [3]
+                3.67    0.00   10880/10880       matmul [4]
+                0.01    0.00    6272/6272        quantize [8]
+                0.01    0.00    3200/3200        rmsnorm [9]
+                0.00    0.00   18432/18432       softmax [11]
+-----------------------------------------------
+                3.67    0.00   10880/10880       forward [3]
+[4]     96.8    3.67    0.00   10880         matmul [4]
+-----------------------------------------------
+                0.00    0.02       1/1           main [1]
+[5]      0.5    0.00    0.02       1         build_transformer [5]
+                0.00    0.02       1/1           read_checkpoint [7]
+-----------------------------------------------
+                0.02    0.00       1/1           read_checkpoint [7]
+[6]      0.5    0.02    0.00       1         memory_map_weights [6]
+                0.00    0.00       7/7           init_quantized_tensors [14]
+-----------------------------------------------
+                0.00    0.02       1/1           build_transformer [5]
+[7]      0.5    0.00    0.02       1         read_checkpoint [7]
+                0.02    0.00       1/1           memory_map_weights [6]
+-----------------------------------------------
+                0.01    0.00    6272/6272        forward [3]
+[8]      0.3    0.01    0.00    6272         quantize [8]
+-----------------------------------------------
+                0.01    0.00    3200/3200        forward [3]
+[9]      0.3    0.01    0.00    3200         rmsnorm [9]
+-----------------------------------------------
+                0.01    0.00     117/117         generate [2]
+[10]     0.3    0.01    0.00     117         sample [10]
+-----------------------------------------------
+                0.00    0.00   18432/18432       forward [3]
+[11]     0.0    0.00    0.00   18432         softmax [11]
+-----------------------------------------------
+                0.00    0.00     128/128         generate [2]
+[12]     0.0    0.00    0.00     128         decode [12]
+-----------------------------------------------
+                0.00    0.00     128/128         generate [2]
+[13]     0.0    0.00    0.00     128         safe_printf [13]
+-----------------------------------------------
+                0.00    0.00       7/7           memory_map_weights [6]
+[14]     0.0    0.00    0.00       7         init_quantized_tensors [14]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[15]     0.0    0.00    0.00       1         build_tokenizer [15]
+-----------------------------------------------
+                0.00    0.00       1/1           generate [2]
+[16]     0.0    0.00    0.00       1         encode [16]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[17]     0.0    0.00    0.00       1         free_run_state [17]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[18]     0.0    0.00    0.00       1         free_tokenizer [18]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[19]     0.0    0.00    0.00       1         free_transformer [19]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[20]     0.0    0.00    0.00       1         malloc_run_state [20]
+-----------------------------------------------
+
+Index by function name
+
+  [15] build_tokenizer        [19] free_transformer        [7] read_checkpoint
+   [5] build_transformer       [2] generate                [9] rmsnorm
+  [12] decode                 [14] init_quantized_tensors [13] safe_printf
+  [16] encode                 [20] malloc_run_state       [10] sample
+   [3] forward                 [4] matmul                 [11] softmax
+  [17] free_run_state          [6] memory_map_weights
+  [18] free_tokenizer          [8] quantize

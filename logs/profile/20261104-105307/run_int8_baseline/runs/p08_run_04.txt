@@ -1,5 +1,0 @@
-Once there was a very clever girl named Mia. She was always looking for ways to help people. One day, Mia saw a man who was very sad. She asked him why he was so sad and he said he was looking for a special gift. Mia thought for a moment and then she had an idea. She said, "I can help you find the gift!"
-The man was very happy and he thanked Mia. He said, "I'm sure you can find it!" Mia smiled and said, "I'm sure I can!"
-Mia and the man went on a longforward steps: 128; timed steps: 127; forward seconds: 3.636760
-forward tokens/s: 34.921194
-

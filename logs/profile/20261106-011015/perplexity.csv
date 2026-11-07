@@ -1,0 +1,10 @@
+run_id,label,arch,binary,model,text,text_sha256,threads,tokens,mean_nll,perplexity,wall_s
+20261106-011015,"",aarch64,run_fp32_baseline,"stories110M.bin","data/eval.txt",7d681a73b672,1,971,1.324342,3.759711,61.897
+20261106-011015,"",aarch64,run_int8_baseline,"stories110M_int8.bin","data/eval.txt",7d681a73b672,1,971,1.327143,3.770257,32.690
+20261106-011015,"",aarch64,run_fp16_baseline,"stories110M_fp16.bin","data/eval.txt",7d681a73b672,1,971,1.324358,3.759770,83.775
+20261106-011015,"",aarch64,run_fp16_baseline_native,"stories110M_fp16.bin","data/eval.txt",7d681a73b672,1,971,1.324358,3.759770,62.715
+20261106-011015,"",aarch64,run_fp32_simd,"stories110M.bin","data/eval.txt",7d681a73b672,1,971,1.324342,3.759711,18.826
+20261106-011015,"",aarch64,run_fp32_simd_4row,"stories110M.bin","data/eval.txt",7d681a73b672,1,971,1.324342,3.759711,12.393
+20261106-011015,"",aarch64,run_fp32_openmp,"stories110M.bin","data/eval.txt",7d681a73b672,8,971,1.324342,3.759711,10.466
+20261106-011015,"",aarch64,run_fp32_openmp_simd,"stories110M.bin","data/eval.txt",7d681a73b672,8,971,1.324342,3.759711,8.513
+20261106-011015,"",aarch64,run_fp32_openmp_neon,"stories110M.bin","data/eval.txt",7d681a73b672,8,971,1.324342,3.759711,4.389

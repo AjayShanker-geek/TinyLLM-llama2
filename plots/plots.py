@@ -15,7 +15,9 @@ Figures:
     4_tok_s_boxplot.*      raw tok/s of every run: (a) timing runs, (b) thread sweep; mean marked
     5_cachegrind.*         simulated I1 / D1 / LL data miss rates
     6_perf_breakdown.*     share of CPU time per function group (perf record)
-    7_next_token_agreement.*  (a) % of positions whose argmax differs from FP32,
+    7_cachegrind_threads.* total simulated L1 / last-level data misses per OpenMP thread count
+    8_model_size.*         model .bin size per precision (FP32 / FP16 / INT8) and peak memory (max RSS)
+    9_next_token_agreement.*  (a) % of positions whose argmax differs from FP32,
                            (b) what those mismatches were: FP32 right / this binary right / both wrong
 
 Colour encodes precision (FP32 / FP16 / INT8) wherever binaries are compared, the same in
@@ -420,7 +422,123 @@ def plot_perf_breakdown(data: RunData):
 
 
 # ----------------------------------------------------------------------------
-# 7. Next-token agreement vs FP32
+# 7. Cachegrind thread sweep: total misses per thread count
+
+
+def thread_colours(n: int) -> list:
+    """n ordered, clearly different colours (viridis: green-yellow = few, purple = many threads).
+    Sampled from one perceptually uniform, colour-blind-safe map, so any number of thread
+    counts gets its own colour and the order still reads light -> dark."""
+    cmap = matplotlib.colormaps["viridis"]
+    return [cmap(v) for v in np.linspace(0.85, 0.05, n)] if n > 1 else [cmap(0.45)]
+
+
+def plot_cachegrind_threads(data: RunData):
+    df = data.cachegrind_sweep
+    if df.empty:
+        return None
+    panels = [("D1_misses", "(a) L1 data misses"), ("LL_data_misses", "(b) Last-level data misses"),
+              ("Ir", "(c) Instructions executed")]
+    threads = sorted(df["threads"].unique())
+    binaries = [b for b in df["binary"].cat.categories if b in set(df["binary"])]
+    colours = thread_colours(len(threads))
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5.5))
+    x = np.arange(len(binaries))
+    width = 0.8 / len(threads)
+    for ax, (col, title) in zip(axes, panels):
+        top = df[col].max() / 1e6
+        for k, t in enumerate(threads):
+            rows = df[df["threads"] == t].set_index(df[df["threads"] == t]["binary"].astype(str))
+            values = np.array([rows[col].get(b, np.nan) for b in binaries], dtype=float) / 1e6
+            ratios = [rows[f"{col}_vs_1thread"].get(b, np.nan) for b in binaries]
+            pos = x + (k - (len(threads) - 1) / 2) * width
+            ax.bar(pos, values, width=width, color=colours[k], edgecolor=SURFACE, linewidth=1.5,
+                   label=f"{t} thread{'s' if t > 1 else ''}")
+            for p_, v, r in zip(pos, values, ratios):  # value, and ratio vs 1 thread for t > 1
+                if np.isnan(v):
+                    continue
+                # change vs 1 thread as a % (the ratios are ~1.00x, so 2 decimals of x hide it)
+                text = f"{v:,.1f}M" if t == threads[0] else f"{v:,.1f}M  {100 * (r - 1):+.1f}%"
+                ax.text(p_, v + top * 0.01, text, rotation=90, ha="center", va="bottom", fontsize=7, color=INK)
+        ax.set_xticks(x, [label(b) for b in binaries], fontsize=8.5)
+        ax.set_ylim(0, top * 1.45)  # room for the rotated labels
+        ax.set_ylabel("Millions (sum over all threads)")
+        ax.grid(axis="x", visible=False)
+        ax.set_title(title)
+    handles, names = axes[0].get_legend_handles_labels()
+    fig.legend(handles, names, title="OpenMP threads", loc="upper right", ncol=len(threads),
+               bbox_to_anchor=(0.99, 1.0))
+    fig.suptitle("Total simulated cache misses vs thread count (cachegrind)", x=0.01, ha="left",
+                 fontweight="bold", fontsize=13)
+    steps = data.meta["valgrind_steps"].iloc[0] if "valgrind_steps" in data.meta else float("nan")
+    subtitle(fig, f"Sum over all threads, {steps:.0f} tokens, OMP_WAIT_POLICY=passive. Valgrind runs threads one at "
+                  "a time on ONE simulated 32 KiB L1 / 8 MiB LL cache, so totals are comparable, per-core "
+                  "behaviour is not. % = change vs the same build at 1 thread.")
+    fig.tight_layout(rect=(0, 0.04, 1, 0.93))
+    return fig
+
+
+# ----------------------------------------------------------------------------
+# 8. Model file size and peak memory per precision
+
+
+def plot_model_size(data: RunData):
+    meta = data.meta
+    if "model_bytes" not in meta or meta["model_bytes"].isna().all():
+        return None
+    has_rss = not data.time_v.empty and "max_rss_kb" in data.time_v
+    fig, axes = plt.subplots(1, 2 if has_rss else 1, figsize=(14 if has_rss else 7, 5.5), squeeze=False,
+                             gridspec_kw={"width_ratios": [1, 1.6]} if has_rss else None)
+
+    # (a) one bar per model file (FP32 / FP16 / INT8), not per binary
+    files = (meta.assign(binary=meta["binary"].astype(str))
+             .dropna(subset=["model_bytes"])
+             .drop_duplicates("model")[["model", "precision", "model_bytes"]])
+    order = list(PRECISION_COLOURS)
+    files = files.sort_values("precision", key=lambda c: c.map(order.index)).reset_index(drop=True)
+    fp32 = files.loc[files["precision"] == "FP32", "model_bytes"]
+    ax = axes[0, 0]
+    x = np.arange(len(files))
+    mb = files["model_bytes"] / 1e6
+    ax.bar(x, mb, color=[PRECISION_COLOURS.get(p, NEUTRAL) for p in files["precision"]], width=0.6,
+           edgecolor=SURFACE, linewidth=2)
+    for xi, (_, row) in zip(x, files.iterrows()):
+        note = "" if fp32.empty or row["precision"] == "FP32" else \
+            f"\n{fp32.iloc[0] / row['model_bytes']:.2f}× smaller"
+        ax.text(xi, row["model_bytes"] / 1e6, f"{row['model_bytes'] / 1e6:.1f} MB{note}", ha="center",
+                va="bottom", fontsize=9, color=INK)
+    ax.set_xticks(x, [f"{p}\n{m}" for p, m in zip(files["precision"], files["model"])], fontsize=8.5)
+    ax.set_ylim(0, mb.max() * 1.2)
+    ax.set_ylabel("Model file size (MB)")
+    ax.grid(axis="x", visible=False)
+    ax.set_title("(a) Model file (.bin) size")
+    precision_legend(ax, files["precision"], loc="upper right")
+
+    # (b) peak resident memory of every binary while generating
+    if has_rss:
+        rss = data.time_v.dropna(subset=["max_rss_kb"])
+        ax = axes[0, 1]
+        y = np.arange(len(rss))[::-1]
+        values = rss["max_rss_kb"] * 1024 / 1e6  # time -v reports KiB; MB = 10^6 bytes as in (a)
+        ax.barh(y, values, color=[PRECISION_COLOURS.get(p, NEUTRAL) for p in rss["precision"]], height=0.7,
+                edgecolor=SURFACE, linewidth=2)
+        for yi, v in zip(y, values):
+            ax.text(v, yi, f"  {v:.0f} MB", va="center", ha="left", fontsize=8.5, color=INK)
+        ax.set_yticks(y, [one_line(b) for b in rss["binary"]], fontsize=8.5)
+        ax.set_xlim(0, values.max() * 1.18)
+        ax.set_xlabel("Peak resident memory, max RSS (MB)")
+        ax.grid(axis="y", visible=False)
+        ax.set_title("(b) Peak memory while generating")
+
+    fig.suptitle("Model size by precision", x=0.01, ha="left", fontweight="bold", fontsize=13)
+    subtitle(fig, "MB = 10^6 bytes. Max RSS from /usr/bin/time -v (first prompt, default threads); it includes the "
+                  "mmap-ed weights, the KV cache and buffers, and the INT8 build's FP32 copy of the token embeddings.")
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
+    return fig
+
+
+# ----------------------------------------------------------------------------
+# 9. Next-token agreement vs FP32
 
 MISMATCH_KINDS = [  # column, legend label, colour
     ("ref_right_only", "FP32 right, this binary wrong", SERIES[3]),
@@ -496,7 +614,9 @@ FIGURES = [
     ("4_tok_s_boxplot", plot_tok_s_boxplot),
     ("5_cachegrind", plot_cachegrind),
     ("6_perf_breakdown", plot_perf_breakdown),
-    ("7_next_token_agreement", plot_agreement),
+    ("7_cachegrind_threads", plot_cachegrind_threads),
+    ("8_model_size", plot_model_size),
+    ("9_next_token_agreement", plot_agreement),
 ]
 
 

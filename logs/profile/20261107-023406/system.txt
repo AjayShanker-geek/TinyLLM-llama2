@@ -1,0 +1,64 @@
+# date
+Sat Nov  7 02:34:07 UTC 2026
+# uname
+Linux ac873ec98190 7.0.14-linuxkit #1 SMP PREEMPT Fri Oct 30 13:45:20 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+# lscpu
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  10
+On-line CPU(s) list:                     0-9
+Vendor ID:                               Apple
+Model name:                              -
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per cluster:                     10
+Socket(s):                               -
+Cluster(s):                              1
+Stepping:                                0x0
+BogoMIPS:                                48.00
+Flags:                                   fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp flagm2 frint i8mm bf16 bti afp rpres ebf16
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Not affected
+Vulnerability Spec store bypass:         Vulnerable
+Vulnerability Spectre v1:                Mitigation; __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; CSV2, but not BHB
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+# nproc
+8
+# memory
+               total        used        free      shared  buff/cache   available
+Mem:           15970         638       15083           0         443       15331
+Swap:           4095           0        4095
+# cgroup cpu.max
+800000 100000
+# cgroup cpuset
+0-7
+# cgroup memory.max
+4294967296
+# compiler
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+# cmake
+cmake version 3.28.3
+# OpenMP env
+OMP_PLACES=cores
+OMP_PROC_BIND=close
+OMP_NUM_THREADS=8
+# settings
+LABEL= STEPS=128 VALGRIND_STEPS=16 RUNS=5 SEED=42
+THREADS_SWEEP=1,2,4,6,8,10 CG_SWEEP=1
+PROMPTS_FILE=data/prompts.txt (10 prompts, see prompts.tsv; first: Robbie had just turned three and was so excited.)
+PPL=1 PPL_TEXT=data/eval.txt

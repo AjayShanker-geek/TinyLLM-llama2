@@ -1,7 +1,0 @@
-binary,precision,method,Ir_total
-run_fp32_baseline,FP32,baseline,12401880953.0
-run_fp16_baseline,FP16,baseline (software decode),36970490880.0
-run_fp16_baseline_native,FP16,baseline (_Float16),14376758279.0
-run_int8_baseline,INT8,baseline,11534034289.0
-run_fp32_simd,FP32,SIMD,2772650350.0
-run_fp32_simd_4row,FP32,SIMD 4-row,1444801860.0

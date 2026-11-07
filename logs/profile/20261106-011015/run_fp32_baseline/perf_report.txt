@@ -1,0 +1,46 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 7K of event 'cpu-clock'
+# Event count (approx.): 7583583576
+#
+# Overhead  Command          Shared Object      Symbol                   
+# ........  ...............  .................  .........................
+#
+    99.54%  run_fp32_baseli  run_fp32_baseline  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.09%  run_fp32_baseli  [unknown]          [k] 0xffff800080ca8ba8
+     0.05%  run_fp32_baseli  run_fp32_baseline  [.] rmsnorm
+     0.04%  run_fp32_baseli  libm.so.6          [.] expf@@GLIBC_2.27
+     0.03%  run_fp32_baseli  libc.so.6          [.] msort_with_tmp.part.0
+     0.03%  run_fp32_baseli  libm.so.6          [.] __sincosf
+     0.03%  run_fp32_baseli  [unknown]          [k] 0xffff8000802bcb5c
+     0.01%  run_fp32_baseli  libc.so.6          [.] malloc_consolidate
+     0.01%  run_fp32_baseli  libc.so.6          [.] strcmp
+     0.01%  run_fp32_baseli  libm.so.6          [.] powf@@GLIBC_2.27
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] expf@plt
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] sample
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] softmax
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008011d2c4
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000802bc100
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000802d080c
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008031cb90
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008033b420
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff800080355910
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803af6a8
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803b5444
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803b5ca0
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
