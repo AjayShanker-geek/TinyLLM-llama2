@@ -1,8 +1,0 @@
-Molly was feeling excited. She was going to the park with her mom. She put on her shoes and grabbed her hat.
-When they got to the park, Molly saw a big slide. She ran over to it and started to climb up.
-"Be careful, Molly," said her mom.
-Molly smiled and kept climbing. When she got to the top, she looked down and saw a big puddle.
-"Mom, can I splash in the puddle?" asked Molly.
-"Yes, but be careful," said her mom.forward steps: 128; timed steps: 127; forward seconds: 3.717199
-forward tokens/s: 34.165514
-

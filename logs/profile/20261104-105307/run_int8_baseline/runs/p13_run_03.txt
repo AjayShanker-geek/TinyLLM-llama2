@@ -1,4 +1,0 @@
-Once upon a time, there was a big park. In the park, there was a swing. A little boy named Tim loved to play on the swing. One day, Tim saw a big, red ball near the swing. He wanted to play with the ball, but he was scared. He thought the ball might be dangerous.
-Tim's friend, Sue, came to the park too. She saw Tim looking at the ball. Sue said, "Let's play with the ball together!" Tim was still scared, but he wanted to be brave. So, he said, "Okay, let'sforward steps: 128; timed steps: 127; forward seconds: 3.704950
-forward tokens/s: 34.278465
-

@@ -1,0 +1,65 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 10K of event 'cpu-clock'
+# Event count (approx.): 10509509499
+#
+# Overhead  Command          Shared Object      Symbol                   
+# ........  ...............  .................  .........................
+#
+    77.33%  run_fp16_baseli  run_fp16_baseline  [.] fp16_to_fp32
+            |
+            ---fp16_to_fp32
+               |          
+                --77.30%--matmul
+                          forward
+                          generate
+                          main
+                          __libc_start_call_main
+                          __libc_start_main@@GLIBC_2.34
+                          _start
+
+    21.75%  run_fp16_baseli  run_fp16_baseline  [.] matmul
+            |
+            ---matmul
+               forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.65%  run_fp16_baseli  run_fp16_baseline  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.03%  run_fp16_baseli  libm.so.6          [.] powf@@GLIBC_2.27
+     0.03%  run_fp16_baseli  [unknown]          [k] 0xffff800080ca8ba8
+     0.02%  run_fp16_baseli  libc.so.6          [.] __memcpy_generic
+     0.02%  run_fp16_baseli  libm.so.6          [.] expf@@GLIBC_2.27
+     0.02%  run_fp16_baseli  run_fp16_baseline  [.] rmsnorm
+     0.02%  run_fp16_baseli  run_fp16_baseline  [.] sample
+     0.02%  run_fp16_baseli  run_fp16_baseline  [.] softmax
+     0.02%  run_fp16_baseli  run_fp16_baseline  [.] strcmp@plt
+     0.01%  run_fp16_baseli  libc.so.6          [.] msort_with_tmp.part.0
+     0.01%  run_fp16_baseli  libm.so.6          [.] __sincosf
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff8000802bcb5c
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff8000802f5610
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff80008031f760
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff800080355910
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff8000803b5544
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff8000803b5ca4
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff80008149f7d0
+     0.01%  run_fp16_baseli  [unknown]          [k] 0xffff8000814d1d10
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

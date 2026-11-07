@@ -1,0 +1,46 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 7K of event 'cpu-clock'
+# Event count (approx.): 7659659652
+#
+# Overhead  Command          Shared Object             Symbol                   
+# ........  ...............  ........................  .........................
+#
+    99.58%  run_fp16_baseli  run_fp16_baseline_native  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.07%  run_fp16_baseli  run_fp16_baseline_native  [.] rmsnorm
+     0.04%  run_fp16_baseli  libm.so.6                 [.] expf@@GLIBC_2.27
+     0.03%  run_fp16_baseli  libc.so.6                 [.] __memcpy_generic
+     0.03%  run_fp16_baseli  libm.so.6                 [.] __sincosf
+     0.03%  run_fp16_baseli  run_fp16_baseline_native  [.] expf@plt
+     0.03%  run_fp16_baseli  run_fp16_baseline_native  [.] softmax
+     0.03%  run_fp16_baseli  [unknown]                 [k] 0xffff8000802d09c0
+     0.01%  run_fp16_baseli  libc.so.6                 [.] msort_with_tmp.part.0
+     0.01%  run_fp16_baseli  libc.so.6                 [.] strcmp
+     0.01%  run_fp16_baseli  libm.so.6                 [.] powf@@GLIBC_2.27
+     0.01%  run_fp16_baseli  run_fp16_baseline_native  [.] sample
+     0.01%  run_fp16_baseli  run_fp16_baseline_native  [.] sincosf@plt
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff80008004d080
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff80008006fe54
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000800b59f8
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff80008012cc88
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000802d4e80
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000803b0da4
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000814cbd98
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000814cc52c
+     0.01%  run_fp16_baseli  [unknown]                 [k] 0xffff8000814cc534
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

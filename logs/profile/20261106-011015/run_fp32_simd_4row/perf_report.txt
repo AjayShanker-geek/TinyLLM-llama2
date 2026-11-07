@@ -1,0 +1,83 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 1K of event 'cpu-clock'
+# Event count (approx.): 1077077076
+#
+# Overhead  Command          Shared Object       Symbol                   
+# ........  ...............  ..................  .........................
+#
+    92.10%  run_fp32_simd_4  run_fp32_simd_4row  [.] matmul_4row
+            |
+            ---matmul_4row
+               forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     5.11%  run_fp32_simd_4  run_fp32_simd_4row  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.56%  run_fp32_simd_4  [unknown]           [k] 0xffff800080ca8ba8
+            |
+            ---0xffff800080ca8ba8
+               0xffff80008077fc9c
+               0xffff80008077fdcc
+               0xffff800080761758
+               0xffff80008076b2c4
+               0xffff80008076b35c
+               0xffff80008046bfe8
+               0xffff800080769a9c
+               0xffff8000802ce1e0
+               0xffff8000802cf0d8
+               0xffff8000802cfa6c
+               0xffff8000802c0950
+               0xffff80008031b79c
+               0xffff8000803279c0
+               0xffff800080328498
+               0xffff8000814dfba8
+               0xffff8000814e01d8
+               0xffff8000800468f0
+               0xffff8000814cc534
+               0xffff8000814cceb0
+               0xffff8000800115a0
+               matmul_4row
+               forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.19%  run_fp32_simd_4  libc.so.6           [.] msort_with_tmp.part.0
+     0.19%  run_fp32_simd_4  libm.so.6           [.] expf@@GLIBC_2.27
+     0.19%  run_fp32_simd_4  run_fp32_simd_4row  [.] expf@plt
+     0.19%  run_fp32_simd_4  run_fp32_simd_4row  [.] rmsnorm
+     0.19%  run_fp32_simd_4  [unknown]           [k] 0xffff80008011d2c4
+     0.19%  run_fp32_simd_4  [unknown]           [k] 0xffff8000802d080c
+     0.19%  run_fp32_simd_4  [unknown]           [k] 0xffff8000803b0268
+     0.09%  run_fp32_simd_4  libc.so.6           [.] strcmp
+     0.09%  run_fp32_simd_4  libm.so.6           [.] powf@@GLIBC_2.27
+     0.09%  run_fp32_simd_4  run_fp32_simd_4row  [.] softmax
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff8000802d09c0
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff8000802d11e8
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff80008031ef18
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff80008033b500
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff8000814c85c4
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff8000814cc52c
+     0.09%  run_fp32_simd_4  [unknown]           [k] 0xffff8000814dfa7c
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

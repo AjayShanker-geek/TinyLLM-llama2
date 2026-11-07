@@ -1,0 +1,60 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 3K of event 'cpu-clock'
+# Event count (approx.): 3764764761
+#
+# Overhead  Command          Shared Object      Symbol                
+# ........  ...............  .................  ......................
+#
+    96.44%  run_int8_baseli  run_int8_baseline  [.] matmul
+            |
+            ---matmul
+               forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     2.15%  run_int8_baseli  run_int8_baseline  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.27%  run_int8_baseli  run_int8_baseline  [.] memory_map_weights
+     0.27%  run_int8_baseli  run_int8_baseline  [.] quantize
+     0.13%  run_int8_baseli  libm.so.6          [.] expf@@GLIBC_2.27
+     0.08%  run_int8_baseli  run_int8_baseline  [.] expf@plt
+     0.05%  run_int8_baseli  libc.so.6          [.] __memcpy_generic
+     0.05%  run_int8_baseli  libm.so.6          [.] powf@@GLIBC_2.27
+     0.05%  run_int8_baseli  run_int8_baseline  [.] rmsnorm
+     0.05%  run_int8_baseli  [unknown]          [k] 0xffff8000802d09c0
+     0.03%  run_int8_baseli  libc.so.6          [.] _IO_fread
+     0.03%  run_int8_baseli  libc.so.6          [.] strcmp
+     0.03%  run_int8_baseli  run_int8_baseline  [.] strcmp@plt
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff80008006fe54
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff80008012cc88
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000802bcb5c
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000802d080c
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000802d4e80
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000802f6e40
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000803273a8
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000803af6b8
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000803af778
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000803b12d0
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000803b56a4
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000803b5ca4
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff80008149ca88
+     0.03%  run_int8_baseli  [unknown]          [k] 0xffff8000814d1d10
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
