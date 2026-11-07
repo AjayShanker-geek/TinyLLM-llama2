@@ -534,7 +534,11 @@ def plot_model_size(data: RunData):
     subtitle(fig, "MB = 10^6 bytes. Max RSS from /usr/bin/time -v (first prompt, default threads); it includes the "
                   "mmap-ed weights, the KV cache and buffers, and the INT8 build's FP32 copy of the token embeddings.")
     fig.tight_layout(rect=(0, 0.04, 1, 1))
-# 7. Next-token agreement vs FP32
+    return fig
+
+
+# ----------------------------------------------------------------------------
+# 9. Next-token agreement vs FP32
 
 MISMATCH_KINDS = [  # column, legend label, colour
     ("ref_right_only", "FP32 right, this binary wrong", SERIES[3]),

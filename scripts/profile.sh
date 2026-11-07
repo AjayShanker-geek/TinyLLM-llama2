@@ -103,8 +103,9 @@ AGREE_REF="run_fp32_baseline"         # every binary's argmax is compared with t
 ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp16_baseline run_fp16_baseline_native run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd run_fp32_openmp_neon)
 
 # Fixed simulated cache for cachegrind: 32 KiB L1 I/D, 8 MiB last level
-# CACHEGRIND_CACHE=(--I1=32768,8,64 --D1=32768,8,64 --LL=8388608,16,64)
-CACHEGRIND_CACHE_E=(--I1=131072,8,128 --D1=65536,8,128 --LL=8388608,16,128)
+CACHEGRIND_CACHE=(--I1=32768,8,64 --D1=32768,8,64 --LL=8388608,16,64)
+# Alternative (larger L1, 128-byte lines); swap it in above to use it:
+# CACHEGRIND_CACHE=(--I1=131072,8,128 --D1=65536,8,128 --LL=8388608,16,128)
 
 # PATHS
 RUN_ID="$(date +%Y%m%d-%H%M%S)"
