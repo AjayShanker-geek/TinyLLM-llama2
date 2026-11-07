@@ -244,3 +244,25 @@ foreach(lib no_optimization simd_optimisation openmp_optimisation openmp_simd_ag
     target_link_options(${lib} INTERFACE -pg)
   endif()
 endforeach()
+
+# BEGIN NEXT TOKEN AGREEMENT
+# Paste at the END of the root CMakeLists.txt, after runner targets are defined.
+foreach(agreement_target IN ITEMS
+    run_fp32_baseline run_int8_baseline run_fp16_baseline
+    run_fp16_baseline_native run_fp32_simd run_fp32_simd_4row
+    run_fp32_openmp run_fp32_openmp_neon run_fp32_openmp_simd)
+  if(TARGET ${agreement_target})
+    get_target_property(agreement_added ${agreement_target} NEXT_TOKEN_AGREEMENT_ADDED)
+    if(NOT agreement_added)
+      target_sources(${agreement_target} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/agreement.c")
+      target_include_directories(${agreement_target} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+      set_property(TARGET ${agreement_target} PROPERTY NEXT_TOKEN_AGREEMENT_ADDED TRUE)
+    endif()
+  endif()
+endforeach()
+
+if(NOT TARGET compare_next_tokens)
+  add_executable(compare_next_tokens src/compare_next_tokens.c)
+  target_compile_features(compare_next_tokens PRIVATE c_std_11)
+endif()
+# END NEXT TOKEN AGREEMENT

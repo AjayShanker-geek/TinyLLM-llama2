@@ -21,19 +21,26 @@
 #   5. tool-specific steps (see the `case` at the bottom):
 #        gprof       % of time per function + call counts (single-threaded builds only)
 #        callgrind   exact instruction count per function
-#        cachegrind  simulated cache misses (fixed cache size, same on every machine)
+#        cachegrind  simulated cache misses (fixed cache size, same on every machine);
+#                    always 1 thread (OMP_NUM_THREADS=1), also for the OpenMP builds
 #        massif      peak heap memory
 #        thread sweep  timing repeated for each thread count in THREADS_SWEEP (OpenMP)
 #   6. perplexity    accuracy on PPL_TEXT (`-m ppl -f`), skipped if the file is missing or PPL=0
+#   7. agreement     teacher-forced argmax trace on AGREE_TEXT (`-m agreement -f -o`); after all
+#                    binaries, compare_next_tokens compares each trace with run_fp32_baseline's
+#                    (the baseline trace is made even if it is not in the binary list). AGREE=0 skips
 #
 # Output, in logs/profile/<run_id>[-<label>]/:
 #   results.csv     every measurement of this run, one row each
 #   perplexity.csv  one row per binary: tokens, mean NLL, perplexity (accuracy, separate from speed)
+#   next_token_agreement.csv  one row per binary: positions, matches, mismatches, agreement_pct
+#                   vs the FP32 baseline (also in results.csv as tool=agreement)
 #   system.txt      CPU, limits, compiler and settings of this run
 #   prompts.tsv     prompt id (p01, p02, ...) and the prompt text used
 #   <binary>/       raw tool output: runs/p01_run_01.txt, output.txt (run 1 of every prompt),
-#                   gprof.txt, perf.data, perplexity.txt, ...
-# Every run's rows are also appended to logs/profile/all_results.csv and all_perplexity.csv.
+#                   gprof.txt, perf.data, perplexity.txt, next_token_trace.csv, agreement.txt, ...
+# Every run's rows are also appended to logs/profile/all_results.csv, all_perplexity.csv and
+# all_next_token_agreement.csv.
 #
 # CSV columns:
 #   run_id   timestamp of this profile run      label    LABEL setting (free text)
@@ -48,6 +55,11 @@
 #   run_id, label, arch, binary, model, text (PPL_TEXT), text_sha256 (first 12 hex chars, to
 #   check every row scored the same text), threads, tokens (scored), mean_nll (nats),
 #   perplexity (exp(mean_nll), lower is better), wall_s (time of the ppl run)
+#
+# next_token_agreement.csv columns:
+#   run_id, label, arch, binary, model, reference (binary whose argmax is the reference),
+#   text (AGREE_TEXT), text_sha256, threads, positions (next-token positions compared),
+#   matches, mismatches, agreement_pct (100 * matches / positions), wall_s (time of the trace run)
 #
 # Note: every binary prints "achieved tok/s" the same way (llama2.c style): tokens 2..N,
 # including forward(), sampling and printing; excluding model loading and the first step.
@@ -65,7 +77,7 @@ LABEL="${LABEL:-}"                     # tag for this run, e.g. the code version
 RUNS="${RUNS:-5}"                      # measured repeats per prompt (after 1 warm-up)
 STEPS="${STEPS:-128}"                  # tokens per run (-n)
 VALGRIND_STEPS="${VALGRIND_STEPS:-16}" # tokens for valgrind runs (~50x slower)
-THREADS_SWEEP="${THREADS_SWEEP:-1,2,4,8}"
+THREADS_SWEEP="${THREADS_SWEEP:-1,2,4,6,8,10}"
 PROMPTS_FILE="${PROMPTS_FILE:-data/prompts.txt}" # one prompt per line
 PROMPT="${PROMPT:-Once upon a time}"             # used only if PROMPTS_FILE is missing or empty
 SEED="${SEED:-42}"
@@ -78,6 +90,10 @@ TOKENIZER="${TOKENIZER:-models/tokenizer.bin}"
 
 PPL="${PPL:-1}"                       # 1 = run the perplexity step, 0 = skip it
 PPL_TEXT="${PPL_TEXT:-data/eval.txt}" # same text for every binary, so PPLs are comparable
+
+AGREE="${AGREE:-1}"                   # 1 = run the next-token agreement step, 0 = skip it
+AGREE_TEXT="${AGREE_TEXT:-$PPL_TEXT}" # text whose next tokens are predicted (teacher forcing)
+AGREE_REF="run_fp32_baseline"         # every binary's argmax is compared with this one's
 
 # ALL_BINARIES=(run_fp16_baseline_native)
 ALL_BINARIES=(run_fp32_baseline run_int8_baseline run_fp16_baseline run_fp16_baseline_native run_fp32_simd run_fp32_simd_4row run_fp32_openmp run_fp32_openmp_simd run_fp32_openmp_neon)
@@ -98,9 +114,13 @@ CSV_HEADER="run_id,label,arch,binary,tool,metric,item,threads,repeat,value,unit"
 PPL_CSV="$LOG_ROOT/perplexity.csv"
 ALL_PPL_CSV="$ROOT/logs/profile/all_perplexity.csv"
 PPL_HEADER="run_id,label,arch,binary,model,text,text_sha256,threads,tokens,mean_nll,perplexity,wall_s"
+AGREE_CSV="$LOG_ROOT/next_token_agreement.csv"
+ALL_AGREE_CSV="$ROOT/logs/profile/all_next_token_agreement.csv"
+AGREE_HEADER="run_id,label,arch,binary,model,reference,text,text_sha256,threads,positions,matches,mismatches,agreement_pct,wall_s"
 
 if (($#)); then BINARIES=("$@"); else BINARIES=("${ALL_BINARIES[@]}"); fi
 FAILURES=()
+declare -A AGREE_WALL=() # binary -> wall time (s) of its agreement trace run
 
 ##################################################################################
 # HELPERS
@@ -181,14 +201,27 @@ check_inputs() {
     echo "Missing $PPL_TEXT: skipping perplexity (set PPL_TEXT=... or PPL=0)." >&2
     PPL=0
   fi
+  if [[ "$AGREE" == 1 && ! -f "$AGREE_TEXT" ]]; then
+    echo "Missing $AGREE_TEXT: skipping next-token agreement (set AGREE_TEXT=... or AGREE=0)." >&2
+    AGREE=0
+  fi
+  # the reference trace needs the FP32 model even if the baseline is not in the binary list
+  file="$(model_for "$AGREE_REF")"
+  if [[ "$AGREE" == 1 && ! -f "$file" ]]; then
+    echo "Missing $file (needed by $AGREE_REF, the agreement reference)." >&2
+    missing=1
+  fi
   return "$missing"
 }
 
 build() {
   # Build binaries normal
+  local targets=("${BINARIES[@]}")
+  # agreement also needs the reference binary and the comparison tool
+  if [[ "$AGREE" == 1 ]]; then targets+=("$AGREE_REF" compare_next_tokens); fi
   log "Building (normal) into ${BUILD_DIR#"$ROOT"/}"
   cmake -S . -B "$BUILD_DIR" -G Ninja -DENABLE_GPROF=OFF
-  cmake --build "$BUILD_DIR" --target "${BINARIES[@]}"
+  cmake --build "$BUILD_DIR" --target $(printf '%s\n' "${targets[@]}" | sort -u)
 
   # Build binaries with -pg for gprof
   log "Building (gprof, -pg) into ${GPROF_BUILD_DIR#"$ROOT"/}"
@@ -224,6 +257,7 @@ system_info() {
     echo "LABEL=$LABEL STEPS=$STEPS VALGRIND_STEPS=$VALGRIND_STEPS RUNS=$RUNS SEED=$SEED"
     echo "PROMPTS_FILE=$PROMPTS_FILE (${#PROMPTS[@]} prompts, see prompts.tsv; first: $PROMPT)"
     echo "PPL=$PPL PPL_TEXT=$PPL_TEXT"
+    echo "AGREE=$AGREE AGREE_TEXT=$AGREE_TEXT AGREE_REF=$AGREE_REF"
   } >"$LOG_ROOT/system.txt"
 }
 
@@ -260,6 +294,10 @@ append_all_results() { # copy this run's rows into the files that hold every run
   if [[ -f "$PPL_CSV" ]]; then
     [[ -f "$ALL_PPL_CSV" ]] || echo "$PPL_HEADER" >"$ALL_PPL_CSV"
     tail -n +2 "$PPL_CSV" >>"$ALL_PPL_CSV"
+  fi
+  if [[ -f "$AGREE_CSV" ]]; then
+    [[ -f "$ALL_AGREE_CSV" ]] || echo "$AGREE_HEADER" >"$ALL_AGREE_CSV"
+    tail -n +2 "$AGREE_CSV" >>"$ALL_AGREE_CSV"
   fi
 }
 ##################################################################################
@@ -516,8 +554,12 @@ run_callgrind() {
 }
 
 # CSV tool=cachegrind. Files: cachegrind.out, cachegrind.txt, cachegrind.log
+# Always 1 thread: valgrind runs threads one at a time on ONE simulated cache, so a
+# multi-threaded run would not model per-core caches. For OpenMP builds this measures the
+# cache behaviour of their code (scalar / -O3 / NEON kernel) on one core. Passive waiting
+# stops idle libgomp threads spinning, which valgrind would count as extra memory reads.
 run_cachegrind() {
-  valgrind --tool=cachegrind --cache-sim=yes "${CACHEGRIND_CACHE[@]}" \
+  OMP_NUM_THREADS=1 OMP_WAIT_POLICY=passive valgrind --tool=cachegrind --cache-sim=yes "${CACHEGRIND_CACHE[@]}" \
     --cachegrind-out-file="$OUT/cachegrind.out" \
     "$BIN" "${VG_ARGS[@]}" >/dev/null 2>"$OUT/cachegrind.log" &&
     cg_annotate "$OUT/cachegrind.out" >"$OUT/cachegrind.txt" &&
@@ -567,6 +609,68 @@ run_perplexity() {
   printf '  %s tokens, mean nll %s, perplexity %s (%s s)\n' "$tokens" "$nll" "$ppl" "$wall"
 }
 
+# Teacher-forced argmax trace of AGREE_TEXT. File: <binary>/next_token_trace.csv (+ agreement.txt log)
+# Uses the globals NAME, BIN, OUT; the comparison itself runs once after every binary is traced.
+run_agreement_trace() {
+  local model threads logf start end
+  model="$(model_for "$NAME")"
+  threads="$(threads_for "$NAME")"
+  logf="$OUT/agreement.txt"
+  start="$(date +%s.%N)"
+  OMP_NUM_THREADS="$threads" "$BIN" "$ROOT/$model" -z "$ROOT/$TOKENIZER" -m agreement \
+    -f "$ROOT/$AGREE_TEXT" -o "$OUT/next_token_trace.csv" >"$logf" 2>&1 || {
+    echo "  $NAME exited with an error, see ${logf#"$ROOT"/} (no -m agreement mode in this binary?)" >&2
+    return 1
+  }
+  end="$(date +%s.%N)"
+  AGREE_WALL[$NAME]="$(awk -v s="$start" -v e="$end" 'BEGIN { printf "%.3f", e - s }')"
+  printf '  %s (%s s)\n' "$(tail -n 1 "$logf")" "${AGREE_WALL[$NAME]}"
+}
+
+# Compare every binary's trace with the reference (AGREE_REF) trace.
+# next_token_agreement.csv (one row per binary) and results.csv rows:
+#   tool=agreement, metric=positions|matches|mismatches|agreement_pct, item=reference binary
+run_agreement_compare() {
+  local ref_trace="$LOG_ROOT/$AGREE_REF/next_token_trace.csv" sha result positions matches mismatches pct
+  local model threads trace status=0
+  if [[ ! -f "$ref_trace" ]]; then # reference binary not in the list: trace it now
+    log "$AGREE_REF: agreement trace (reference)"
+    NAME="$AGREE_REF" BIN="$BUILD_DIR/$AGREE_REF" OUT="$LOG_ROOT/$AGREE_REF"
+    mkdir -p "$OUT"
+    run_agreement_trace || return 1
+  fi
+  sha="$(sha256sum "$AGREE_TEXT" | cut -c1-12)"
+  [[ -f "$AGREE_CSV" ]] || echo "$AGREE_HEADER" >"$AGREE_CSV"
+  for NAME in "${BINARIES[@]}"; do
+    trace="$LOG_ROOT/$NAME/next_token_trace.csv"
+    if [[ ! -f "$trace" ]]; then
+      echo "  $NAME: no trace (its agreement step failed), skipped" >&2
+      status=1
+      continue
+    fi
+    # Output: header, then "path",positions,matches,mismatches,agreement_percent
+    if ! result="$("$BUILD_DIR/compare_next_tokens" "$ref_trace" "$trace" |
+      awk -F, 'NR == 2 { print $(NF-3) "|" $(NF-2) "|" $(NF-1) "|" $NF }')" || [[ -z "$result" ]]; then
+      echo "  $NAME: compare_next_tokens failed (traces scored different inputs?)" >&2
+      status=1
+      continue
+    fi
+    IFS='|' read -r positions matches mismatches pct <<<"$result"
+    model="$(model_for "$NAME")"
+    threads="$(threads_for "$NAME")"
+    printf '%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n' \
+      "$RUN_ID" "$(csv_quote "$LABEL")" "$ARCH" "$NAME" "$(csv_quote "$(basename "$model")")" "$AGREE_REF" \
+      "$(csv_quote "$AGREE_TEXT")" "$sha" "$threads" "$positions" "$matches" "$mismatches" "$pct" \
+      "${AGREE_WALL[$NAME]:-}" >>"$AGREE_CSV"
+    csv_row agreement positions "$AGREE_REF" "$threads" "" "$positions" count
+    csv_row agreement matches "$AGREE_REF" "$threads" "" "$matches" count
+    csv_row agreement mismatches "$AGREE_REF" "$threads" "" "$mismatches" count
+    csv_row agreement agreement_pct "$AGREE_REF" "$threads" "" "$pct" %
+    printf '  %-28s %s / %s match (%s%%)\n' "$NAME" "$matches" "$positions" "$pct"
+  done
+  return "$status"
+}
+
 ##################################################################################
 # MAIN
 ##################################################################################
@@ -606,20 +710,26 @@ for NAME in "${BINARIES[@]}"; do
     step "$NAME: cachegrind" run_cachegrind
     ;;
   run_fp32_openmp | run_fp32_openmp_simd | run_fp32_openmp_neon)
-    # gprof only sees the main thread, and valgrind runs threads one at a time,
-    # so neither says much about a multi-threaded build
+    # gprof only sees the main thread, so it is skipped. Cachegrind runs with 1 thread
+    # (see run_cachegrind): valgrind cannot model per-core caches of a multi-threaded run
     step "$NAME: thread sweep" run_thread_sweep
+    step "$NAME: cachegrind (1 thread)" run_cachegrind
     ;;
   esac
 
   # Accuracy (separate CSV)
   if [[ "$PPL" == 1 ]]; then step "$NAME: perplexity" run_perplexity; fi
+  if [[ "$AGREE" == 1 ]]; then step "$NAME: agreement trace" run_agreement_trace; fi
 done
+
+# Next-token agreement vs the FP32 baseline (needs every trace, so after the loop)
+if [[ "$AGREE" == 1 ]]; then step "next-token agreement vs $AGREE_REF" run_agreement_compare; fi
 
 append_all_results
 
 log "Results in ${LOG_ROOT#"$ROOT"/} ($(($(wc -l <"$RESULTS_CSV") - 1)) rows in results.csv)"
 if [[ -f "$PPL_CSV" ]]; then column -s, -t <"$PPL_CSV" 2>/dev/null || cat "$PPL_CSV"; fi
+if [[ -f "$AGREE_CSV" ]]; then column -s, -t <"$AGREE_CSV" 2>/dev/null || cat "$AGREE_CSV"; fi
 if ((${#FAILURES[@]})); then
   printf 'Failed steps:\n'
   printf '  - %s\n' "${FAILURES[@]}"
