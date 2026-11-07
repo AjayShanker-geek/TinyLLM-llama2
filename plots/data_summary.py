@@ -68,6 +68,7 @@ class RunData:
     cachegrind_functions: pd.DataFrame  # binary, function, D1_misses
     massif: pd.DataFrame            # binary, peak_heap_bytes, peak_heap_extra_bytes
     perplexity: pd.DataFrame        # perplexity.csv + precision/method + delta vs FP32
+    cachegrind_sweep: pd.DataFrame  # binary x threads: total simulated misses (OpenMP builds)
 
 
 def latest_run_dir() -> Path:
@@ -194,6 +195,23 @@ def load_run(run_dir: Path) -> RunData:
     cachegrind_functions = per_function(raw, "cachegrind", ["D1_misses"])
     massif = wide_per_binary(raw, "massif")
 
+    # cachegrind at each thread count (OpenMP builds): one row per (binary, threads)
+    cg_rows = select(raw, "cachegrind_sweep")
+    if cg_rows.empty:
+        cachegrind_sweep = pd.DataFrame()
+    else:
+        cachegrind_sweep = cg_rows.pivot_table(index=["binary", "threads"], columns="metric",
+                                               values="value", aggfunc="first", observed=True)
+        cachegrind_sweep.columns.name = None
+        cachegrind_sweep = cachegrind_sweep.reset_index()
+        # total data misses (read + write) per level, and change vs the same binary at 1 thread
+        cachegrind_sweep["D1_misses"] = cachegrind_sweep["D1mr"] + cachegrind_sweep["D1mw"]
+        cachegrind_sweep["LL_data_misses"] = cachegrind_sweep["DLmr"] + cachegrind_sweep["DLmw"]
+        for col in ("Ir", "D1_misses", "LL_data_misses"):
+            one = cachegrind_sweep[cachegrind_sweep["threads"] == 1].set_index("binary")[col]
+            cachegrind_sweep[f"{col}_vs_1thread"] = cachegrind_sweep[col] / cachegrind_sweep["binary"].map(one)
+        cachegrind_sweep = add_binary_info(cachegrind_sweep)
+
     # perplexity
     ppl_file = run_dir / "perplexity.csv"
     perplexity = pd.read_csv(ppl_file, keep_default_na=False) if ppl_file.is_file() else pd.DataFrame()
@@ -208,7 +226,7 @@ def load_run(run_dir: Path) -> RunData:
 
     return RunData(run_dir, raw, meta, prompts, timing, timing_summary, thread_sweep, sweep_summary,
                    time_v, perf_stat, perf_report, gprof, callgrind, callgrind_total, cachegrind,
-                   cachegrind_functions, massif, perplexity)
+                   cachegrind_functions, massif, perplexity, cachegrind_sweep)
 
 
 # ----------------------------------------------------------------------------
@@ -252,6 +270,13 @@ def print_overview(data: RunData) -> None:
                 if c in data.cachegrind.columns]
         print("\n== cachegrind miss rates (%) ==")
         print(data.cachegrind[cols].to_string(index=False))
+
+    if not data.cachegrind_sweep.empty:
+        cols = [c for c in ("binary", "threads", "Ir", "D1_misses", "LL_data_misses", "D1_miss_rate",
+                            "LL_data_miss_rate", "D1_misses_vs_1thread", "LL_data_misses_vs_1thread")
+                if c in data.cachegrind_sweep.columns]
+        print("\n== cachegrind thread sweep (total misses, all threads) ==")
+        print(data.cachegrind_sweep[cols].to_string(index=False))
 
     if not data.perf_report.empty:
         top = (data.perf_report.sort_values(["binary", "self_pct"], ascending=[True, False])
