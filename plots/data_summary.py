@@ -9,6 +9,8 @@ Usage (from the project root):
 Input, in the run folder (see the header of scripts/profile.sh for the columns):
     results.csv     long format: one row per measurement (tool, metric, item, threads, repeat, value)
     perplexity.csv  one row per binary
+    next_token_agreement.csv  one row per binary: matches vs the FP32 baseline's argmax
+    <binary>/next_token_trace.csv  teacher-forced argmax per position (for top-1 accuracy)
     prompts.tsv     prompt id (p01..) -> prompt text
 
 Every table below has one row per observation and named columns, ready for plotting.
@@ -68,6 +70,7 @@ class RunData:
     cachegrind_functions: pd.DataFrame  # binary, function, D1_misses
     massif: pd.DataFrame            # binary, peak_heap_bytes, peak_heap_extra_bytes
     perplexity: pd.DataFrame        # perplexity.csv + precision/method + delta vs FP32
+    agreement: pd.DataFrame         # next_token_agreement.csv + flip rate, top-1 accuracy, mismatch kinds
 
 
 def latest_run_dir() -> Path:
@@ -140,6 +143,53 @@ def summarise(df: pd.DataFrame, by: list[str]) -> pd.DataFrame:
     return out.reset_index()
 
 
+def load_trace(path: Path) -> pd.DataFrame:
+    """<binary>/next_token_trace.csv from agreement.c (header lines start with #)."""
+    return pd.read_csv(path, comment="#")
+
+
+def agreement_table(run_dir: Path) -> pd.DataFrame:
+    """next_token_agreement.csv plus statistics computed from the per-position traces:
+    flip_pct           100 - agreement_pct (share of positions whose argmax differs from FP32)
+    top1_acc_pct       share of positions where the argmax equals the true next token
+    ref_top1_acc_pct   the same for the reference (FP32) trace
+    of the mismatches: ref_right_only (FP32 was right, this binary wrong), cand_right_only
+    (this binary right, FP32 wrong), both_wrong (both wrong, different tokens)
+    """
+    path = run_dir / "next_token_agreement.csv"
+    if not path.is_file():
+        return pd.DataFrame()
+    df = pd.read_csv(path, keep_default_na=False)
+    if df.empty:
+        return df
+    df["agreement_pct"] = pd.to_numeric(df["agreement_pct"])
+    df["flip_pct"] = 100 - df["agreement_pct"]
+    if df["text_sha256"].nunique() > 1:
+        print("WARNING: agreement rows used different texts (text_sha256 differs)")
+
+    traces = {b: run_dir / b / "next_token_trace.csv" for b in set(df["binary"]) | set(df["reference"])}
+    traces = {b: load_trace(p) for b, p in traces.items() if p.is_file()}
+    extra = []
+    for _, row in df.iterrows():
+        cand, ref = traces.get(row["binary"]), traces.get(row["reference"])
+        stats = {"binary": row["binary"]}
+        if cand is not None:
+            stats["top1_acc_pct"] = 100 * (cand["predicted_token"] == cand["target_token"]).mean()
+        if cand is not None and ref is not None and len(cand) == len(ref):
+            c_ok = cand["predicted_token"].to_numpy() == cand["target_token"].to_numpy()
+            r_ok = ref["predicted_token"].to_numpy() == ref["target_token"].to_numpy()
+            differ = cand["predicted_token"].to_numpy() != ref["predicted_token"].to_numpy()
+            stats["ref_top1_acc_pct"] = 100 * r_ok.mean()
+            stats["ref_right_only"] = int((differ & r_ok).sum())
+            stats["cand_right_only"] = int((differ & c_ok).sum())
+            stats["both_wrong"] = int((differ & ~r_ok & ~c_ok).sum())
+            # first position (0-based) where the argmax differs; -1 if never
+            stats["first_mismatch"] = int(np.argmax(differ)) if differ.any() else -1
+        extra.append(stats)
+    df = df.merge(pd.DataFrame(extra), on="binary", how="left")
+    return add_binary_info(df)
+
+
 def load_run(run_dir: Path) -> RunData:
     raw = pd.read_csv(run_dir / "results.csv", keep_default_na=False, na_values=[""])
     raw["item"] = raw["item"].fillna("")
@@ -206,9 +256,12 @@ def load_run(run_dir: Path) -> RunData:
         if perplexity["text_sha256"].nunique() > 1:
             print("WARNING: perplexity rows scored different texts (text_sha256 differs)")
 
+    # next-token agreement (per-binary CSV; results.csv has the same numbers as tool=agreement)
+    agreement = agreement_table(run_dir)
+
     return RunData(run_dir, raw, meta, prompts, timing, timing_summary, thread_sweep, sweep_summary,
                    time_v, perf_stat, perf_report, gprof, callgrind, callgrind_total, cachegrind,
-                   cachegrind_functions, massif, perplexity)
+                   cachegrind_functions, massif, perplexity, agreement)
 
 
 # ----------------------------------------------------------------------------
@@ -238,6 +291,13 @@ def print_overview(data: RunData) -> None:
                 if c in data.perplexity.columns]
         print("\n== perplexity ==")
         print(data.perplexity[cols].to_string(index=False))
+
+    if not data.agreement.empty:
+        cols = [c for c in ("binary", "positions", "matches", "mismatches", "agreement_pct", "flip_pct",
+                            "top1_acc_pct", "ref_right_only", "cand_right_only", "both_wrong", "first_mismatch")
+                if c in data.agreement.columns]
+        print(f"\n== next-token agreement vs {data.agreement['reference'].iloc[0]} ==")
+        print(data.agreement[cols].to_string(index=False))
 
     if not data.time_v.empty:
         print("\n== time -v ==")
