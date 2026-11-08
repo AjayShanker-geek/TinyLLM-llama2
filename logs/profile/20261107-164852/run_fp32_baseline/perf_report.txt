@@ -1,0 +1,44 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 7K of event 'cpu-clock'
+# Event count (approx.): 7330330323
+#
+# Overhead  Command          Shared Object      Symbol                   
+# ........  ...............  .................  .........................
+#
+    99.59%  run_fp32_baseli  run_fp32_baseline  [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.11%  run_fp32_baseli  [unknown]          [k] 0xffff800080ca8ba8
+     0.04%  run_fp32_baseli  libm.so.6          [.] expf@@GLIBC_2.27
+     0.03%  run_fp32_baseli  run_fp32_baseline  [.] expf@plt
+     0.03%  run_fp32_baseli  run_fp32_baseline  [.] rmsnorm
+     0.01%  run_fp32_baseli  libc.so.6          [.] __memcpy_generic
+     0.01%  run_fp32_baseli  libc.so.6          [.] __memset_zva64
+     0.01%  run_fp32_baseli  libc.so.6          [.] msort_with_tmp.part.0
+     0.01%  run_fp32_baseli  libm.so.6          [.] __sincosf
+     0.01%  run_fp32_baseli  libm.so.6          [.] powf@@GLIBC_2.27
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] build_tokenizer
+     0.01%  run_fp32_baseli  run_fp32_baseline  [.] sample
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff80008011d2c4
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000802b9484
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff800080355910
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803669cc
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000803af764
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000814ad7c8
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000814c85dc
+     0.01%  run_fp32_baseli  [unknown]          [k] 0xffff8000814cc52c
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

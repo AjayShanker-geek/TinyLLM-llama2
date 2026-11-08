@@ -1,0 +1,22 @@
+# started on Sat Nov  7 18:08:37 2026
+
+
+ Performance counter stats for '/workspace/build-docker/run_fp32_openmp_neon /workspace/models/stories110M.bin -z /workspace/models/tokenizer.bin -t 0 -s 42 -n 128 -i Robbie had just turned three and was so excited.':
+
+           2972.64 msec task-clock                       #    6.576 CPUs utilized             
+              5510      context-switches                 #    1.854 K/sec                     
+                 7      cpu-migrations                   #    2.355 /sec                      
+             12047      page-faults                      #    4.053 K/sec                     
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      cache-references                                                      
+   <not supported>      cache-misses                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+       0.452046251 seconds time elapsed
+
+       2.816730000 seconds user
+       0.164208000 seconds sys
+
+

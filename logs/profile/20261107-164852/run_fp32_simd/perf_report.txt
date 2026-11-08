@@ -1,0 +1,59 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 1K of event 'cpu-clock'
+# Event count (approx.): 1950950949
+#
+# Overhead  Command        Shared Object     Symbol                   
+# ........  .............  ................  .........................
+#
+    95.28%  run_fp32_simd  run_fp32_simd     [.] matmul_basic_rows
+            |
+            ---matmul_basic_rows
+               forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     2.92%  run_fp32_simd  run_fp32_simd     [.] forward
+            |
+            ---forward
+               generate
+               main
+               __libc_start_call_main
+               __libc_start_main@@GLIBC_2.34
+               _start
+
+     0.31%  run_fp32_simd  run_fp32_simd     [.] expf@plt
+     0.15%  run_fp32_simd  libm.so.6         [.] expf@@GLIBC_2.27
+     0.10%  run_fp32_simd  libm.so.6         [.] __sincosf
+     0.10%  run_fp32_simd  libm.so.6         [.] powf@@GLIBC_2.27
+     0.10%  run_fp32_simd  run_fp32_simd     [.] rmsnorm
+     0.10%  run_fp32_simd  [unknown]         [k] 0xffff800080ca8ba8
+     0.05%  run_fp32_simd  libc.so.6         [.] msort_with_tmp.part.0
+     0.05%  run_fp32_simd  libc.so.6         [.] strcmp
+     0.05%  run_fp32_simd  run_fp32_simd     [.] softmax
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff80008004d080
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff80008004d46c
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000802d080c
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000802d09c0
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000802d4e80
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000802f6e1c
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000802f93f0
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff800080328560
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff800080354a68
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000803af660
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000803af6b8
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff800080c21300
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff80008149ca8c
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff80008149f860
+     0.05%  run_fp32_simd  [unknown]         [k] 0xffff8000814cc534
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
