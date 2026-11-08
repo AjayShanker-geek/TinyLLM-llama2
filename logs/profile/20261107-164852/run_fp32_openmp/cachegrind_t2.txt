@@ -1,0 +1,631 @@
+--------------------------------------------------------------------------------
+-- Metadata
+--------------------------------------------------------------------------------
+Invocation:       /usr/bin/cg_annotate /workspace/logs/profile/20261107-164852/run_fp32_openmp/cachegrind_t2.out
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         32768 B, 64 B, 8-way associative
+LL cache:         8388608 B, 64 B, 16-way associative
+Command:          /workspace/build-docker/run_fp32_openmp /workspace/models/stories110M.bin -z /workspace/models/tokenizer.bin -t 0 -s 42 -n 16 -i Robbie had just turned three and was so excited.
+Events recorded:  Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Events shown:     Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Event sort order: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Threshold:        0.1%
+Annotation:       on
+
+--------------------------------------------------------------------------------
+-- Summary
+--------------------------------------------------------------------------------
+Ir_____________________ I1mr__________ ILmr__________ Dr____________________ D1mr________________ DLmr________________ Dw_________________ D1mw____________ DLmw____________ 
+
+12,405,032,373 (100.0%) 2,570 (100.0%) 2,316 (100.0%) 3,530,257,853 (100.0%) 110,226,471 (100.0%) 109,746,501 (100.0%) 12,813,990 (100.0%) 290,570 (100.0%) 177,470 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+-- File:function summary
+--------------------------------------------------------------------------------
+  Ir___________________________ I1mr____________ ILmr____________ Dr__________________________ D1mr______________________ DLmr________________________ Dw______________________ D1mw__________________ DLmw__________________  file:function
+
+< 12,322,791,351 (99.3%, 99.3%) 102 (4.0%, 4.0%) 101 (4.4%, 4.4%) 3,512,975,760 (99.5%, 99.5%) 109,829,007 (99.6%, 99.6%) 109,715,694 (100.0%, 100.0%) 4,699,005 (36.7%, 36.7%) 135,321 (46.6%, 46.6%) 132,728 (74.8%, 74.8%)  /workspace/src/run_fp32_openmp.c:
+   6,619,605,120 (53.4%)          4 (0.2%)         4 (0.2%)       1,887,452,160 (53.5%)         58,987,600 (53.5%)         58,983,698  (53.7%)         1,244,160  (9.7%)         78,697 (27.1%)         77,707 (43.8%)           matmul_nowait
+   5,668,063,104 (45.7%)          3 (0.1%)         3 (0.1%)       1,616,912,192 (45.8%)         50,534,324 (45.8%)         50,528,718  (46.0%)           810,912  (6.3%)         50,823 (17.5%)         50,654 (28.5%)           matmul._omp_fn.0
+      19,294,464  (0.2%)         10 (0.4%)        10 (0.4%)           5,071,488  (0.1%)            164,771  (0.1%)            138,240   (0.1%)         1,282,944 (10.0%)          3,456  (1.2%)          3,264  (1.8%)           forward._omp_fn.1
+
+--------------------------------------------------------------------------------
+-- Function:file summary
+--------------------------------------------------------------------------------
+  Ir__________________________ I1mr___________ ILmr___________ Dr__________________________ D1mr_____________________ DLmr_____________________ Dw______________________ D1mw_________________ DLmw_________________  function:file
+
+> 6,619,605,120 (53.4%, 53.4%)  4 (0.2%, 0.2%)  4 (0.2%, 0.2%) 1,887,452,160 (53.5%, 53.5%) 58,987,600 (53.5%, 53.5%) 58,983,698 (53.7%, 53.7%) 1,244,160  (9.7%,  9.7%) 78,697 (27.1%, 27.1%) 77,707 (43.8%, 43.8%)  matmul_nowait:/workspace/src/run_fp32_openmp.c
+
+> 5,668,063,104 (45.7%, 99.1%)  3 (0.1%, 0.3%)  3 (0.1%, 0.3%) 1,616,912,192 (45.8%, 99.3%) 50,534,324 (45.8%, 99.4%) 50,528,718 (46.0%, 99.8%)   810,912  (6.3%, 16.0%) 50,823 (17.5%, 44.6%) 50,654 (28.5%, 72.3%)  matmul._omp_fn.0:/workspace/src/run_fp32_openmp.c
+
+>    19,305,984  (0.2%, 99.2%) 11 (0.4%, 0.7%) 11 (0.5%, 0.8%)     5,071,488  (0.1%, 99.4%)    164,771  (0.1%, 99.5%)    138,240  (0.1%, 99.9%) 1,282,944 (10.0%, 26.0%)  3,456  (1.2%, 45.8%)  3,264  (1.8%, 74.2%)  forward._omp_fn.1:
+     19,294,464  (0.2%)        10 (0.4%)       10 (0.4%)           5,071,488  (0.1%)           164,771  (0.1%)           138,240  (0.1%)        1,282,944 (10.0%)         3,456  (1.2%)         3,264  (1.8%)           /workspace/src/run_fp32_openmp.c
+
+--------------------------------------------------------------------------------
+-- Annotated source file: /workspace/src/run_fp32_openmp.c
+--------------------------------------------------------------------------------
+Ir___________________ I1mr____ ILmr____ Dr___________________ D1mr______________ DLmr______________ Dw______________ D1mw__________ DLmw__________ 
+
+-- line 23 ----------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .          #include "agreement.h"
+            .         .        .                    .                  .                  .                 .             .              .          #include "run_fp32_openmp.h"
+            .         .        .                    .                  .                  .                 .             .              .          #include "sampler.h"
+            .         .        .                    .                  .                  .                 .             .              .          #include "tokenizer.h"
+            .         .        .                    .                  .                  .                 .             .              .          #include "transformer_fp32.h"
+            .         .        .                    .                  .                  .                 .             .              .          #include "util.h"
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void malloc_run_state(RunState *s, Config *p)
+            9  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                12 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .            // we calloc instead of malloc to keep valgrind happy
+            5  (0.0%) 1 (0.0%) 1 (0.0%)             3  (0.0%)          0                  0                 1 (0.0%)      0              0            int kv_dim = (p->dim * p->n_kv_heads) / p->n_heads;
+            6  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            s->x = calloc(p->dim, sizeof(float));
+            5  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            s->xb = calloc(p->dim, sizeof(float));
+            5  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            s->xb2 = calloc(p->dim, sizeof(float));
+            6  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 1 (0.0%)      0              0            s->hb = calloc(p->hidden_dim, sizeof(float));
+            5  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            s->hb2 = calloc(p->hidden_dim, sizeof(float));
+            5  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 1 (0.0%)      0              0            s->q = calloc(p->dim, sizeof(float));
+           11  (0.0%) 0        0                    2  (0.0%)          0                  0                 2 (0.0%)      1  (0.0%)      0            s->key_cache = calloc(p->n_layers * p->seq_len * kv_dim, sizeof(float));
+            5  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            s->value_cache = calloc(p->n_layers * p->seq_len * kv_dim, sizeof(float));
+            8  (0.0%) 1 (0.0%) 1 (0.0%)             2  (0.0%)          0                  0                 1 (0.0%)      1  (0.0%)      0            s->att = calloc(p->n_heads * p->seq_len, sizeof(float));
+            5  (0.0%) 0        0                    1  (0.0%)          1  (0.0%)          0                 1 (0.0%)      1  (0.0%)      0            s->logits = calloc(p->vocab_size, sizeof(float));
+            .         .        .                    .                  .                  .                 .             .              .            // ensure all mallocs went fine
+            .         .        .                    .                  .                  .                 .             .              .            if (!s->x || !s->xb || !s->xb2 || !s->hb || !s->hb2 || !s->q || !s->key_cache || !s->value_cache || !s->att
+           20  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0                || !s->logits) {
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "malloc failed!\n");
+            .         .        .                    .                  .                  .                 .             .              .              exit(EXIT_FAILURE);
+            .         .        .                    .                  .                  .                 .             .              .            }
+            7  (0.0%) 1 (0.0%) 1 (0.0%)            12  (0.0%)          3  (0.0%)          0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void free_run_state(RunState *s)
+            4  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 3 (0.0%)      0              0          {
+            2  (0.0%) 0        0                    1  (0.0%)          1  (0.0%)          1  (0.0%)         0             0              0            free(s->x);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->xb);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->xb2);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->hb);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->hb2);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->q);
+            2  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 0             0              0            free(s->att);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->logits);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->key_cache);
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            free(s->value_cache);
+            2  (0.0%) 0        0                    3  (0.0%)          0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void memory_map_weights(TransformerWeights *w, Config *p, float *ptr, int shared_weights)
+            .         .        .                    .                  .                  .                 .             .              .          {
+            3  (0.0%) 1 (0.0%) 1 (0.0%)             3  (0.0%)          0                  0                 0             0              0            int head_size = p->dim / p->n_heads;
+            .         .        .                    .                  .                  .                 .             .              .            // make sure the multiplications below are done in 64bit to fit the parameter counts of 13B+ models
+            .         .        .                    .                  .                  .                 .             .              .            unsigned long long n_layers = p->n_layers;
+            .         .        .                    .                  .                  .                 .             .              .            w->token_embedding_table = ptr;
+            3  (0.0%) 0        0                    2  (0.0%)          0                  0                 0             0              0            ptr += p->vocab_size * p->dim;
+            1  (0.0%) 0        0                    0                  0                  0                 2 (0.0%)      0              0            w->rms_att_weight = ptr;
+            3  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0            ptr += n_layers * p->dim;
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->wq = ptr;
+            4  (0.0%) 0        0                    0                  0                  0                 0             0              0            ptr += n_layers * p->dim * (p->n_heads * head_size);
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->wk = ptr;
+            4  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0            ptr += n_layers * p->dim * (p->n_kv_heads * head_size);
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->wv = ptr;
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            ptr += n_layers * p->dim * (p->n_kv_heads * head_size);
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->wo = ptr;
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            ptr += n_layers * (p->n_heads * head_size) * p->dim;
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->rms_ffn_weight = ptr;
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            ptr += n_layers * p->dim;
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->w1 = ptr;
+            4  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            ptr += n_layers * p->dim * p->hidden_dim;
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->w2 = ptr;
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            ptr += n_layers * p->hidden_dim * p->dim;
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->w3 = ptr;
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            ptr += n_layers * p->dim * p->hidden_dim;
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->rms_final_weight = ptr;
+            .         .        .                    .                  .                  .                 .             .              .            ptr += p->dim;
+            1  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            ptr += p->seq_len * head_size / 2;// skip what used to be freq_cis_real (for RoPE)
+            .         .        .                    .                  .                  .                 .             .              .            ptr += p->seq_len * head_size / 2;// skip what used to be freq_cis_imag (for RoPE)
+            2  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            w->wcls = shared_weights ? w->token_embedding_table : ptr;
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void read_checkpoint(char *checkpoint,
+            .         .        .                    .                  .                  .                 .             .              .            Config *config,
+            .         .        .                    .                  .                  .                 .             .              .            TransformerWeights *weights,
+            .         .        .                    .                  .                  .                 .             .              .            int *fd,
+            .         .        .                    .                  .                  .                 .             .              .            float **data,
+            .         .        .                    .                  .                  .                 .             .              .            ssize_t *file_size)
+           13  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                11 (0.0%)      0              0          {
+            3  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0            FILE *file = fopen(checkpoint, "rb");
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (!file) {
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "Couldn't open file %s\n", checkpoint);
+            .         .        .                    .                  .                  .                 .             .              .              exit(EXIT_FAILURE);
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            // read in the config header
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (fread(config, sizeof(Config), 1, file) != 1) { exit(EXIT_FAILURE); }
+            .         .        .                    .                  .                  .                 .             .              .            // negative vocab size is hacky way of signaling unshared weights. bit yikes.
+            3  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            int shared_weights = config->vocab_size > 0 ? 1 : 0;
+            2  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            config->vocab_size = abs(config->vocab_size);
+            .         .        .                    .                  .                  .                 .             .              .            // figure out the file size
+            4  (0.0%) 0        0                    0                  0                  0                 0             0              0            fseek(file, 0, SEEK_END);// move file pointer to end of file
+            3  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 1 (0.0%)      0              0            *file_size = ftell(file);// get the file size, in bytes
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            fclose(file);
+            .         .        .                    .                  .                  .                 .             .              .            // memory map the Transformer weights into the data pointer
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            *fd = open(checkpoint, O_RDONLY);// open in read only mode
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (*fd == -1) {
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "open failed!\n");
+            .         .        .                    .                  .                  .                 .             .              .              exit(EXIT_FAILURE);
+            .         .        .                    .                  .                  .                 .             .              .            }
+            7  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 1 (0.0%)      0              0            *data = mmap(NULL, *file_size, PROT_READ, MAP_PRIVATE, *fd, 0);
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (*data == MAP_FAILED) {
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "mmap failed!\n");
+            .         .        .                    .                  .                  .                 .             .              .              exit(EXIT_FAILURE);
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            float *weights_ptr = *data + sizeof(Config) / sizeof(float);
+            5  (0.0%) 0        0                    0                  0                  0                 0             0              0            memory_map_weights(weights, config, weights_ptr, shared_weights);
+            6  (0.0%) 0        0                   11  (0.0%)          0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void build_transformer(Transformer *t, char *checkpoint_path)
+            5  (0.0%) 2 (0.1%) 2 (0.1%)             0                  0                  0                 3 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .            // read in the Config and the Weights from the checkpoint
+            6  (0.0%) 0        0                    0                  0                  0                 0             0              0            read_checkpoint(checkpoint_path, &t->config, &t->weights, &t->fd, &t->data, &t->file_size);
+            .         .        .                    .                  .                  .                 .             .              .            // allocate the RunState buffers
+            3  (0.0%) 0        0                    0                  0                  0                 0             0              0            malloc_run_state(&t->state, &t->config);
+            2  (0.0%) 0        0                    3  (0.0%)          0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void free_transformer(Transformer *t)
+            4  (0.0%) 2 (0.1%) 2 (0.1%)             0                  0                  0                 3 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .            // close the memory mapping
+            5  (0.0%) 0        0                    2  (0.0%)          1  (0.0%)          0                 0             0              0            if (t->data != MAP_FAILED) { munmap(t->data, t->file_size); }
+            4  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            if (t->fd != -1) { close(t->fd); }
+            .         .        .                    .                  .                  .                 .             .              .            // free the RunState buffers
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            free_run_state(&t->state);
+            2  (0.0%) 0        0                    3  (0.0%)          0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          // ----------------------------------------------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .          // neural net blocks; the dynamics of the Transformer
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void rmsnorm(float *o, const float *x, const float *weight, int size)
+        2,400  (0.0%) 0        0                    0                  0                  0             1,200 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .            // calculate sum of squares
+          800  (0.0%) 0        0                    0                  0                  0                 0             0              0            float ss = 0.0F;
+    1,536,800  (0.0%) 2 (0.1%) 2 (0.1%)       307,200  (0.0%)          0                  0                 0             0              0            for (int j = 0; j < size; j++) { ss += x[j] * x[j]; }
+          400  (0.0%) 0        0                    0                  0                  0                 0             0              0            ss /= size;
+        1,600  (0.0%) 2 (0.1%) 2 (0.1%)             0                  0                  0                 0             0              0            ss += 1e-5F;
+        2,400  (0.0%) 0        0                    0                  0                  0                 0             0              0            ss = 1.0F / sqrtf(ss);
+            .         .        .                    .                  .                  .                 .             .              .            // normalize and scale
+    2,457,600  (0.0%) 1 (0.0%) 1 (0.0%)       614,400  (0.0%)     19,600  (0.0%)     19,597  (0.0%)   307,200 (2.4%)    784  (0.3%)    735  (0.4%)    for (int j = 0; j < size; j++) { o[j] = weight[j] * (ss * x[j]); }
+        1,200  (0.0%) 0        0                1,200  (0.0%)          0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void softmax(float *x, int size)
+       11,520  (0.0%) 1 (0.0%) 0                    0                  0                  0            13,824 (0.1%)    276  (0.1%)    191  (0.1%)  {
+            .         .        .                    .                  .                  .                 .             .              .            // find max value (for numerical stability)
+        4,464  (0.0%) 1 (0.0%) 1 (0.0%)         2,304  (0.0%)          0                  0                 0             0              0            float max_val = x[0];
+       62,928  (0.0%) 0        0                    0                  0                  0             2,160 (0.0%)      0              0            for (int i = 1; i < size; i++) {
+       54,012  (0.0%) 0        0               17,280  (0.0%)          0                  0                 0             0              0              if (x[i] > max_val) { max_val = x[i]; }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            // exp and sum
+        4,608  (0.0%) 0        0                    0                  0                  0                 0             0              0            float sum = 0.0F;
+       46,656  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0               144 (0.0%)      0              0            for (int i = 0; i < size; i++) {
+       76,032  (0.0%) 0        0               17,280  (0.0%)          0                  0            19,584 (0.2%)      0              0              x[i] = expf(x[i] - max_val);
+       19,584  (0.0%) 0        0                    0                  0                  0                 0             0              0              sum += x[i];
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            // normalize
+      100,224  (0.0%) 0        0               21,888  (0.0%)          0                  0            19,584 (0.2%)      0              0            for (int i = 0; i < size; i++) { x[i] /= sum; }
+        9,216  (0.0%) 0        0               13,824  (0.0%)          0                  0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void matmul(float *xout, const float *x, const float *w, int n, int d)
+            .         .        .                    .                  .                  .                 .             .              .          {
+            .         .        .                    .                  .                  .                 .             .              .            // W (d,n) @ x (n,) -> xout (d,)
+            .         .        .                    .                  .                  .                 .             .              .            // by far the most amount of time is spent inside this little function
+          192  (0.0%) 0        0                  192  (0.0%)          0                  0                 0             0              0            int i = 0;
+       24,976  (0.0%) 4 (0.2%) 4 (0.2%)         8,592  (0.0%)      1,200  (0.0%)         48  (0.0%)     6,000 (0.0%)    336  (0.1%)      1  (0.0%)  #pragma omp parallel for private(i)
+            .         .        .                    .                  .                  .                 .             .              .            for (i = 0; i < d; i++) {
+    1,613,824  (0.0%) 0        0                    0                  0                  0                 0             0              0              float val = 0.0F;
+5,662,392,320 (45.6%) 1 (0.0%) 1 (0.0%) 1,616,904,192 (45.8%) 50,533,124 (45.8%) 50,528,670 (46.0%)         0             0              0              for (int j = 0; j < n; j++) { val += w[(i * n) + j] * x[j]; }
+    4,034,560  (0.0%) 0        0                    0                  0                  0           806,912 (6.3%) 50,823 (17.5%) 50,654 (28.5%)      xout[i] = val;
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void matmul_nowait(float *xout, const float *x, const float *w, int n, int d)
+       49,920  (0.0%) 2 (0.1%) 2 (0.1%)             0                  0                  0            15,360 (0.1%)    383  (0.1%)    214  (0.1%)  {
+            .         .        .                    .                  .                  .                 .             .              .          #pragma omp for schedule(static) nowait
+            .         .        .                    .                  .                  .                 .             .              .            for (int i = 0; i < d; i++) {
+    1,228,800  (0.0%) 0        0                    0                  0                  0                 0             0              0              float val = 0.0F;
+6,612,172,800 (53.3%) 1 (0.0%) 1 (0.0%) 1,887,436,800 (53.5%) 58,984,336 (53.5%) 58,983,696 (53.7%)         0             0              0              for (int j = 0; j < n; j++) { val += w[(i * n) + j] * x[j]; }
+    6,144,000  (0.0%) 0        0                    0                  0                  0         1,228,800 (9.6%) 78,314 (27.0%) 77,493 (43.7%)      xout[i] = val;
+            .         .        .                    .                  .                  .                 .             .              .            }
+        9,600  (0.0%) 1 (0.0%) 1 (0.0%)        15,360  (0.0%)      3,264  (0.0%)          2  (0.0%)         0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          float *forward(Transformer *transformer, int token, int pos)
+          256  (0.0%) 2 (0.1%) 2 (0.1%)            32  (0.0%)          0                  0               240 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // a few convenience variables
+            .         .        .                    .                  .                  .                 .             .              .            Config *p = &transformer->config;
+           16  (0.0%) 0        0                    0                  0                  0                 0             0              0            TransformerWeights *w = &transformer->weights;
+           16  (0.0%) 0        0                    0                  0                  0                 0             0              0            RunState *s = &transformer->state;
+           16  (0.0%) 0        0                   16  (0.0%)         16  (0.0%)         15  (0.0%)         0             0              0            float *x = s->x;
+           16  (0.0%) 0        0                   16  (0.0%)          0                  0                 0             0              0            int dim = p->dim;
+           48  (0.0%) 0        0                   32  (0.0%)         16  (0.0%)         15  (0.0%)         0             0              0            int kv_dim = (p->dim * p->n_kv_heads) / p->n_heads;
+           32  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                16 (0.0%)      0              0            int kv_mul = p->n_heads / p->n_kv_heads;// integer multiplier of the kv sharing in multiquery
+           48  (0.0%) 0        0                   16  (0.0%)          0                  0                32 (0.0%)      0              0            int hidden_dim = p->hidden_dim;
+           16  (0.0%) 0        0                    0                  0                  0                 0             0              0            int head_size = dim / p->n_heads;
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // copy the token embedding into x
+           32  (0.0%) 0        0                   16  (0.0%)          0                  0                 0             0              0            float *content_row = w->token_embedding_table + token * dim;
+           16  (0.0%) 0        0                    0                  0                  0                 0             0              0            memcpy(x, content_row, dim * sizeof(*x));
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // forward all the layers
+        3,232  (0.0%) 2 (0.1%) 2 (0.1%)         1,648  (0.0%)        608  (0.0%)        208  (0.0%)       768 (0.0%)      0              0            for (unsigned long long l = 0; l < p->n_layers; l++) {
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // attention rmsnorm
+        1,344  (0.0%) 1 (0.0%) 1 (0.0%)           576  (0.0%)          0                  0                 0             0              0              rmsnorm(s->xb, x, w->rms_att_weight + l * dim, dim);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // key and value point to the kv cache
+        1,104  (0.0%) 1 (0.0%) 1 (0.0%)           384  (0.0%)          0                  0               192 (0.0%)      0              0              int loff = l * p->seq_len * kv_dim;// kv cache layer offset for convenience
+        1,120  (0.0%) 3 (0.1%) 3 (0.1%)           208  (0.0%)          0                  0                96 (0.0%)      0              0              s->k = s->key_cache + loff + pos * kv_dim;
+          960  (0.0%) 1 (0.0%) 1 (0.0%)           384  (0.0%)        176  (0.0%)        176  (0.0%)       384 (0.0%)      0              0              s->v = s->value_cache + loff + pos * kv_dim;
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // qkv matmuls for this position
+        5,952  (0.0%) 1 (0.0%) 1 (0.0%)         5,184  (0.0%)        384  (0.0%)          0             4,416 (0.0%)    176  (0.1%)      0          #pragma omp parallel
+            .         .        .                    .                  .                  .                 .             .              .              {
+        4,608  (0.0%) 1 (0.0%) 1 (0.0%)         1,920  (0.0%)        577  (0.0%)          0                 0             0              0                matmul_nowait(s->q, s->xb, w->wq + l * dim * dim, dim, dim);
+        3,840  (0.0%) 1 (0.0%) 1 (0.0%)           768  (0.0%)        768  (0.0%)         15  (0.0%)         0             0              0                matmul_nowait(s->k, s->xb, w->wk + l * dim * kv_dim, dim, kv_dim);
+        2,688  (0.0%) 0        0                  768  (0.0%)        768  (0.0%)          0                 0             0              0                matmul_nowait(s->v, s->xb, w->wv + l * dim * kv_dim, dim, kv_dim);
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .              // RoPE relative positional encoding: complex-valued rotate q and k in each head
+      222,336  (0.0%) 0        0                  576  (0.0%)          0                  0                 0             0              0              for (int i = 0; i < dim; i += 2) {
+      147,456  (0.0%) 0        0                    0                  0                  0                 0             0              0                int head_dim = i % head_size;
+      444,832  (0.0%) 2 (0.1%) 2 (0.1%)           576  (0.0%)        192  (0.0%)          0               592 (0.0%)    384  (0.1%)      0                float freq = 1.0f / powf(10000.0f, head_dim / (float)head_size);
+            .         .        .                    .                  .                  .                 .             .              .                float val = pos * freq;
+            .         .        .                    .                  .                  .                 .             .              .                float fcr = cosf(val);
+            .         .        .                    .                  .                  .                 .             .              .                float fci = sinf(val);
+      516,096  (0.0%) 0        0                    0                  0                  0                 0             0              0                int rotn = i < kv_dim ? 2 : 1;// how many vectors? 2 = q & k, 1 = q only
+      147,456  (0.0%) 0        0                    0                  0                  0                 0             0              0                for (int v = 0; v < rotn; v++) {
+      147,456  (0.0%) 0        0              147,456  (0.0%)        192  (0.0%)          0                 0             0              0                  float *vec = v == 0 ? s->q : s->k;// the vector to rotate (query or key)
+      147,456  (0.0%) 1 (0.0%) 1 (0.0%)       147,456  (0.0%)      9,408  (0.0%)          0                 0             0              0                  float v0 = vec[i];
+      294,912  (0.0%) 0        0              294,912  (0.0%)      9,408  (0.0%)          0                 0             0              0                  float v1 = vec[i + 1];
+      589,824  (0.0%) 0        0                    0                  0                  0           147,456 (1.2%)      0              0                  vec[i] = v0 * fcr - v1 * fci;
+      589,824  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0           147,456 (1.2%)      0              0                  vec[i + 1] = v0 * fci + v1 * fcr;
+            .         .        .                    .                  .                  .                 .             .              .                }
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // multihead attention. iterate over all heads
+            .         .        .                    .                  .                  .                 .             .              .              int h = 0;
+       12,096  (0.0%) 4 (0.2%) 4 (0.2%)         6,720  (0.0%)        228  (0.0%)          0             5,952 (0.0%)    384  (0.1%)    176  (0.1%)  #pragma omp parallel for private(h)
+        4,224  (0.0%) 1 (0.0%) 1 (0.0%)           384  (0.0%)        215  (0.0%)          0               384 (0.0%)      0              0              for (h = 0; h < p->n_heads; h++) {
+            .         .        .                    .                  .                  .                 .             .              .                // get the query vector for this head
+        2,304  (0.0%) 0        0                2,304  (0.0%)          0                  0                 0             0              0                float *q = s->q + (h * head_size);
+            .         .        .                    .                  .                  .                 .             .              .                // attention scores for this head
+        9,216  (0.0%) 0        0                4,608  (0.0%)        336  (0.0%)          0                 0             0              0                float *att = s->att + (h * p->seq_len);
+            .         .        .                    .                  .                  .                 .             .              .                // iterate over all timesteps, including the current one
+       63,360  (0.0%) 0        0                2,304  (0.0%)          0                  0                 0             0              0                for (int t = 0; t <= pos; t++) {
+            .         .        .                    .                  .                  .                 .             .              .                  // get the key vector for this head and at this timestep
+       26,880  (0.0%) 1 (0.0%) 1 (0.0%)         7,296  (0.0%)         36  (0.0%)          0             2,688 (0.0%)      0              0                  float *k = s->key_cache + loff + (t * kv_dim) + ((h / kv_mul) * head_size);
+            .         .        .                    .                  .                  .                 .             .              .                  // calculate the attention score as the dot product of q and k
+       19,584  (0.0%) 0        0                    0                  0                  0                 0             0              0                  float score = 0.0F;
+    8,832,384  (0.1%) 2 (0.1%) 2 (0.1%)     2,506,752  (0.1%)     82,027  (0.1%)     69,120  (0.1%)         0             0              0                  for (int i = 0; i < head_size; i++) { score += q[i] * k[i]; }
+       89,856  (0.0%) 2 (0.1%) 2 (0.1%)         2,304  (0.0%)          0                  0                 0             0              0                  score /= sqrtf(head_size);
+            .         .        .                    .                  .                  .                 .             .              .                  // save the score to the attention buffer
+       19,584  (0.0%) 0        0                    0                  0                  0            19,584 (0.2%)  3,264  (1.1%)  3,264  (1.8%)          att[t] = score;
+            .         .        .                    .                  .                  .                 .             .              .                }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .                // softmax the scores to get attention weights, from 0..pos inclusively
+        6,912  (0.0%) 0        0                2,304  (0.0%)          0                  0             2,304 (0.0%)      0              0                softmax(att, pos + 1);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .                // weighted sum of the values, store back into xb
+        4,608  (0.0%) 0        0                2,304  (0.0%)          0                  0                 0             0              0                float *xb = s->xb + (ptrdiff_t)(h * head_size);
+          768  (0.0%) 0        0                    0                  0                  0                 0             0              0                memset(xb, 0, head_size * sizeof(float));
+       99,840  (0.0%) 0        0                8,448  (0.0%)         48  (0.0%)          0                 0             0              0                for (int t = 0; t <= pos; t++) {
+            .         .        .                    .                  .                  .                 .             .              .                  // get the value vector for this head and at this timestep
+            .         .        .                    .                  .                  .                 .             .              .                  float *v = s->value_cache + loff + t * kv_dim + (ptrdiff_t)((h / kv_mul) * head_size);
+            .         .        .                    .                  .                  .                 .             .              .                  // get the attention weight for this timestep
+       19,584  (0.0%) 0        0               19,584  (0.0%)          0                  0                 0             0              0                  float a = att[t];
+            .         .        .                    .                  .                  .                 .             .              .                  // accumulate the weighted value into xb
+   10,085,760  (0.1%) 1 (0.0%) 1 (0.0%)     2,506,752  (0.1%)     81,881  (0.1%)     69,120  (0.1%) 1,253,376 (9.8%)      0              0                  for (int i = 0; i < head_size; i++) { xb[i] += a * v[i]; }
+            .         .        .                    .                  .                  .                 .             .              .                }
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // final matmul to get the output of the attention
+        1,152  (0.0%) 0        0                  768  (0.0%)        360  (0.0%)          0                 0             0              0              matmul(s->xb2, s->xb, w->wo + l * dim * dim, dim, dim);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // residual connection back into x
+    1,032,960  (0.0%) 1 (0.0%) 1 (0.0%)       295,104  (0.0%)     18,624  (0.0%)      9,408  (0.0%)   147,456 (1.2%)      0              0              for (int i = 0; i < dim; i++) { x[i] += s->xb2[i]; }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // ffn rmsnorm
+        1,344  (0.0%) 0        0                  576  (0.0%)        384  (0.0%)          0                 0             0              0              rmsnorm(s->xb, x, w->rms_ffn_weight + l * dim, dim);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // Now for FFN in PyTorch we have: self.w2(F.silu(self.w1(x)) * self.w3(x))
+            .         .        .                    .                  .                  .                 .             .              .              // first calculate self.w1(x) and self.w3(x)
+        6,336  (0.0%) 1 (0.0%) 1 (0.0%)         5,184  (0.0%)        576  (0.0%)          1  (0.0%)     4,032 (0.0%)    192  (0.1%)      0          #pragma omp parallel
+            .         .        .                    .                  .                  .                 .             .              .              {
+        4,608  (0.0%) 1 (0.0%) 1 (0.0%)         1,536  (0.0%)        576  (0.0%)          0                 0             0              0                matmul_nowait(s->hb, s->xb, w->w1 + l * dim * hidden_dim, dim, hidden_dim);
+        2,688  (0.0%) 0        0                  768  (0.0%)        768  (0.0%)          0                 0             0              0                matmul_nowait(s->hb2, s->xb, w->w3 + l * dim * hidden_dim, dim, hidden_dim);
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .              // SwiGLU non-linearity
+    1,180,032  (0.0%) 0        0                    0                  0                  0                 0             0              0              for (int i = 0; i < hidden_dim; i++) {
+      393,216  (0.0%) 0        0              393,216  (0.0%)     24,768  (0.0%)     12,308  (0.0%)         0             0              0                float val = s->hb[i];
+            .         .        .                    .                  .                  .                 .             .              .                // silu(x)=x*σ(x), where σ(x) is the logistic sigmoid
+    1,966,656  (0.0%) 0        0                  192  (0.0%)        192  (0.0%)        192  (0.0%)         0             0              0                val *= (1.0f / (1.0f + expf(-val)));
+            .         .        .                    .                  .                  .                 .             .              .                // elementwise multiply with w3(x)
+    1,179,648  (0.0%) 1 (0.0%) 1 (0.0%)       786,432  (0.0%)     24,384  (0.0%)      4,202  (0.0%)         0             0              0                val *= s->hb2[i];
+      393,216  (0.0%) 0        0                    0                  0                  0           393,216 (3.1%)      0              0                s->hb[i] = val;
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // final matmul to get the output of the ffn
+        1,536  (0.0%) 0        0                  768  (0.0%)        576  (0.0%)        192  (0.0%)         0             0              0              matmul(s->xb, s->hb, w->w2 + l * dim * hidden_dim, hidden_dim, dim);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // residual connection
+    1,032,960  (0.0%) 0        0              295,104  (0.0%)     18,816  (0.0%)      9,408  (0.0%)   147,456 (1.2%)      0              0              for (int i = 0; i < dim; i++) { x[i] += s->xb[i]; }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // final rmsnorm
+           96  (0.0%) 0        0                   16  (0.0%)         16  (0.0%)          0                16 (0.0%)      0              0            rmsnorm(x, x, w->rms_final_weight, dim);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // classifier into logits
+          112  (0.0%) 1 (0.0%) 1 (0.0%)            80  (0.0%)         16  (0.0%)         16  (0.0%)         0             0              0            matmul(s->logits, x, w->wcls, p->dim, p->vocab_size);
+           16  (0.0%) 0        0                   16  (0.0%)         16  (0.0%)         16  (0.0%)         0             0              0            return s->logits;
+          256  (0.0%) 1 (0.0%) 1 (0.0%)           272  (0.0%)         64  (0.0%)         64  (0.0%)         0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          // Adapter to perplexity.h's forward_fn: perplexity.c only knows the model as a void*
+            .         .        .                    .                  .                  .                 .             .              .          static float *forward_cb(void *model, int token, int pos) { return forward((Transformer *)model, token, pos); }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          int sample_argmax(const float *probabilities, int n)
+            .         .        .                    .                  .                  .                 .             .              .          {
+            .         .        .                    .                  .                  .                 .             .              .            // return the index that has the highest probability
+           10  (0.0%) 0        0                    0                  0                  0                 0             0              0            int max_i = 0;
+            5  (0.0%) 1 (0.0%) 1 (0.0%)             5  (0.0%)          5  (0.0%)          5  (0.0%)         0             0              0            float max_p = probabilities[0];
+      480,000  (0.0%) 0        0                    0                  0                  0                 0             0              0            for (int i = 1; i < n; i++) {
+      479,985  (0.0%) 0        0              159,995  (0.0%)     10,000  (0.0%)      9,163  (0.0%)         0             0              0              if (probabilities[i] > max_p) {
+            .         .        .                    .                  .                  .                 .             .              .                max_i = i;
+           78  (0.0%) 5 (0.2%) 5 (0.2%)             0                  0                  0                 0             0              0                max_p = probabilities[i];
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            return max_i;
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          int sample_mult(const float *probabilities, int n, float coin)
+            .         .        .                    .                  .                  .                 .             .              .          {
+            .         .        .                    .                  .                  .                 .             .              .            // sample index from probabilities (they must sum to 1!)
+-- line 355 ----------------------------------------
+-- line 410 ----------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .              cdf += probindex[i].prob;
+            .         .        .                    .                  .                  .                 .             .              .              if (r < cdf) { return probindex[i].index; }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            return probindex[last_idx].index;// in case of rounding errors
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void build_sampler(Sampler *sampler, int vocab_size, float temperature, float topp, unsigned long long rng_seed)
+            .         .        .                    .                  .                  .                 .             .              .          {
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      1  (0.0%)      0            sampler->vocab_size = vocab_size;
+            .         .        .                    .                  .                  .                 .             .              .            sampler->temperature = temperature;
+            1  (0.0%) 0        0                    0                  0                  0                 2 (0.0%)      0              0            sampler->topp = topp;
+            1  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 1 (0.0%)      0              0            sampler->rng_state = rng_seed;
+            .         .        .                    .                  .                  .                 .             .              .            // buffer only used with nucleus sampling; may not need but it's ~small
+            4  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            sampler->probindex = malloc(sampler->vocab_size * sizeof(ProbIndex));
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            2  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          1  (0.0%)          0                 0             0              0          void free_sampler(Sampler *sampler) { free(sampler->probindex); }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          unsigned int random_u32(unsigned long long *state)
+            .         .        .                    .                  .                  .                 .             .              .          {
+            .         .        .                    .                  .                  .                 .             .              .            // xorshift rng: https://en.wikipedia.org/wiki/Xorshift#xorshift.2A
+            .         .        .                    .                  .                  .                 .             .              .            *state ^= *state >> 12;
+            .         .        .                    .                  .                  .                 .             .              .            *state ^= *state << 25;
+            .         .        .                    .                  .                  .                 .             .              .            *state ^= *state >> 27;
+            .         .        .                    .                  .                  .                 .             .              .            return (*state * 0x2545F4914F6CDD1Dull) >> 32;
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          float random_f32(unsigned long long *state)
+            .         .        .                    .                  .                  .                 .             .              .          {// random float32 in [0,1)
+            .         .        .                    .                  .                  .                 .             .              .            return (random_u32(state) >> 8) / 16777216.0f;
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          int sample(Sampler *sampler, float *logits)
+           25  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                25 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .            // sample the token given the logits and some hyperparameters
+            .         .        .                    .                  .                  .                 .             .              .            int next = 0;
+           15  (0.0%) 0        0                    5  (0.0%)          5  (0.0%)          5  (0.0%)         0             0              0            if (sampler->temperature == 0.0f) {
+            .         .        .                    .                  .                  .                 .             .              .              // greedy argmax sampling: take the token with the highest probability
+            .         .        .                    .                  .                  .                 .             .              .              next = sample_argmax(logits, sampler->vocab_size);
+            .         .        .                    .                  .                  .                 .             .              .            } else {
+            .         .        .                    .                  .                  .                 .             .              .              // apply the temperature to the logits
+            5  (0.0%) 0        0                    5  (0.0%)          0                  0                 0             0              0              for (int q = 0; q < sampler->vocab_size; q++) { logits[q] /= sampler->temperature; }
+            .         .        .                    .                  .                  .                 .             .              .              // apply softmax to the logits to get the probabilities for next token
+            .         .        .                    .                  .                  .                 .             .              .              softmax(logits, sampler->vocab_size);
+            .         .        .                    .                  .                  .                 .             .              .              // flip a (float) coin (this is our source of entropy for sampling)
+            .         .        .                    .                  .                  .                 .             .              .              float coin = random_f32(&sampler->rng_state);
+            .         .        .                    .                  .                  .                 .             .              .              // we sample from this distribution to get the next token
+            .         .        .                    .                  .                  .                 .             .              .              if (sampler->topp <= 0 || sampler->topp >= 1) {
+            .         .        .                    .                  .                  .                 .             .              .                // simply sample from the predicted probability distribution
+            .         .        .                    .                  .                  .                 .             .              .                next = sample_mult(logits, sampler->vocab_size, coin);
+            .         .        .                    .                  .                  .                 .             .              .              } else {
+            .         .        .                    .                  .                  .                 .             .              .                // top-p (nucleus) sampling, clamping the least likely tokens to zero
+            .         .        .                    .                  .                  .                 .             .              .                next = sample_topp(logits, sampler->vocab_size, sampler->topp, sampler->probindex, coin);
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            return next;
+           20  (0.0%) 1 (0.0%) 1 (0.0%)            25  (0.0%)         10  (0.0%)          0                 0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          // ----------------------------------------------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .          // generation loop
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void generate(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler, char *prompt, int steps)
+           16  (0.0%) 2 (0.1%) 2 (0.1%)             2  (0.0%)          0                  0                10 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .            char *empty_prompt = "";
+            4  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (prompt == NULL) { prompt = empty_prompt; }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // encode the (string) prompt into tokens sequence
+            1  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            int num_prompt_tokens = 0;
+            7  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            int *prompt_tokens = (int *)malloc((strlen(prompt) + 3) * sizeof(int));// +3 for '\0', ?BOS, ?EOS
+            6  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0            encode(tokenizer, prompt, 1, 0, prompt_tokens, &num_prompt_tokens);
+            3  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            if (num_prompt_tokens < 1) {
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "something is wrong, expected at least 1 prompt token\n");
+            .         .        .                    .                  .                  .                 .             .              .              exit(EXIT_FAILURE);
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // start the main loop
+            3  (0.0%) 0        0                    0                  0                  0                 4 (0.0%)      1  (0.0%)      0            long start = 0;// used to time our code, only initialized after first iteration
+            .         .        .                    .                  .                  .                 .             .              .            int next;// will store the next token in the sequence
+            2  (0.0%) 0        0                    2  (0.0%)          0                  0                 0             0              0            int token = prompt_tokens[0];// kick off with the first token in the prompt
+            .         .        .                    .                  .                  .                 .             .              .            int pos = 0;// position in the sequence
+           82  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0            while (pos < steps) {
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // forward the transformer to get logits for the next token
+           64  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0              float *logits = forward(transformer, token, pos);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // advance the state machine
+           80  (0.0%) 1 (0.0%) 1 (0.0%)            16  (0.0%)         16  (0.0%)         16  (0.0%)         0             0              0              if (pos < num_prompt_tokens - 1) {
+            .         .        .                    .                  .                  .                 .             .              .                // if we are still processing the input prompt, force the next prompt token
+           12  (0.0%) 1 (0.0%) 1 (0.0%)            11  (0.0%)         11  (0.0%)         11  (0.0%)         0             0              0                next = prompt_tokens[pos + 1];
+            .         .        .                    .                  .                  .                 .             .              .              } else {
+            .         .        .                    .                  .                  .                 .             .              .                // otherwise sample the next token from the logits
+           20  (0.0%) 0        0                    5  (0.0%)          0                  0                 0             0              0                next = sample(sampler, logits);
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .              pos++;
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // data-dependent terminating condition: the BOS (=1) token delimits sequences
+           32  (0.0%) 0        0                    0                  0                  0                 0             0              0              if (next == 1) { break; }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // print the token as string, decode it with the Tokenizer object
+           64  (0.0%) 0        0                    0                  0                  0                 0             0              0              char *piece = decode(tokenizer, token, next);
+           16  (0.0%) 0        0                    0                  0                  0                 0             0              0              safe_printf(piece);// same as printf("%s", piece), but skips "unsafe" bytes
+           34  (0.0%) 0        0                   17  (0.0%)          1  (0.0%)          0                 0             0              0              fflush(stdout);
+            .         .        .                    .                  .                  .                 .             .              .              token = next;
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .              // init the timer here because the first iteration can be slower
+           19  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0              if (start == 0) { start = time_in_ms(); }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .            printf("\n");
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // report achieved tok/s (pos-1 because the timer starts after first iteration)
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (pos > 1) {
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0              long end = time_in_ms();
+            9  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 0             0              0              fprintf(stderr, "achieved tok/s: %f\n", (pos - 1) / (double)(end - start) * 1000);
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          
+            9  (0.0%) 0        0                    4  (0.0%)          0                  0                 0             0              0            free(prompt_tokens);
+            5  (0.0%) 0        0                    8  (0.0%)          1  (0.0%)          1  (0.0%)         0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          // ----------------------------------------------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .          // chat loop
+            .         .        .                    .                  .                  .                 .             .              .          // I manually inspected the tokens for a few chat conversations compared to
+            .         .        .                    .                  .                  .                 .             .              .          // python reference and that seemed ok, but this was not thoroughly tested and
+            .         .        .                    .                  .                  .                 .             .              .          // is not safely implemented, it's more a proof of concept atm.
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          void chat(Transformer *transformer,
+-- line 534 ----------------------------------------
+-- line 639 ----------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .            fprintf(stderr, "  -m <string> mode: generate|chat|ppl|agreement, default: generate\n");
+            .         .        .                    .                  .                  .                 .             .              .            fprintf(stderr, "  -f <string> text file to score in ppl mode\n");
+            .         .        .                    .                  .                  .                 .             .              .            fprintf(stderr, "  -y <string> (optional) system prompt in chat mode\n");
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "  -o <string> output CSV for agreement mode\n");
+            .         .        .                    .                  .                  .                 .             .              .              exit(EXIT_FAILURE);
+            .         .        .                    .                  .                  .                 .             .              .          }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .          int main(int argc, char *argv[])
+           14  (0.0%) 1 (0.0%) 1 (0.0%)             2  (0.0%)          0                  0                15 (0.0%)      0              0          {
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // default parameters
+            .         .        .                    .                  .                  .                 .             .              .            char *checkpoint_path = nullptr;// e.g. out/model.bin
+            3  (0.0%) 0        0                    0                  0                  0                 0             0              0            char *tokenizer_path = "tokenizer.bin";
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            float temperature = 1.0F;// 0.0 = greedy deterministic. 1.0 = original. don't set higher
+            4  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0            float topp = 0.9F;// top-p in nucleus sampling. 1.0 = off. 0.9 works well, but slower
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            int steps = 256;// number of steps to run for
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            char *prompt = nullptr;// prompt string
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            unsigned long long rng_seed = 0;// seed rng with time by default
+            4  (0.0%) 0        0                    0                  0                  0                 1 (0.0%)      0              0            char *mode = "generate";// generate|chat
+            .         .        .                    .                  .                  .                 .             .              .            char *system_prompt = nullptr;// the (optional) system prompt to use in chat mode
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            char *text_path = nullptr;// evaluation text file for ppl mode
+            1  (0.0%) 0        0                    0                  0                  0                 2 (0.0%)      0              0            char *agreement_path = NULL; // CSV output for agreement mode
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            int agreement_status = 0;
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // poor man's C argparse so we can override the defaults above from the command line
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (argc >= 2) {
+            2  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 1 (0.0%)      0              0              checkpoint_path = argv[1];
+            .         .        .                    .                  .                  .                 .             .              .            } else {
+            .         .        .                    .                  .                  .                 .             .              .              error_usage();
+            .         .        .                    .                  .                  .                 .             .              .            }
+           12  (0.0%) 0        0                    0                  0                  0                 0             0              0            for (int i = 2; i < argc; i += 2) {
+            .         .        .                    .                  .                  .                 .             .              .              // do some basic validation
+           20  (0.0%) 0        0                    0                  0                  0                 0             0              0              if (i + 1 >= argc) { error_usage(); }// must have arg after flag
+           20  (0.0%) 1 (0.0%) 1 (0.0%)            10  (0.0%)          1  (0.0%)          0                 0             0              0              if (argv[i][0] != '-') { error_usage(); }// must start with dash
+           20  (0.0%) 0        0                    0                  0                  0                 0             0              0              if (strlen(argv[i]) != 2) { error_usage(); }// must be -x (one dash, one letter)
+            .         .        .                    .                  .                  .                 .             .              .              // read in the args
+           15  (0.0%) 0        0                    5  (0.0%)          0                  0                 0             0              0              if (argv[i][1] == 't') {
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0                temperature = atof(argv[i + 1]);
+            8  (0.0%) 0        0                    0                  0                  0                 0             0              0              } else if (argv[i][1] == 'p') {
+            .         .        .                    .                  .                  .                 .             .              .                topp = atof(argv[i + 1]);
+            8  (0.0%) 1 (0.0%) 1 (0.0%)             0                  0                  0                 0             0              0              } else if (argv[i][1] == 's') {
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0                rng_seed = atoi(argv[i + 1]);
+            6  (0.0%) 0        0                    0                  0                  0                 0             0              0              } else if (argv[i][1] == 'n') {
+            .         .        .                    .                  .                  .                 .             .              .                steps = atoi(argv[i + 1]);
+            4  (0.0%) 0        0                    0                  0                  0                 0             0              0              } else if (argv[i][1] == 'i') {
+            2  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0                prompt = argv[i + 1];
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0              } else if (argv[i][1] == 'z') {
+            2  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 0             0              0                tokenizer_path = argv[i + 1];
+            .         .        .                    .                  .                  .                 .             .              .              } else if (argv[i][1] == 'm') {
+            .         .        .                    .                  .                  .                 .             .              .                mode = argv[i + 1];
+            .         .        .                    .                  .                  .                 .             .              .              } else if (argv[i][1] == 'y') {
+            .         .        .                    .                  .                  .                 .             .              .                system_prompt = argv[i + 1];
+            .         .        .                    .                  .                  .                 .             .              .              } else if (argv[i][1] == 'o') { agreement_path = argv[i + 1]; }
+            .         .        .                    .                  .                  .                 .             .              .                else if (argv[i][1] == 'f') {
+            .         .        .                    .                  .                  .                 .             .              .                text_path = argv[i + 1];
+            .         .        .                    .                  .                  .                 .             .              .              } else {
+            .         .        .                    .                  .                  .                 .             .              .                error_usage();
+            .         .        .                    .                  .                  .                 .             .              .              }
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // parameter validation/overrides
+            1  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (rng_seed <= 0) { rng_seed = (unsigned int)time(nullptr); }
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (temperature < 0.0) { temperature = 0.0F; }
+            6  (0.0%) 0        0                    0                  0                  0                 0             0              0            if (topp < 0.0 || 1.0 < topp) { topp = 0.9F; }
+            .         .        .                    .                  .                  .                 .             .              .            if (steps < 0) { steps = 0; }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // build the Transformer via the model .bin file
+            .         .        .                    .                  .                  .                 .             .              .            Transformer transformer;
+            4  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          0                  0                 0             0              0            build_transformer(&transformer, checkpoint_path);
+            5  (0.0%) 1 (0.0%) 1 (0.0%)             1  (0.0%)          1  (0.0%)          0                 0             0              0            if (steps == 0 || steps > transformer.config.seq_len) {
+            .         .        .                    .                  .                  .                 .             .              .              steps = transformer.config.seq_len;// override to ~max length
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // build the Tokenizer via the tokenizer .bin file
+            .         .        .                    .                  .                  .                 .             .              .            Tokenizer tokenizer;
+            5  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            build_tokenizer(&tokenizer, tokenizer_path, transformer.config.vocab_size);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // build the Sampler
+            .         .        .                    .                  .                  .                 .             .              .            Sampler sampler;
+            1  (0.0%) 0        0                    1  (0.0%)          1  (0.0%)          0                 0             0              0            build_sampler(&sampler, transformer.config.vocab_size, temperature, topp, rng_seed);
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // run!
+            5  (0.0%) 0        0                    1  (0.0%)          0                  0                 0             0              0            if (strcmp(mode, "generate") == 0) {
+            7  (0.0%) 2 (0.1%) 2 (0.1%)             0                  0                  0                 0             0              0              generate(&transformer, &tokenizer, &sampler, prompt, steps);
+            .         .        .                    .                  .                  .                 .             .              .            } else if (strcmp(mode, "chat") == 0) {
+            .         .        .                    .                  .                  .                 .             .              .              chat(&transformer, &tokenizer, &sampler, prompt, system_prompt, steps);
+            .         .        .                    .                  .                  .                 .             .              .            } else if (strcmp(mode, "agreement") == 0) {
+            .         .        .                    .                  .                  .                 .             .              .                  if (text_path == NULL || agreement_path == NULL) { error_usage(); }
+            .         .        .                    .                  .                  .                 .             .              .                  agreement_status = agreement_file(
+            .         .        .                    .                  .                  .                 .             .              .                      &transformer, forward_cb, transformer.config.vocab_size,
+            .         .        .                    .                  .                  .                 .             .              .                      transformer.config.seq_len, &tokenizer, text_path, agreement_path);
+            .         .        .                    .                  .                  .                 .             .              .              } else if (strcmp(mode, "ppl") == 0) {
+-- line 730 ----------------------------------------
+-- line 733 ----------------------------------------
+            .         .        .                    .                  .                  .                 .             .              .                &transformer, forward_cb, transformer.config.vocab_size, transformer.config.seq_len, &tokenizer, text_path);
+            .         .        .                    .                  .                  .                 .             .              .            } else {
+            .         .        .                    .                  .                  .                 .             .              .              fprintf(stderr, "unknown mode: %s\n", mode);
+            .         .        .                    .                  .                  .                 .             .              .              error_usage();
+            .         .        .                    .                  .                  .                 .             .              .            }
+            .         .        .                    .                  .                  .                 .             .              .          
+            .         .        .                    .                  .                  .                 .             .              .            // memory and file handles cleanup
+            .         .        .                    .                  .                  .                 .             .              .            free_sampler(&sampler);
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            free_tokenizer(&tokenizer);
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            free_transformer(&transformer);
+            2  (0.0%) 0        0                    0                  0                  0                 0             0              0            return agreement_status ? EXIT_FAILURE : EXIT_SUCCESS;
+           16  (0.0%) 1 (0.0%) 1 (0.0%)            17  (0.0%)          4  (0.0%)          3  (0.0%)         0             0              0          }
+            .         .        .                    .                  .                  .                 .             .              .          #endif
+
+--------------------------------------------------------------------------------
+-- Annotation summary
+--------------------------------------------------------------------------------
+Ir____________________ I1mr_________ ILmr_________ Dr___________________ D1mr_______________ DLmr________________ Dw_______________ D1mw___________ DLmw___________ 
+
+12,322,791,351 (99.3%)   102  (4.0%)   101  (4.4%) 3,512,975,760 (99.5%) 109,829,007 (99.6%) 109,715,694 (100.0%) 4,699,005 (36.7%) 135,321 (46.6%) 132,728 (74.8%)    annotated: files known & above threshold & readable, line numbers known
+             0             0             0                     0                   0                   0                  0               0               0            annotated: files known & above threshold & readable, line numbers unknown
+             0             0             0                     0                   0                   0                  0               0               0          unannotated: files known & above threshold & two or more non-identical
+             0             0             0                     0                   0                   0                  0               0               0          unannotated: files known & above threshold & unreadable 
+    76,453,548  (0.6%) 2,098 (81.6%) 1,868 (80.7%)    15,759,950  (0.4%)     341,174  (0.3%)      26,640   (0.0%) 7,886,832 (61.5%) 134,938 (46.4%)  41,297 (23.3%)  unannotated: files known & below threshold
+     5,787,474  (0.0%)   370 (14.4%)   347 (15.0%)     1,522,143  (0.0%)      56,290  (0.1%)       4,167   (0.0%)   228,153  (1.8%)  20,311  (7.0%)   3,445  (1.9%)  unannotated: files unknown
+

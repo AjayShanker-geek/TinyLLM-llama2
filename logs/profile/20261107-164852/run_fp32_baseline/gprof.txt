@@ -1,0 +1,104 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 99.86      7.28     7.28      128     0.06     0.06  forward
+  0.14      7.29     0.01    18432     0.00     0.00  softmax
+  0.00      7.29     0.00     3200     0.00     0.00  rmsnorm
+  0.00      7.29     0.00      128     0.00     0.00  decode
+  0.00      7.29     0.00      128     0.00     0.00  safe_printf
+  0.00      7.29     0.00      117     0.00     0.00  sample
+  0.00      7.29     0.00        1     0.00     0.00  build_tokenizer
+  0.00      7.29     0.00        1     0.00     0.00  build_transformer
+  0.00      7.29     0.00        1     0.00     0.00  encode
+  0.00      7.29     0.00        1     0.00     0.00  free_run_state
+  0.00      7.29     0.00        1     0.00     0.00  free_tokenizer
+  0.00      7.29     0.00        1     0.00     0.00  free_transformer
+  0.00      7.29     0.00        1     0.00     7.29  generate
+  0.00      7.29     0.00        1     0.00     0.00  malloc_run_state
+  0.00      7.29     0.00        1     0.00     0.00  memory_map_weights
+  0.00      7.29     0.00        1     0.00     0.00  read_checkpoint
+
+			Call graph
+
+
+granularity: each sample hit covers 4 byte(s) for 0.14% of 7.29 seconds
+
+index % time    self  children    called     name
+                7.28    0.01     128/128         generate [2]
+[1]    100.0    7.28    0.01     128         forward [1]
+                0.01    0.00   18432/18432       softmax [4]
+                0.00    0.00    3200/3200        rmsnorm [5]
+-----------------------------------------------
+                0.00    7.29       1/1           main [3]
+[2]    100.0    0.00    7.29       1         generate [2]
+                7.28    0.01     128/128         forward [1]
+                0.00    0.00     128/128         safe_printf [7]
+                0.00    0.00     128/128         decode [6]
+                0.00    0.00     117/117         sample [8]
+                0.00    0.00       1/1           encode [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]    100.0    0.00    7.29                 main [3]
+                0.00    7.29       1/1           generate [2]
+                0.00    0.00       1/1           malloc_run_state [15]
+                0.00    0.00       1/1           build_transformer [10]
+                0.00    0.00       1/1           build_tokenizer [9]
+                0.00    0.00       1/1           free_tokenizer [13]
+                0.00    0.00       1/1           free_run_state [12]
+                0.00    0.00       1/1           free_transformer [14]
+-----------------------------------------------
+                0.01    0.00   18432/18432       forward [1]
+[4]      0.1    0.01    0.00   18432         softmax [4]
+-----------------------------------------------
+                0.00    0.00    3200/3200        forward [1]
+[5]      0.0    0.00    0.00    3200         rmsnorm [5]
+-----------------------------------------------
+                0.00    0.00     128/128         generate [2]
+[6]      0.0    0.00    0.00     128         decode [6]
+-----------------------------------------------
+                0.00    0.00     128/128         generate [2]
+[7]      0.0    0.00    0.00     128         safe_printf [7]
+-----------------------------------------------
+                0.00    0.00     117/117         generate [2]
+[8]      0.0    0.00    0.00     117         sample [8]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[9]      0.0    0.00    0.00       1         build_tokenizer [9]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[10]     0.0    0.00    0.00       1         build_transformer [10]
+                0.00    0.00       1/1           memory_map_weights [16]
+                0.00    0.00       1/1           read_checkpoint [17]
+-----------------------------------------------
+                0.00    0.00       1/1           generate [2]
+[11]     0.0    0.00    0.00       1         encode [11]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[12]     0.0    0.00    0.00       1         free_run_state [12]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[13]     0.0    0.00    0.00       1         free_tokenizer [13]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[14]     0.0    0.00    0.00       1         free_transformer [14]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[15]     0.0    0.00    0.00       1         malloc_run_state [15]
+-----------------------------------------------
+                0.00    0.00       1/1           build_transformer [10]
+[16]     0.0    0.00    0.00       1         memory_map_weights [16]
+-----------------------------------------------
+                0.00    0.00       1/1           build_transformer [10]
+[17]     0.0    0.00    0.00       1         read_checkpoint [17]
+-----------------------------------------------
+
+Index by function name
+
+   [9] build_tokenizer        [13] free_tokenizer          [5] rmsnorm
+  [10] build_transformer      [14] free_transformer        [7] safe_printf
+   [6] decode                  [2] generate                [8] sample
+  [11] encode                 [15] malloc_run_state        [4] softmax
+   [1] forward                [16] memory_map_weights
+  [12] free_run_state         [17] read_checkpoint

@@ -1,0 +1,109 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 95.79      1.82     1.82    10880     0.00     0.00  matmul_basic_rows
+  3.68      1.89     0.07      128     0.00     0.01  forward
+  0.53      1.90     0.01     3200     0.00     0.00  rmsnorm
+  0.00      1.90     0.00    18432     0.00     0.00  softmax
+  0.00      1.90     0.00      128     0.00     0.00  decode
+  0.00      1.90     0.00      128     0.00     0.00  safe_printf
+  0.00      1.90     0.00      117     0.00     0.00  sample
+  0.00      1.90     0.00        1     0.00     0.00  build_tokenizer
+  0.00      1.90     0.00        1     0.00     0.00  build_transformer
+  0.00      1.90     0.00        1     0.00     0.00  encode
+  0.00      1.90     0.00        1     0.00     0.00  free_run_state
+  0.00      1.90     0.00        1     0.00     0.00  free_tokenizer
+  0.00      1.90     0.00        1     0.00     0.00  free_transformer
+  0.00      1.90     0.00        1     0.00     1.90  generate
+  0.00      1.90     0.00        1     0.00     0.00  malloc_run_state
+  0.00      1.90     0.00        1     0.00     0.00  memory_map_weights
+  0.00      1.90     0.00        1     0.00     0.00  read_checkpoint
+
+			Call graph
+
+
+granularity: each sample hit covers 4 byte(s) for 0.53% of 1.90 seconds
+
+index % time    self  children    called     name
+                0.07    1.83     128/128         generate [2]
+[1]    100.0    0.07    1.83     128         forward [1]
+                1.82    0.00   10880/10880       matmul_basic_rows [4]
+                0.01    0.00    3200/3200        rmsnorm [5]
+                0.00    0.00   18432/18432       softmax [6]
+-----------------------------------------------
+                0.00    1.90       1/1           main [3]
+[2]    100.0    0.00    1.90       1         generate [2]
+                0.07    1.83     128/128         forward [1]
+                0.00    0.00     128/128         safe_printf [8]
+                0.00    0.00     128/128         decode [7]
+                0.00    0.00     117/117         sample [9]
+                0.00    0.00       1/1           encode [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]    100.0    0.00    1.90                 main [3]
+                0.00    1.90       1/1           generate [2]
+                0.00    0.00       1/1           malloc_run_state [16]
+                0.00    0.00       1/1           build_transformer [11]
+                0.00    0.00       1/1           build_tokenizer [10]
+                0.00    0.00       1/1           free_tokenizer [14]
+                0.00    0.00       1/1           free_run_state [13]
+                0.00    0.00       1/1           free_transformer [15]
+-----------------------------------------------
+                1.82    0.00   10880/10880       forward [1]
+[4]     95.8    1.82    0.00   10880         matmul_basic_rows [4]
+-----------------------------------------------
+                0.01    0.00    3200/3200        forward [1]
+[5]      0.5    0.01    0.00    3200         rmsnorm [5]
+-----------------------------------------------
+                0.00    0.00   18432/18432       forward [1]
+[6]      0.0    0.00    0.00   18432         softmax [6]
+-----------------------------------------------
+                0.00    0.00     128/128         generate [2]
+[7]      0.0    0.00    0.00     128         decode [7]
+-----------------------------------------------
+                0.00    0.00     128/128         generate [2]
+[8]      0.0    0.00    0.00     128         safe_printf [8]
+-----------------------------------------------
+                0.00    0.00     117/117         generate [2]
+[9]      0.0    0.00    0.00     117         sample [9]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[10]     0.0    0.00    0.00       1         build_tokenizer [10]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[11]     0.0    0.00    0.00       1         build_transformer [11]
+                0.00    0.00       1/1           memory_map_weights [17]
+                0.00    0.00       1/1           read_checkpoint [18]
+-----------------------------------------------
+                0.00    0.00       1/1           generate [2]
+[12]     0.0    0.00    0.00       1         encode [12]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[13]     0.0    0.00    0.00       1         free_run_state [13]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[14]     0.0    0.00    0.00       1         free_tokenizer [14]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[15]     0.0    0.00    0.00       1         free_transformer [15]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[16]     0.0    0.00    0.00       1         malloc_run_state [16]
+-----------------------------------------------
+                0.00    0.00       1/1           build_transformer [11]
+[17]     0.0    0.00    0.00       1         memory_map_weights [17]
+-----------------------------------------------
+                0.00    0.00       1/1           build_transformer [11]
+[18]     0.0    0.00    0.00       1         read_checkpoint [18]
+-----------------------------------------------
+
+Index by function name
+
+  [10] build_tokenizer        [14] free_tokenizer         [18] read_checkpoint
+  [11] build_transformer      [15] free_transformer        [5] rmsnorm
+   [7] decode                  [2] generate                [8] safe_printf
+  [12] encode                 [16] malloc_run_state        [9] sample
+   [1] forward                 [4] matmul_basic_rows (run_fp32_simd.c) [6] softmax
+  [13] free_run_state         [17] memory_map_weights
