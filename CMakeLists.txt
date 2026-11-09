@@ -40,7 +40,7 @@ set(FP16_ARCH "${DEFAULT_FP16_ARCH}" CACHE STRING "Value passed to -march for th
 
 include_directories(include)
 
-# Ensure no optimzation done by the compiler
+# Compiler flag groups: every variant uses -O2 with auto-vectorization off, except the aggressive group
 add_library(no_optimization INTERFACE)
 add_library(fp16_optimisation INTERFACE)
 add_library(simd_optimisation INTERFACE)
@@ -51,7 +51,7 @@ target_compile_options(no_optimization
     INTERFACE
         # $<$<CONFIG:Debug>:-O0>
         # $<$<CONFIG:Debug>:-g>
-        -O2 # Disable compiler optimizations
+        -O2 # Ordinary optimization for all variants; the code stays scalar (see next flag)
         -fno-tree-vectorize # Disable vectorization
         -Wall
         -Wextra
@@ -75,7 +75,7 @@ target_compile_options(fp16_optimisation
 
 target_compile_options(simd_optimisation
     INTERFACE
-        -O2 # Disable compiler optimizations, same as the baseline
+        -O2 # Ordinary optimization, same as the baseline
         -march=${SIMD_ARCH} # Enable architecture-specific optimizations
         -fno-tree-vectorize # No auto-vectorization: only the hand-written NEON is SIMD
         -Wall
