@@ -16,7 +16,7 @@
 #include "tokenizer.h"
 /* FP16 stored weights, FP32 products/accumulation/activations/KV cache.
  * Adapted from this repository's INT8 baseline; uses the L2FP16 v1 format.
- * Tokenizer, sampling, attention structure and forward-only timer are retained.
+ * Tokenizer, sampling and attention structure are retained.
  */
 
 #include <stdio.h>
@@ -589,18 +589,20 @@ int sample(Sampler* sampler, float* logits) {
 // ----------------------------------------------------------------------------
 // utilities: time
 
-double time_in_seconds(void) {
 #ifdef _WIN32
+static double time_in_ms(void) {
     LARGE_INTEGER ticks, frequency;
     QueryPerformanceCounter(&ticks);
     QueryPerformanceFrequency(&frequency);
-    return (double)ticks.QuadPart / (double)frequency.QuadPart;
-#else
-    struct timespec now;
-    clock_gettime(CLOCK_MONOTONIC, &now);
-    return (double)now.tv_sec + (double)now.tv_nsec * 1e-9;
-#endif
+    return floor((double)ticks.QuadPart * 1000.0 / (double)frequency.QuadPart);
 }
+#else
+static long time_in_ms(void) {
+    struct timespec time;
+    clock_gettime(CLOCK_REALTIME, &time);
+    return time.tv_sec * 1000 + time.tv_nsec / 1000000;
+}
+#endif
 
 // ----------------------------------------------------------------------------
 // generation loop
@@ -648,15 +650,15 @@ void generate(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler, 
         token = next;
 
         // init the timer here because the first iteration can be slower
-        if (start == 0.0) { start = time_in_seconds(); }
+        if (start == 0.0) { start = time_in_ms(); }
     }
     printf("\n");
 
     // report achieved tok/s (pos-1 because the timer starts after first iteration)
     // includes forward(), sampling and printing; excludes checkpoint loading and the first step
     if (pos > 1) {
-        double end = time_in_seconds();
-        fprintf(stderr, "achieved tok/s: %f\n", (pos - 1) / (end - start));
+        double end = time_in_ms();
+        fprintf(stderr, "achieved tok/s: %f\n", (pos - 1) / (end - start) * 1000.0);
     }
 
     free(prompt_tokens);
