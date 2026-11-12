@@ -327,8 +327,7 @@ def plot_tok_s_boxplot(data: RunData):
                                               for i, b in enumerate(sb)]), loc="upper left", ncol=2)
 
     fig.suptitle("Distribution of tokens/s over all runs", x=0.01, ha="left", fontweight="bold", fontsize=13)
-    subtitle(fig, "tok/s as printed by each binary: INT8 and FP16 time forward() only, the others include "
-                  "sampling, so compare across binaries with care (wall time is the like-for-like measure).")
+    subtitle(fig, "tok/s as printed by each binary: Runners all include time forward() and sampling")
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     return fig
 
