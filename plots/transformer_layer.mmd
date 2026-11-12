@@ -1,0 +1,42 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Arial','fontSize':'15px','primaryColor':'#ffffff','primaryBorderColor':'#555555','primaryTextColor':'#111111','lineColor':'#555555','clusterBkg':'#f7f7f7','clusterBorder':'#bbbbbb'},'flowchart':{'curve':'basis','nodeSpacing':30,'rankSpacing':38,'wrappingWidth':280}}}%%
+flowchart LR
+    XIN(["Input<br/><b>x: 768 × 1</b><br/>from embedding<br/>or previous layer"])
+
+    subgraph ATT["Attention block: mix information from earlier tokens"]
+        direction TB
+        A1["RMSNorm<br/>xb: 768 × 1"]
+        A2["Q, K, V projections<br/>Wq, Wk, Wv: 768 × 768 each<br/><b>q, k, v: 768 × 1 each</b>"]
+        A3["RoPE on q and k<br/>12 heads × 64"]
+        KV[("KV cache of this layer<br/>K, V: seq_len × 768")]
+        A4["Attention per head (12 × 64)<br/>scores K·q / √64: (pos+1) × 1<br/>softmax → weighted sum of V<br/><b>stack heads: 768 × 1</b>"]
+        A5["Output projection<br/>Wo: 768 × 768<br/><b>768 × 1</b>"]
+        A6(["Residual add<br/>x = x + attention output<br/><b>768 × 1</b>"])
+        A1 --> A2 --> A3 --> A4 --> A5 --> A6
+        A3 -- "store k, v" --> KV
+        KV -- "keys, values 0…pos" --> A4
+    end
+
+    subgraph FF["Feed-forward block (SwiGLU): transform this token"]
+        direction TB
+        F1["RMSNorm<br/>xb: 768 × 1"]
+        F2["Expand<br/>W1, W3: 2048 × 768 each<br/><b>h1, h3: 2048 × 1 each</b>"]
+        F3["SwiGLU<br/>h = SiLU(h1) ⊙ h3<br/><b>2048 × 1</b>"]
+        F4["Shrink<br/>W2: 768 × 2048<br/><b>768 × 1</b>"]
+        F5(["Residual add<br/>x = x + FFN output<br/><b>768 × 1</b>"])
+        F1 --> F2 --> F3 --> F4 --> F5
+    end
+
+    XOUT(["Output<br/><b>x: 768 × 1</b><br/>to next layer<br/>or final RMSNorm"])
+
+    XIN --> ATT
+    ATT --> FF
+    FF --> XOUT
+
+    classDef matmul fill:#fde2e2,stroke:#c0392b,stroke-width:1.5px
+    classDef cache fill:#fff4d6,stroke:#b7950b,stroke-width:1.5px
+    classDef add fill:#eef7ee,stroke:#2e7d32,stroke-width:1.5px
+    classDef io fill:#e3ecfa,stroke:#2c5aa0,stroke-width:1.5px
+    class A2,A5,F2,F4 matmul
+    class KV cache
+    class A6,F5 add
+    class XIN,XOUT io

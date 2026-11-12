@@ -368,10 +368,30 @@ def plot_cachegrind(data: RunData):
 # ----------------------------------------------------------------------------
 # 6. perf: share of time per function group
 
-PERF_GROUPS = ["matmul", "fp16_to_fp32", "forward (rest of layer)", "OpenMP runtime", "libc / libm"]
+PERF_GROUPS = ["matmul", "matmul (inlined)", "fp16_to_fp32", "forward (rest of layer)", "OpenMP runtime",
+               "libc / libm"]
+PERF_COLOURS = {"matmul": SERIES[0], "matmul (inlined)": SERIES[0], "fp16_to_fp32": SERIES[1],
+                "forward (rest of layer)": SERIES[2], "OpenMP runtime": SERIES[3], "libc / libm": SERIES[4],
+                "Other / unknown": NEUTRAL}
+PERF_HATCH = {"matmul (inlined)": "//"}
+
+# GCC inlines the matmul kernel into its caller in some builds, so perf reports its samples under the
+# caller's symbol. These (binary, symbol) pairs are relabelled "matmul (inlined)":
+#   - FP32 and FP16 _Float16 baselines (-O2): matmul is inlined into forward(). The segment also holds the
+#     small rest-of-layer work (RMSNorm, RoPE, attention), which perf cannot separate.
+#   - FP32 OpenMP + -O3 SIMD: matmul_nowait is inlined into the Q/K/V region (forward._omp_fn.0) and the
+#     W1/W3 region (forward._omp_fn.2); those regions contain nothing else (src/run_fp32_openmp.c).
+INLINED_MATMUL = {
+    ("run_fp32_baseline", "forward"),
+    ("run_fp16_baseline_native", "forward"),
+    ("run_fp32_openmp_simd", "forward._omp_fn.0"),
+    ("run_fp32_openmp_simd", "forward._omp_fn.2"),
+}
 
 
-def perf_group(function: str) -> str:
+def perf_group(function: str, binary: str = "") -> str:
+    if (str(binary), function) in INLINED_MATMUL:
+        return "matmul (inlined)"
     f = function.lower()
     if "fp16_to_fp32" in f:
         return "fp16_to_fp32"
@@ -390,23 +410,24 @@ def plot_perf_breakdown(data: RunData):
     df = data.perf_report
     if df.empty:
         return None
-    df = df.assign(group=df["function"].map(perf_group))
+    df = df.assign(group=[perf_group(f, b) for f, b in zip(df["function"], df["binary"])])
     share = df.pivot_table(index="binary", columns="group", values="self_pct", aggfunc="sum",
                            fill_value=0, observed=True)
     share["Other / unknown"] = share.get("Other / unknown", 0) + (100 - share.sum(axis=1)).clip(lower=0)
     groups = [g for g in PERF_GROUPS if g in share.columns and share[g].sum() > 0] + ["Other / unknown"]
-    colours = dict(zip(PERF_GROUPS, SERIES), **{"Other / unknown": NEUTRAL})
-
     fig, ax = plt.subplots(figsize=(11, 6))
     y = np.arange(len(share))[::-1]
     left = np.zeros(len(share))
     for g in groups:
         values = share[g].to_numpy()
-        ax.barh(y, values, left=left, color=colours[g], edgecolor=SURFACE, linewidth=2, height=0.7, label=g)
+        ax.barh(y, values, left=left, color=PERF_COLOURS[g], edgecolor=SURFACE, linewidth=2, height=0.7,
+                hatch=PERF_HATCH.get(g), label=g)
         for yi, l, v in zip(y, left, values):
             if v >= 4:
                 ax.text(l + v / 2, yi, f"{v:.1f}%", ha="center", va="center", fontsize=8,
-                        color="white" if g in ("matmul", "OpenMP runtime") or g == "Other / unknown" else INK)
+                        color="white" if g in ("matmul", "matmul (inlined)", "OpenMP runtime", "Other / unknown")
+                        else INK,
+                        bbox=dict(facecolor=PERF_COLOURS[g], edgecolor="none", pad=1) if g in PERF_HATCH else None)
         left += values
     ax.set_yticks(y, [label(b) for b in share.index], fontsize=8.5)
     ax.set_xlim(0, 100)
@@ -414,9 +435,10 @@ def plot_perf_breakdown(data: RunData):
     ax.grid(axis="y", visible=False)
     ax.set_title("Where the time goes (perf record, self time)")
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=len(groups))
-    subtitle(fig, "Functions grouped; labels shown for segments ≥ 4%. In the FP32/FP16 _Float16 baselines matmul "
-                  "is attributed to forward(), so it appears as 'forward'.")
-    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    subtitle(fig, "Functions grouped; labels shown for segments ≥ 4%. Hatched = matmul inlined by GCC into its caller, "
+                  "so perf reports it under that symbol:\nforward() in the FP32 and FP16 _Float16 baselines (also holds "
+                  "the small rest-of-layer work), and the Q/K/V and W1/W3 parallel regions in OpenMP + -O3 SIMD.")
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
     return fig
 
 
