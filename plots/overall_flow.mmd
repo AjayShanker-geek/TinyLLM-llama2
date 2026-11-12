@@ -1,0 +1,27 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Arial','fontSize':'15px','primaryColor':'#ffffff','primaryBorderColor':'#555555','primaryTextColor':'#111111','lineColor':'#555555','clusterBkg':'#f7f7f7','clusterBorder':'#bbbbbb'},'flowchart':{'curve':'basis','nodeSpacing':28,'rankSpacing':45}}}%%
+flowchart TB
+    subgraph R1["1. Input: text → token → vector (tokenizer runs once per prompt)"]
+        direction LR
+        T["Tokenizer (BPE)<br/>prompt text → token IDs"] --> ID["Current token ID<br/>1 integer, position pos"]
+        ID --> E["Embedding lookup<br/>table 32000 × 768<br/><b>x: 768 × 1</b>"]
+    end
+    subgraph R2["2. Model forward pass"]
+        direction LR
+        TL[["Transformer layer × 12<br/>(Figure 2)<br/><b>x: 768 × 1</b>"]] --> N["Final RMSNorm<br/><b>x: 768 × 1</b>"]
+        N --> C["Classifier<br/>Wcls 32000 × 768<br/><b>logits: 32000 × 1</b>"]
+    end
+    subgraph R3["3. Choose and output the next token"]
+        direction LR
+        S["Sampler<br/>argmax (-t 0) or<br/>softmax + top-p"] --> NT["Next token ID"]
+        NT --> O(["decode → print text"])
+        O --> LOOP(["Back to step 1 with pos + 1<br/>(stop at BOS token or step limit)"])
+    end
+    R1 --> R2
+    R2 --> R3
+
+    classDef matmul fill:#fde2e2,stroke:#c0392b,stroke-width:1.5px
+    classDef layer fill:#e3ecfa,stroke:#2c5aa0,stroke-width:1.5px
+    class C matmul
+    class TL layer
+    classDef loop fill:#eef7ee,stroke:#2e7d32,stroke-width:1.5px,stroke-dasharray:4 3
+    class LOOP loop

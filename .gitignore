@@ -108,3 +108,6 @@ models/
 build-docker/
 build-docker-*/
 
+# Temporary files
+*.tmp
+reports/
